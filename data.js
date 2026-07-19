@@ -42,6 +42,27 @@ window.DK = (function () {
     { wk: 16, date: "Mon 9 Nov",  iso: "2026-11-09", op: "Dragonball Z",       ha: "Home", tbl: "1" },
   ];
 
+  // Set lineup — the 3 players rostered to play each week. Edit to change who's on.
+  // Wks 1 & 2 set by Tony; the rest allocated for equal spread (≈9 games each) within leave.
+  const lineups = {
+    1:  ["Oscar", "Arul", "Angus"],
+    2:  ["Tony", "Kate", "Angus"],
+    4:  ["Oscar", "Angus"],            // only 2 available — needs a fill-in
+    5:  ["Oscar", "Arul", "Angus"],
+    6:  ["Tony", "Oscar", "Angus"],
+    7:  ["Kate", "Arul", "Angus"],
+    8:  ["Tony", "Oscar", "Angus"],
+    9:  ["Oscar", "Kate", "Angus"],
+    10: ["Oscar", "Kate", "Arul"],
+    11: ["Tony", "Kate", "Arul"],
+    12: ["Tony", "Kate", "Arul"],
+    13: ["Tony", "Kate", "Arul"],
+    14: ["Tony", "Kate", "Arul"],
+    15: ["Tony", "Oscar", "Arul"],
+    16: ["Tony", "Oscar", "Kate"],
+  };
+  fixtures.forEach(f => { f.lineup = lineups[f.wk] || []; });
+
   // The 13 Monday teams. Double Kiss first. (More per-team detail to come.)
   const teams = [
     { name: "Double Kiss",        captain: "Tony Brooks",              us: true },
@@ -81,6 +102,11 @@ window.DK = (function () {
     return fixtures.filter(f => f.ha !== "Bye" && !p.out.includes(f.wk)).length;
   }
 
+  // how many matches this player is actually rostered (set lineup) to play
+  function scheduledGames(p) {
+    return fixtures.filter(f => f.lineup.includes(p.name)).length;
+  }
+
   function availability(wk) {
     const f = fixture(wk);
     const bye = !!f && f.ha === "Bye";
@@ -101,5 +127,5 @@ window.DK = (function () {
   }
 
   return { TEAM, SEASON, LEAGUE, VENUE, PLAYERS_PER_NIGHT, roster, fixtures, teams, news, stats,
-           fixture, matchesAvailable, availability, nextIndex, nextMatchIndex };
+           fixture, matchesAvailable, scheduledGames, availability, nextIndex, nextMatchIndex };
 })();

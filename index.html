@@ -23,7 +23,7 @@
   <h2 id="whoHdr">Who's available</h2>
   <div id="fitBanner"></div>
   <div class="who" id="who"></div>
-  <p class="sub" style="margin-top:10px">Only 3 play each Monday — the captain picks the lineup from those available.</p>
+  <p class="sub" style="margin-top:10px">Only 3 play each Monday — see the Roster tab for every week's lineup.</p>
 
   <h2>News</h2>
   <div class="news" id="news"></div>
@@ -60,28 +60,26 @@
     }
   }
 
-  // who's available for the next actual match
+  // lineup for the next actual match
   const mi = D.nextMatchIndex();
   const whoHdr = document.getElementById("whoHdr");
   const fb = document.getElementById("fitBanner");
   const who = document.getElementById("who");
+  const roleOf = {}; D.roster.forEach(p => roleOf[p.name] = p.role);
   if (mi === -1) {
-    whoHdr.textContent = "Who's available";
+    whoHdr.textContent = "Lineup";
     who.innerHTML = '<div class="empty">No upcoming matches.</div>';
   } else {
-    const f = D.fixtures[mi], a = D.availability(f.wk), inN = a.count;
-    whoHdr.textContent = "Available · Wk " + f.wk + " vs " + f.op;
-    let cls, msg;
-    if (inN < 3) { cls = "short"; msg = "Only " + inN + " available — you need a fill-in or it's a forfeit risk."; }
-    else if (inN === 3) { cls = "tight"; msg = "Exactly 3 available — enough to field, but no cover."; }
-    else { cls = "ok"; msg = inN + " of " + D.roster.length + " available — you're covered."; }
-    fb.className = "fitbanner " + cls; fb.textContent = msg;
-    who.innerHTML = D.roster.map(p => ({ p, out: p.out.includes(f.wk) }))
-      .sort((x, y) => x.out - y.out)
-      .map(({ p, out }) =>
-        '<div class="row' + (out ? ' out' : '') + '"><div><div class="nm">' + esc(p.name) +
-        '</div><div class="rl">' + esc(p.role) + '</div></div>' +
-        '<div class="st ' + (out ? 'out' : 'in') + '">' + (out ? 'Away' : 'In') + '</div></div>').join("");
+    const f = D.fixtures[mi], rostered = f.lineup.length, shortNight = rostered < 3;
+    whoHdr.textContent = "Lineup · Wk " + f.wk + " vs " + f.op;
+    if (shortNight) { fb.className = "fitbanner short"; fb.textContent = "Only " + rostered + " rostered — line up a fill-in or it's a forfeit risk."; }
+    else { fb.className = "fitbanner ok"; fb.textContent = "Lineup set — 3 playing."; }
+    let rows = f.lineup.map(name =>
+      '<div class="row"><div><div class="nm">' + esc(name) + '</div><div class="rl">' +
+      esc(roleOf[name] || "Player") + '</div></div><div class="st in">Playing</div></div>').join("");
+    if (shortNight) rows += '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
+      (3 - rostered) + ' more</div></div><div class="st out">TBC</div></div>';
+    who.innerHTML = rows;
   }
 
   // news
