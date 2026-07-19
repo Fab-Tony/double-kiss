@@ -16,11 +16,15 @@
 <body data-page="teams">
 <div class="wrap">
   <h1>Teams</h1>
-  <div class="sub">The 13 Monday teams in Season 28. Per-team pages coming soon.</div>
+  <div class="sub">The 13 Monday teams — tap for the squad and FargoRate ratings. The number is each team's top-three total; the three who play must stay under <b style="color:var(--ink)">1775</b>, so teams shown in <span style="color:var(--danger)">red</span> can't field their strongest trio.</div>
 
-  <div class="teamgrid" id="teamgrid"></div>
+  <div class="games" id="teamlist"></div>
 
-  <footer>Sydney Diamond League · Monday competition · Club9</footer>
+  <div class="card" style="margin-top:14px">
+    <div style="font-size:12.5px;color:var(--muted);line-height:1.65"><b style="color:var(--ink)">Ratings note:</b> FargoRate figures are accurate as at season start and are <b style="color:var(--ink)">not synced live</b> — they won't update here through the season. Check the BCAPL app for current ratings.</div>
+  </div>
+
+  <footer>Ranked by top-three FargoRate · squads for Double Kiss &amp; Break &amp; Enter to come.</footer>
 </div>
 
 <script src="data.js"></script>
@@ -28,11 +32,59 @@
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
-  document.getElementById("teamgrid").innerHTML = D.teams.map(t =>
-    '<div class="teamcard' + (t.us ? ' me' : '') + '">' +
-    '<div class="n">' + esc(t.name) + '</div>' +
-    '<div class="c">Captain: ' + esc(t.captain) + '</div>' +
-    (t.us ? '<span class="badge">OUR TEAM</span>' : '') + '</div>').join("");
+  const CAP = 1775;
+
+  const top3 = t => {
+    const rs = t.players.filter(p => p.r).map(p => p.r).sort((a, b) => b - a);
+    return rs.length ? rs.slice(0, 3).reduce((a, b) => a + b, 0) : null;
+  };
+
+  // Double Kiss first, then strongest top-three first; unrated squads last
+  const list = [...D.teams].sort((a, b) => {
+    if (a.us) return -1; if (b.us) return 1;
+    const ta = top3(a), tb = top3(b);
+    if (ta == null && tb == null) return a.name.localeCompare(b.name);
+    if (ta == null) return 1; if (tb == null) return -1;
+    return tb - ta;
+  });
+
+  const wrap = document.getElementById("teamlist");
+  list.forEach(t => {
+    const t3 = top3(t), over = t3 != null && t3 > CAP;
+    const g = document.createElement("div");
+    g.className = "game" + (t.us ? " next" : "");
+
+    const sub = t.players.length ? (esc(t.captain) + " · " + t.players.length + " players")
+                                 : (esc(t.captain) + " · squad TBC");
+    const pill = t3 != null ? '<span class="t3pill' + (over ? " over" : "") + '">' + t3 + '</span>'
+                            : '<span class="t3pill">—</span>';
+    const head = '<button class="ghead" type="button">' +
+      '<span class="gmain"><b>' + esc(t.name) + (t.us ? ' <span class="capb">US</span>' : '') +
+      '</b><small>' + sub + '</small></span>' + pill + '<span class="chev">›</span></button>';
+
+    let body;
+    if (!t.players.length) {
+      body = '<div class="gbody"><div class="empty" style="padding:8px">Squad details to come.</div></div>';
+    } else {
+      const rows = [...t.players].sort((a, b) => (b.r || 0) - (a.r || 0)).map(p =>
+        '<div class="row"><div><div class="nm">' + esc(p.name) + (p.c ? ' <span class="capb">C</span>' : '') +
+        '</div></div>' + (p.r ? ('<div class="rr">' + p.r + '</div>') : '<div class="rr none">unrated</div>') +
+        '</div>').join("");
+      const note = over ? '<div class="overnote">Top three total ' + t3 + ' — over the 1775 cap, so they can\'t field their three strongest together.</div>' : '';
+      body = '<div class="gbody"><div class="who">' + rows + '</div>' + note + '</div>';
+    }
+    g.innerHTML = head + body;
+    wrap.appendChild(g);
+  });
+
+  // one open at a time; open Double Kiss by default
+  wrap.addEventListener("click", e => {
+    const h = e.target.closest(".ghead"); if (!h) return;
+    const g = h.parentElement, wasOpen = g.classList.contains("open");
+    wrap.querySelectorAll(".game.open").forEach(x => x.classList.remove("open"));
+    if (!wasOpen) g.classList.add("open");
+  });
+  const us = wrap.querySelector(".game.next"); if (us) us.classList.add("open");
 })();
 </script>
 </body>

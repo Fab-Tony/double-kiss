@@ -63,21 +63,40 @@ window.DK = (function () {
   };
   fixtures.forEach(f => { f.lineup = lineups[f.wk] || []; });
 
-  // The 13 Monday teams. Double Kiss first. (More per-team detail to come.)
+  // The 13 Monday teams. c: captain. r: FargoRate. (Our own ratings TBC.)
   const teams = [
-    { name: "Double Kiss",        captain: "Tony Brooks",              us: true },
-    { name: "Balls Deep",         captain: "Fenn Warth" },
-    { name: "Break & Enter",      captain: "Nathan Wood" },
-    { name: "Cue The Good Times", captain: "Mike Dogan" },
-    { name: "Dragonball Z",       captain: "Adam Wowk" },
-    { name: "Extorting Dogs",     captain: "Will Yuan" },
-    { name: "Freeballers",        captain: "Josh Leary" },
-    { name: "Gilas",              captain: "John Tan" },
-    { name: "Iron 4",             captain: "Graz Ferreri" },
-    { name: "Marvin's Crew",      captain: "Shaun Oglesby" },
-    { name: "Nice Rack",          captain: "Hadi Cherri" },
-    { name: "Shooters",           captain: "Adis Coralic" },
-    { name: "Unbelief",           captain: "Tony Habib / Kamal Melhem" },
+    { name: "Double Kiss", captain: "Tony Brooks", us: true, players: [
+      { name: "Tony", c: true }, { name: "Oscar" }, { name: "Kate" }, { name: "Arul" }, { name: "Angus" } ] },
+    { name: "Balls Deep", captain: "Fenn Warth", players: [
+      { name: "Sev Gharedaghi", r: 452 }, { name: "Elliot Osborne", r: 397 },
+      { name: "Gian Romeo", r: 350 }, { name: "Fenn Warth", r: 293, c: true } ] },
+    { name: "Break & Enter", captain: "Nathan Wood", players: [] },
+    { name: "Cue The Good Times", captain: "Mike Dogan", players: [
+      { name: "Joe Chao", r: 704 }, { name: "Philip Campbell", r: 504 }, { name: "Wesley Valele", r: 489 },
+      { name: "Mike Dogan", r: 432, c: true }, { name: "Kubilay Akin", r: 303 } ] },
+    { name: "Dragonball Z", captain: "Adam Wowk", players: [
+      { name: "John Bowkett", r: 707 }, { name: "Maghmud Sadien", r: 491 }, { name: "Shaun Matthews", r: 474 },
+      { name: "Adam Wowk", r: 423, c: true }, { name: "Steven Tien", r: 376 } ] },
+    { name: "Extorting Dogs", captain: "Will Yuan", players: [
+      { name: "Chris Dam", r: 680 }, { name: "Sam Stacy", r: 630 }, { name: "Adam Taylor", r: 629 },
+      { name: "Will Yuan", r: 473, c: true }, { name: "Liam Pratt", r: 456 } ] },
+    { name: "Freeballers", captain: "Josh Leary", players: [
+      { name: "Mark Harper", r: 560 }, { name: "Josh Leary", r: 463, c: true },
+      { name: "Gerard Crowe", r: 457 }, { name: "Joshua Mackintosh", r: 450 } ] },
+    { name: "Gilas", captain: "John Tan", players: [
+      { name: "John Tan", r: 667, c: true }, { name: "Raymart Pangan", r: 619 }, { name: "Aldrin Aguilan", r: 530 },
+      { name: "Mark Rillera", r: 529 }, { name: "Alfie Compuesto", r: 511 } ] },
+    { name: "Iron 4", captain: "Graz Ferreri", players: [
+      { name: "Andrew Samarjia", r: 589 }, { name: "Dinesh Sookgreep", r: 569 }, { name: "Dai Leota", r: 554 },
+      { name: "Graz Ferreri", r: 547, c: true } ] },
+    { name: "Marvin's Crew", captain: "Shaun Oglesby", players: [
+      { name: "Shaun Oglesby", r: 668, c: true }, { name: "John McDermott", r: 616 }, { name: "David Gardner", r: 469 } ] },
+    { name: "Nice Rack", captain: "Hadi Cherri", players: [
+      { name: "Saif Mirza", r: 525 }, { name: "Michael Eskander", r: 467 }, { name: "Hadi Cherri", r: 409, c: true } ] },
+    { name: "Shooters", captain: "Adis Coralic", players: [
+      { name: "Adis Coralic", r: 626, c: true }, { name: "Nasa Munkhnasan", r: 544 }, { name: "Stephen Giddings", r: 525 } ] },
+    { name: "Unbelief", captain: "Tony Habib / Kamal Melhem", players: [
+      { name: "Tony Habib", r: 591, c: true }, { name: "Kah Weng Tan", r: 580 }, { name: "Kamal Melhem", r: 571, c: true } ] },
   ];
 
   // Home-page news feed — newest first. Add items as things happen.
