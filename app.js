@@ -20,6 +20,29 @@
     '<div class="ss">' + (D.SEASON || "") + ' · ' + (D.LEAGUE || "") + '</div></div></div>';
   document.body.insertBefore(top, document.body.firstChild);
 
+  // pull-to-refresh — the installed app has no native reload gesture
+  const ptr = document.createElement("div");
+  ptr.className = "ptr"; ptr.textContent = "Pull to refresh";
+  document.body.appendChild(ptr);
+  let sy = 0, pulling = false, armed = false;
+  window.addEventListener("touchstart", e => {
+    if (window.scrollY <= 0) { sy = e.touches[0].clientY; pulling = true; armed = false; }
+  }, { passive: true });
+  window.addEventListener("touchmove", e => {
+    if (!pulling) return;
+    const d = e.touches[0].clientY - sy;
+    if (d > 18 && window.scrollY <= 0) {
+      ptr.classList.add("show");
+      armed = d > 70;
+      ptr.textContent = armed ? "Release to refresh" : "Pull to refresh";
+    } else { ptr.classList.remove("show"); armed = false; }
+  }, { passive: true });
+  window.addEventListener("touchend", () => {
+    if (pulling && armed) { ptr.textContent = "Refreshing…"; location.reload(); }
+    else ptr.classList.remove("show");
+    pulling = false;
+  }, { passive: true });
+
   // bottom tab bar
   const nav = document.createElement("nav");
   nav.className = "tabbar";

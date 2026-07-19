@@ -33,6 +33,13 @@ a{color:var(--accent)}
 .tabbar .tab.active{color:var(--accent)}
 .tabbar .tab:active{background:rgba(255,255,255,.05)}
 
+/* ---- pull-to-refresh ---- */
+.ptr{position:fixed;top:calc(env(safe-area-inset-top,0px) + 64px);left:50%;z-index:40;
+  background:var(--panel2);border:1px solid var(--line);color:var(--muted);
+  font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;white-space:nowrap;
+  opacity:0;transform:translateX(-50%) translateY(-10px);transition:opacity .18s,transform .18s;pointer-events:none}
+.ptr.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
 /* ---- headings / cards ---- */
 h1{font-size:23px;margin:20px 0 3px}
 .sub{color:var(--muted);font-size:13.5px;margin-bottom:14px}
