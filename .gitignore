@@ -1,0 +1,7 @@
+# Never commit secrets / credentials
+secrets.env
+*.env
+.ghtok
+*.pat
+deploy-token*
+token*.txt

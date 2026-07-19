@@ -49,7 +49,7 @@ GitHub Actions rebuilds and the live site updates in ~1–2 minutes. (Or ask Cla
 ## Context for Claude (future Cowork sessions)
 - **The cloud sandbox cannot reach `api.github.com`** (Anthropic proxy blocks it) — the REST API and `gh` CLI don't work here. Use **git over HTTPS**; that path works.
 - Pages is deployed by the Actions workflow `.github/workflows/pages.yml` (source = "GitHub Actions").
-- **Auth:** a fine-grained PAT on `Fab-Tony/double-kiss` with **Contents, Pages, and Workflows** (read/write). Not stored in the repo; Tony pastes it per session. **Never commit the token.**
+- **Auth:** a fine-grained PAT on `Fab-Tony/double-kiss` with **Contents, Pages, and Workflows** (read/write). It's stored in **`secrets.env` at the root of Tony's `Double kiss` folder** (one level *above* the `site/` repo copy) as `GITHUB_PAT=...`. That file lives outside the repo and is also gitignored, so it is never pushed — read the token from there instead of asking Tony to re-paste. **Never write the token into any file inside the repo.**
 - Verify locally with the pre-installed Chromium via Playwright (`iPhone 12` device) before pushing.
 - Source content: 2026 Comprehensive Rules + Season 28 schedule in Tony's `Double kiss` folder; roster/leave/targets from Tony.
 
