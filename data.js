@@ -66,7 +66,8 @@ window.DK = (function () {
   // The 13 Monday teams. c: captain. r: FargoRate. (Our own ratings TBC.)
   const teams = [
     { name: "Double Kiss", captain: "Tony Brooks", us: true, players: [
-      { name: "Tony", c: true }, { name: "Oscar" }, { name: "Kate" }, { name: "Arul" }, { name: "Angus" } ] },
+      { name: "Arul Baskaran", r: 543 }, { name: "Angus Crump", r: 525 }, { name: "Oscar Kovacs", r: 502 },
+      { name: "Tony Brooks", r: 453, c: true }, { name: "Kate Ridgeway", r: 361 } ] },
     { name: "Balls Deep", captain: "Fenn Warth", players: [
       { name: "Sev Gharedaghi", r: 452 }, { name: "Elliot Osborne", r: 397 },
       { name: "Gian Romeo", r: 350 }, { name: "Fenn Warth", r: 293, c: true } ] },

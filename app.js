@@ -15,7 +15,7 @@
   const top = document.createElement("header");
   top.className = "topbar";
   top.innerHTML =
-    '<div class="inner"><div class="logo">DK</div>' +
+    '<div class="inner"><img class="logo" src="logo.svg?v=3" alt="Double Kiss logo" width="40" height="40">' +
     '<div><div class="tt">' + (D.TEAM || "Double Kiss") + '</div>' +
     '<div class="ss">' + (D.SEASON || "") + ' · ' + (D.LEAGUE || "") + '</div></div></div>';
   document.body.insertBefore(top, document.body.firstChild);
