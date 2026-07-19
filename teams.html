@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Teams · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=6">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
-<link rel="manifest" href="manifest.json?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+<link rel="manifest" href="manifest.json?v=7">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -27,8 +27,8 @@
   <footer>Ranked by top-three FargoRate total.</footer>
 </div>
 
-<script src="data.js?v=6"></script>
-<script src="app.js?v=6"></script>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -41,9 +41,8 @@
     return rs.length ? rs.slice(0, 3).reduce((a, b) => a + b, 0) : null;
   };
 
-  // Double Kiss first, then strongest top-three first; unrated squads last
+  // strongest top-three first; unrated squads last
   const list = [...D.teams].sort((a, b) => {
-    if (a.us) return -1; if (b.us) return 1;
     const ta = top3(a), tb = top3(b);
     if (ta == null && tb == null) return a.name.localeCompare(b.name);
     if (ta == null) return 1; if (tb == null) return -1;
@@ -60,9 +59,9 @@
                                  : (esc(t.captain) + " · squad TBC");
     const pill = t3 != null ? '<span class="t3pill' + (over ? " over" : "") + '">' + t3 + '</span>'
                             : '<span class="t3pill">—</span>';
-    const head = '<button class="ghead" type="button">' +
-      '<span class="gmain"><b>' + esc(t.name) + (t.us ? ' <span class="capb">US</span>' : '') +
-      '</b><small>' + sub + '</small></span>' + pill + '<span class="chev">›</span></button>';
+    const head = '<button class="ghead" type="button" aria-expanded="false">' +
+      '<span class="gmain"><b>' + esc(t.name) + (t.us ? ' <span class="capb">OURS</span>' : '') +
+      '</b><small>' + sub + '</small></span>' + pill + '<span class="chev" aria-hidden="true">›</span></button>';
 
     let body;
     if (!t.players.length) {
@@ -80,13 +79,21 @@
   });
 
   // one open at a time; open Double Kiss by default
+  const setOpen = (g, open) => {
+    g.classList.toggle("open", open);
+    const b = g.querySelector("button.ghead");
+    if (b) b.setAttribute("aria-expanded", String(open));
+  };
   wrap.addEventListener("click", e => {
-    const h = e.target.closest(".ghead"); if (!h) return;
+    const h = e.target.closest("button.ghead"); if (!h) return;
     const g = h.parentElement, wasOpen = g.classList.contains("open");
-    wrap.querySelectorAll(".game.open").forEach(x => x.classList.remove("open"));
-    if (!wasOpen) g.classList.add("open");
+    wrap.querySelectorAll(".game.open").forEach(x => setOpen(x, false));
+    if (!wasOpen) {
+      setOpen(g, true);
+      requestAnimationFrame(() => g.scrollIntoView({ block: "nearest" }));
+    }
   });
-  const us = wrap.querySelector(".game.next"); if (us) us.classList.add("open");
+  const us = wrap.querySelector(".game.next"); if (us) setOpen(us, true);
 })();
 </script>
 </body>

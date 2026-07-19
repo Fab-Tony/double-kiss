@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=6">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
-<link rel="manifest" href="manifest.json?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+<link rel="manifest" href="manifest.json?v=7">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,7 +16,6 @@
 <body data-page="home">
 <div class="wrap">
   <h1>This Monday</h1>
-  <div class="sub" id="sub">—</div>
 
   <div class="next" id="next"></div>
 
@@ -33,8 +32,8 @@
   <footer>Sydney Diamond League · Club9, North Strathfield · Season 28</footer>
 </div>
 
-<script src="data.js?v=6"></script>
-<script src="app.js?v=6"></script>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -42,8 +41,6 @@
   // next fixture (may be a bye)
   const ni = D.nextIndex();
   const nextEl = document.getElementById("next");
-  const sub = document.getElementById("sub");
-  sub.textContent = D.TEAM + " · " + D.SEASON + " · " + D.LEAGUE;
   if (ni === -1) {
     nextEl.innerHTML = '<div class="lbl">Season complete</div><div class="op">See you next season</div>';
   } else {
@@ -73,9 +70,7 @@
     whoHdr.textContent = "Lineup · Wk " + f.wk + " vs " + f.op;
     if (shortNight) { fb.className = "fitbanner short"; fb.textContent = "Only " + rostered + " rostered — line up a fill-in or it's a forfeit risk."; }
     else { fb.className = "fitbanner ok"; fb.textContent = "Lineup set — 3 playing."; }
-    let rows = f.lineup.map(name =>
-      '<div class="row"><div><div class="nm">' + esc(name) + '</div><div class="rl">' +
-      esc(roleOf[name] || "Player") + '</div></div><div class="st in">Playing</div></div>').join("");
+    let rows = '<div class="row"><div><div class="nm">' + f.lineup.map(esc).join(" · ") + '</div></div></div>';
     if (shortNight) rows += '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
       (3 - rostered) + ' more</div></div><div class="st out">TBC</div></div>';
     who.innerHTML = rows;
@@ -94,7 +89,10 @@
       const right = f.ha === "Bye" ? '<span class="tag bye">BYE</span>'
         : '<span class="tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + ' · T' + f.tbl + '</span>';
       const opp = f.ha === "Bye" ? "Bye week" : "vs " + esc(f.op);
-      return '<div class="btn"><span><b>' + opp + '</b><small>Wk ' + f.wk + ' · ' + f.date + '</small></span>' + right + '</div>';
+      const inner = '<span><b>' + opp + '</b><small>Wk ' + f.wk + ' · ' + f.date + '</small></span>' + right;
+      return f.ha === "Bye"
+        ? '<div class="btn">' + inner + '</div>'
+        : '<a class="btn" href="roster.html?wk=' + f.wk + '">' + inner + '<span class="arw">›</span></a>';
     }).join("");
   }
 })();

@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>DK Stats · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=6">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
-<link rel="manifest" href="manifest.json?v=6">
+<title>Stats · Double Kiss</title>
+<link rel="stylesheet" href="styles.css?v=7">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+<link rel="manifest" href="manifest.json?v=7">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,7 +15,7 @@
 </head>
 <body data-page="stats">
 <div class="wrap">
-  <h1>DK Stats</h1>
+  <h1>Stats</h1>
   <div class="sub">Our Season 28 record and performance.</div>
 
   <div id="emptyNote"></div>
@@ -30,8 +30,8 @@
   <footer>Stats update here after each Monday.</footer>
 </div>
 
-<script src="data.js?v=6"></script>
-<script src="app.js?v=6"></script>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
 <script>
 (function () {
   const D = DK, s = D.stats, esc = x => String(x).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -49,11 +49,11 @@
     { v: s.ladderPoints, l: "Ladder pts" },
     { v: s.position ? "#" + s.position : "—", l: "Position" },
     { v: (diff > 0 ? "+" : "") + diff, l: "Scalp diff" },
-    { v: s.br, l: "Break & Runs" },
-    { v: s.tr, l: "Table Runs" },
+    { v: s.br, l: "B&Rs" },
+    { v: s.tr, l: "Table runs" },
     { v: s.drawn, l: "Drawn" },
   ];
-  document.getElementById("tiles").innerHTML = tiles.map(t =>
+  document.getElementById("tiles").innerHTML = s.played === 0 ? "" : tiles.map(t =>
     '<div class="tile"><div class="v">' + esc(t.v) + '</div><div class="l">' + esc(t.l) + '</div></div>').join("");
 
   const res = document.getElementById("results");

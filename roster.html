@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=6">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
-<link rel="manifest" href="manifest.json?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+<link rel="manifest" href="manifest.json?v=7">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,13 +28,12 @@
 
   <h2>Squad &amp; finals targets</h2>
   <div class="rlist" id="squad"></div>
-  <p class="sub" style="margin-top:12px">Games are spread evenly (~9 each) within everyone's leave, so all finals targets are comfortably met.</p>
 
-  <footer>Season 28 · lineups &amp; targets live in one file; every page updates together.</footer>
+  <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=6"></script>
-<script src="app.js?v=6"></script>
+<script src="data.js?v=7"></script>
+<script src="app.js?v=7"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -67,18 +66,20 @@
       tagHtml = '<span class="tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + '</span>';
       title = "vs " + esc(f.op);
     }
-    const head = '<button class="ghead" type="button">' +
-      '<span class="gwk">W' + f.wk + '</span>' +
-      '<span class="gmain"><b>' + title + '</b><small class="' + fitCls + '">' + fitTxt + '</small></span>' +
-      tagHtml + '<span class="chev">›</span></button>';
+    const headInner = '<span class="gwk">W' + f.wk + '</span>' +
+      '<span class="gmain"><b>' + title + '</b><small class="' + fitCls + '">' + fitTxt + '</small></span>' + tagHtml;
+    const head = isBye
+      ? '<div class="ghead flat">' + headInner + '</div>'
+      : '<button class="ghead" type="button" aria-expanded="false">' + headInner + '<span class="chev" aria-hidden="true">›</span></button>';
 
     let body;
     if (isBye) {
-      body = '<div class="gbody"><div class="empty" style="padding:8px">Bye week — no match this week.</div></div>';
+      body = "";
     } else {
       const rows = f.lineup.map(name =>
-        '<div class="row"><div><div class="nm">' + esc(name) + '</div><div class="rl">' +
-        esc(roleOf[name] || "Player") + '</div></div><div class="st in">Playing</div></div>').join("");
+        '<div class="row"><div><div class="nm">' + esc(name) + '</div>' +
+        (roleOf[name] === "Captain" ? '<div class="rl">Captain</div>' : '') +
+        '</div><div class="st in">Playing</div></div>').join("");
       const fillRow = shortNight
         ? '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
           (3 - rostered) + ' more to field a legal team</div></div><div class="st out">TBC</div></div>'
@@ -92,18 +93,32 @@
     gwrap.appendChild(g);
   });
 
-  // open the next match by default
-  const nextEl = gwrap.querySelector(".game.next");
-  if (nextEl) nextEl.classList.add("open");
+  const setOpen = (g, open) => {
+    g.classList.toggle("open", open);
+    const b = g.querySelector("button.ghead");
+    if (b) b.setAttribute("aria-expanded", String(open));
+  };
 
-  // accordion — only one open at a time
+  // deep link (?wk=N from Home) or open the next match by default
+  const wkParam = new URLSearchParams(location.search).get("wk");
+  const target = wkParam ? gwrap.querySelector('.game[data-wk="' + wkParam + '"]') : null;
+  const openEl = (target && target.querySelector("button.ghead")) ? target : gwrap.querySelector(".game.next");
+  if (openEl) {
+    setOpen(openEl, true);
+    if (target) requestAnimationFrame(() => openEl.scrollIntoView({ block: "start" }));
+  }
+
+  // accordion — only one open at a time; keep the tapped card in view
   gwrap.addEventListener("click", e => {
-    const h = e.target.closest(".ghead");
+    const h = e.target.closest("button.ghead");
     if (!h) return;
     const g = h.parentElement;
     const wasOpen = g.classList.contains("open");
-    gwrap.querySelectorAll(".game.open").forEach(x => x.classList.remove("open"));
-    if (!wasOpen) g.classList.add("open");
+    gwrap.querySelectorAll(".game.open").forEach(x => setOpen(x, false));
+    if (!wasOpen) {
+      setOpen(g, true);
+      requestAnimationFrame(() => g.scrollIntoView({ block: "nearest" }));
+    }
   });
 
   // player filter — show weeks that player is rostered to play
@@ -126,7 +141,8 @@
     const sched = D.scheduledGames(p), clear = p.out.length === 0;
     const leaveTxt = p.leave || (clear ? "Available all season" : "");
     const leaveStyle = clear ? "color:var(--home)" : "color:var(--away)";
-    const role = '<span style="color:var(--muted);font-weight:400;font-size:12px">· ' + esc(p.role) + '</span>';
+    const role = p.role === "Captain"
+      ? '<span style="color:var(--muted);font-weight:400;font-size:12px">· Captain</span>' : '';
     const pct = Math.min(100, Math.round(sched / p.target * 100));
     let cls, txt;
     if (!p.finals) { cls = "off"; txt = "Not contesting Finals — expected to drop after mid-Sept"; }
