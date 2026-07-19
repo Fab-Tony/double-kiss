@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Double Kiss — Diamond League Season 28</title>
+<style>
+  :root{
+    --bg:#0a1122; --panel:#111c33; --panel2:#16233f; --line:#26344f;
+    --ink:#eaf0fb; --muted:#93a3c2; --accent:#39b0ff; --accent2:#ffd23f;
+    --home:#1f7a4d; --away:#8a5a1a; --bye:#3a3f52; --next:#39b0ff;
+    --font:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16294d 0%,var(--bg) 55%);
+    color:var(--ink);font-family:var(--font);line-height:1.55;padding:0 0 60px}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  header{padding:38px 0 10px}
+  .brandrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{width:54px;height:54px;border-radius:14px;flex:0 0 auto;
+    background:linear-gradient(135deg,#39b0ff,#0a63b8);display:grid;place-items:center;
+    font-weight:800;font-size:22px;color:#04101f;box-shadow:0 6px 22px rgba(57,176,255,.35)}
+  h1{margin:0;font-size:30px;letter-spacing:.3px}
+  .sub{color:var(--muted);font-size:15px;margin-top:2px}
+  .pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .pill{background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:6px 13px;font-size:13px;color:var(--muted)}
+  .pill b{color:var(--ink);font-weight:600}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);
+    margin:38px 0 14px;font-weight:700}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  /* Next match */
+  .next{background:linear-gradient(135deg,#123a5c,#0d2137);border:1px solid #2f7fb8;
+    border-radius:16px;padding:20px 22px;display:flex;justify-content:space-between;
+    align-items:center;gap:18px;flex-wrap:wrap}
+  .next .lbl{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .next .op{font-size:24px;font-weight:800;margin-top:4px}
+  .next .meta{color:var(--muted);font-size:14px;margin-top:3px}
+  .next .badge{font-size:13px;font-weight:700;padding:8px 14px;border-radius:10px;white-space:nowrap}
+  /* Table */
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+  tbody tr:hover{background:var(--panel2)}
+  tr.byerow td{color:var(--muted);font-style:italic}
+  tr.nextmatch{background:rgba(57,176,255,.10)}
+  tr.nextmatch td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+  tr.done td{opacity:.5}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.4px}
+  .tag.home{background:rgba(31,122,77,.25);color:#5fe0a0;border:1px solid rgba(95,224,160,.35)}
+  .tag.away{background:rgba(190,130,40,.22);color:#f0b86a;border:1px solid rgba(240,184,106,.35)}
+  .tag.bye{background:rgba(140,150,175,.18);color:#b6c0d6;border:1px solid rgba(182,192,214,.3)}
+  .wk{color:var(--muted);font-variant-numeric:tabular-nums}
+  .tbl{font-variant-numeric:tabular-nums}
+  /* Grid sections */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .roster{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+  .player{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:10px 15px;min-width:92px}
+  .player .nm{font-weight:700;font-size:16px}
+  .player .rl{color:var(--muted);font-size:12px}
+  .cap{color:var(--accent2)}
+  ul.rules{list-style:none;padding:0;margin:0}
+  ul.rules li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+  ul.rules li:last-child{border-bottom:0}
+  ul.rules b{color:var(--ink)}
+  .k{color:var(--accent)}
+  .teams{columns:2;column-gap:26px;font-size:14px}
+  @media(max-width:680px){.teams{columns:1}}
+  .teams p{margin:0 0 8px;break-inside:avoid}
+  .teams .me{color:var(--accent2);font-weight:700}
+  .teams span{color:var(--muted)}
+  footer{color:var(--muted);font-size:12.5px;margin-top:36px;text-align:center;line-height:1.7}
+  a{color:var(--accent)}
+  .scalp{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .scalp th,.scalp td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--line)}
+  .scalp td{font-variant-numeric:tabular-nums}
+  /* Availability */
+  .callout{background:linear-gradient(135deg,#3a1620,#28121a);border:1px solid #7a3340;
+    border-radius:14px;padding:15px 18px;margin-bottom:12px}
+  .callout .ct{font-weight:800;color:#ff9a9a;font-size:14px;letter-spacing:.3px}
+  .callout p{margin:6px 0 0;font-size:13.5px;color:#f0c9cf}
+  .note{background:linear-gradient(135deg,#2a2410,#211d0d);border:1px solid #5c4f1e;
+    border-radius:14px;padding:13px 18px;margin-bottom:14px}
+  .note .ct{font-weight:800;color:#f0c24a;font-size:13.5px}
+  .note p{margin:5px 0 0;font-size:13px;color:#e5d9a6}
+  .av-in{color:#5fe0a0;font-weight:700}
+  .av-out{color:#67728c}
+  td.outcell{background:rgba(150,60,70,.14)}
+  .fit{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;letter-spacing:.3px;white-space:nowrap}
+  .fit.ok{background:rgba(31,122,77,.22);color:#5fe0a0}
+  .fit.tight{background:rgba(190,150,40,.2);color:#f0c24a}
+  .fit.short{background:rgba(200,60,60,.24);color:#ff8f8f}
+  #av th,#av td{text-align:center}
+  #av th:nth-child(2),#av td:nth-child(2),#av th:nth-child(3),#av td:nth-child(3){text-align:left}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brandrow">
+      <div class="logo">DK</div>
+      <div>
+        <h1>Double Kiss</h1>
+        <div class="sub">Sydney Diamond League &middot; Season 28 &middot; Monday nights at Club9, North Strathfield</div>
+      </div>
+    </div>
+    <div class="pillrow">
+      <span class="pill"><b>Captain</b> Tony Brooks</span>
+      <span class="pill"><b>Format</b> 8-ball &amp; 10-ball teams</span>
+      <span class="pill"><b>Season</b> 20 Jul – 9 Nov 2026</span>
+      <span class="pill"><b>Start</b> 7:30pm</span>
+      <span class="pill"><b>Team fee</b> $90/night</span>
+    </div>
+  </header>
+
+  <h2>Next match</h2>
+  <div class="next" id="nextCard">
+    <div>
+      <div class="lbl" id="nextLbl">Round 1</div>
+      <div class="op" id="nextOp">vs Extorting Dogs</div>
+      <div class="meta" id="nextMeta">Mon 20 Jul 2026 &middot; Table 7 &middot; Club9</div>
+    </div>
+    <div class="badge tag away" id="nextBadge">AWAY</div>
+  </div>
+
+  <h2>Season 28 fixtures</h2>
+  <div class="card" style="padding:6px 8px">
+    <table id="fx">
+      <thead>
+        <tr><th>Wk</th><th>Date</th><th>Opponent</th><th>Where</th><th>Table</th></tr>
+      </thead>
+      <tbody><!-- filled by JS --></tbody>
+    </table>
+  </div>
+
+  <h2>Availability &amp; leave</h2>
+  <div id="warnBox"></div>
+  <div class="card" style="padding:6px 8px;overflow-x:auto">
+    <table id="av">
+      <thead><tr>
+        <th>Wk</th><th>Date</th><th>Opponent</th>
+        <th>Tony</th><th>Oscar</th><th>Kate</th><th>Arul</th><th>Angus</th><th>Fit</th>
+      </tr></thead>
+      <tbody><!-- filled by JS --></tbody>
+    </table>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#5fe0a0"></span> Available</span>
+    <span><span class="dot" style="background:#67728c"></span> Away</span>
+    <span><span class="fit ok">4+</span> cover in hand</span>
+    <span><span class="fit tight">3</span> exactly enough</span>
+    <span><span class="fit short">&lt;3</span> short &mdash; need a fill-in</span>
+  </div>
+
+  <div class="grid" style="margin-top:16px">
+    <div>
+      <h2>Roster</h2>
+      <div class="card">
+        <div class="roster">
+          <div class="player"><div class="nm cap">Tony ★</div><div class="rl">Captain</div></div>
+          <div class="player"><div class="nm">Oscar</div><div class="rl">Player</div></div>
+          <div class="player"><div class="nm">Kate</div><div class="rl">Player</div></div>
+          <div class="player"><div class="nm">Arul</div><div class="rl">Player</div></div>
+          <div class="player"><div class="nm">Angus</div><div class="rl">Player</div></div>
+        </div>
+        <div style="margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.85">
+          <b style="color:var(--ink)">Known leave</b><br>
+          Tony &mdash; away 10 &amp; 17 Aug<br>
+          Kate &mdash; most of Aug, back 31 Aug<br>
+          Arul &mdash; away 10 Aug (first fortnight)<br>
+          Oscar &mdash; away all October<br>
+          Angus &mdash; available to 15 Sep, then unsure<br>
+          <span style="color:#8b93a8;display:block;margin-top:8px">A legal team fields 3 of the 5; the 3 who play must total under the <b style="color:var(--ink)">1775</b> FargoRate cap.</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>Scalp scoring</h2>
+      <div class="card">
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">
+          20 points at play each game. Winner takes the opponent's scalp, loser gets nothing.
+          Split depends on the FargoRate gap:</p>
+        <table class="scalp">
+          <tr><th>Rating gap</th><th>Points (fav – dog)</th></tr>
+          <tr><td>0–30</td><td>10 – 10</td></tr>
+          <tr><td>61–92</td><td>12 – 8</td></tr>
+          <tr><td>128–165</td><td>14 – 6</td></tr>
+          <tr><td>210–264</td><td>16 – 4</td></tr>
+          <tr><td>340+</td><td>18 – 2</td></tr>
+        </table>
+        <p style="margin:10px 0 0;font-size:13px;color:var(--muted)">
+          Bonus: <b class="k">Break &amp; Run +4</b>, <b class="k">Table Run +2</b> (enter BR/TR in the BCAPL app).</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Key rules at a glance</h2>
+  <div class="card">
+    <ul class="rules">
+      <li><b>Ladder points:</b> Win <span class="k">5</span> &middot; Draw 3 &middot; Loss 1 &middot; Loss but leading at post 2 &middot; Win by forfeit 6 &middot; Marquee win <span class="k">+1</span>.</li>
+      <li><b>Attire:</b> approved Diamond League jersey or League T-shirt is required — turn up without it and you forfeit your 10-ball game.</li>
+      <li><b>Running late:</b> 10 minutes' grace, then the frame is forfeited (recorded as a WF). Weekly $90 team fee is paid before play.</li>
+      <li><b>Time-outs &amp; talk:</b> two team time-outs per match; any discussion capped at 40 seconds; no sideline coaching. A 40-sec shot clock can be enforced if play drags (never on Marquee).</li>
+      <li><b>Fill-ins:</b> must be within 35 FargoRate of the player replaced and keep the team under cap. No fill-ins allowed in Finals.</li>
+      <li><b>Finals:</b> top 16 on the Grand Ladder make the Las Vegas Showdown at Club9. You need 6+ matches played to be eligible (8+ if unrated). Marquee players can't be swapped out.</li>
+      <li><b>Scores:</b> only captains or officials submit results in the BCAPL Scoring App. Score manipulation is serious misconduct.</li>
+    </ul>
+  </div>
+
+  <h2>The 13 teams &amp; captains</h2>
+  <div class="card">
+    <div class="teams">
+      <p class="me">Double Kiss <span>— Tony Brooks</span></p>
+      <p>Balls Deep <span>— Fenn Warth</span></p>
+      <p>Break &amp; Enter <span>— Nathan Wood</span></p>
+      <p>Cue The Good Times <span>— Mike Dogan</span></p>
+      <p>Dragonball Z <span>— Adam Wowk</span></p>
+      <p>Extorting Dogs <span>— Will Yuan</span></p>
+      <p>Freeballers <span>— Josh Leary</span></p>
+      <p>Gilas <span>— John Tan</span></p>
+      <p>Iron 4 <span>— Graz Ferreri</span></p>
+      <p>Marvin's Crew <span>— Shaun Oglesby</span></p>
+      <p>Nice Rack <span>— Hadi Cherri</span></p>
+      <p>Shooters <span>— Adis Coralic</span></p>
+      <p>Unbelief <span>— Tony Habib / Kamal Melhem</span></p>
+    </div>
+  </div>
+
+  <footer>
+    Diamond League — powered by FargoRate, BCA-sanctioned &middot; Club9, North Strathfield NSW<br>
+    Admin/complaints: kate@diamondleague.com.au &middot; <a href="https://www.diamondleague.com.au/">diamondleague.com.au</a><br>
+    Reference built for Tony &middot; Season 28
+  </footer>
+</div>
+
+<script>
+  const fixtures = [
+    {wk:1,  date:"Mon 20 Jul", iso:"2026-07-20", op:"Extorting Dogs",     ha:"Away", tbl:"7"},
+    {wk:2,  date:"Mon 27 Jul", iso:"2026-07-27", op:"Shooters",           ha:"Away", tbl:"5"},
+    {wk:3,  date:"Mon 3 Aug",  iso:"2026-08-03", op:"BYE",                ha:"Bye",  tbl:"—"},
+    {wk:4,  date:"Mon 10 Aug", iso:"2026-08-10", op:"Dragonball Z",       ha:"Home", tbl:"1"},
+    {wk:5,  date:"Mon 17 Aug", iso:"2026-08-17", op:"Break & Enter",      ha:"Away", tbl:"4"},
+    {wk:6,  date:"Mon 24 Aug", iso:"2026-08-24", op:"Freeballers",        ha:"Home", tbl:"4"},
+    {wk:7,  date:"Mon 31 Aug", iso:"2026-08-31", op:"Unbelief",           ha:"Home", tbl:"7"},
+    {wk:8,  date:"Mon 7 Sep",  iso:"2026-09-07", op:"Iron 4",             ha:"Home", tbl:"7"},
+    {wk:9,  date:"Mon 14 Sep", iso:"2026-09-14", op:"Cue The Good Times", ha:"Away", tbl:"1"},
+    {wk:10, date:"Mon 21 Sep", iso:"2026-09-21", op:"Balls Deep",         ha:"Away", tbl:"5"},
+    {wk:11, date:"Mon 28 Sep", iso:"2026-09-28", op:"Nice Rack",          ha:"Home", tbl:"2"},
+    {wk:12, date:"Mon 12 Oct", iso:"2026-10-12", op:"Gilas",              ha:"Away", tbl:"7"},
+    {wk:13, date:"Mon 19 Oct", iso:"2026-10-19", op:"Marvin's Crew",      ha:"Home", tbl:"5"},
+    {wk:14, date:"Mon 26 Oct", iso:"2026-10-26", op:"Nice Rack",          ha:"Home", tbl:"8"},
+    {wk:15, date:"Mon 2 Nov",  iso:"2026-11-02", op:"Balls Deep",         ha:"Away", tbl:"4"},
+    {wk:16, date:"Mon 9 Nov",  iso:"2026-11-09", op:"Dragonball Z",       ha:"Home", tbl:"1"},
+  ];
+
+  // Find next upcoming fixture (today or later)
+  const today = new Date(); today.setHours(0,0,0,0);
+  let nextIdx = fixtures.findIndex(f => new Date(f.iso + "T00:00:00") >= today);
+  if (nextIdx === -1) nextIdx = fixtures.length; // season over
+
+  const tbody = document.querySelector("#fx tbody");
+  fixtures.forEach((f, i) => {
+    const tr = document.createElement("tr");
+    const isBye = f.ha === "Bye";
+    if (isBye) tr.className = "byerow";
+    if (i === nextIdx) tr.classList.add("nextmatch");
+    if (i < nextIdx) tr.classList.add("done");
+    const tagCls = f.ha.toLowerCase();
+    tr.innerHTML =
+      `<td class="wk">${f.wk}</td>`+
+      `<td>${f.date}</td>`+
+      `<td>${isBye ? "— Bye —" : f.op}</td>`+
+      `<td>${isBye ? '<span class="tag bye">BYE</span>' : '<span class="tag '+tagCls+'">'+f.ha.toUpperCase()+'</span>'}</td>`+
+      `<td class="tbl">${f.tbl}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Populate the "next match" card
+  const nc = document.getElementById("nextCard");
+  if (nextIdx < fixtures.length) {
+    const n = fixtures[nextIdx];
+    document.getElementById("nextLbl").textContent = "Round " + n.wk;
+    if (n.ha === "Bye") {
+      document.getElementById("nextOp").textContent = "Bye week — no match";
+      document.getElementById("nextMeta").textContent = n.date + " 2026";
+      const b = document.getElementById("nextBadge"); b.textContent = "BYE"; b.className = "badge tag bye";
+    } else {
+      document.getElementById("nextOp").textContent = "vs " + n.op;
+      document.getElementById("nextMeta").textContent = n.date + " 2026 · Table " + n.tbl + " · Club9";
+      const b = document.getElementById("nextBadge"); b.textContent = n.ha.toUpperCase();
+      b.className = "badge tag " + n.ha.toLowerCase();
+    }
+  } else {
+    document.getElementById("nextLbl").textContent = "Season complete";
+    document.getElementById("nextOp").textContent = "See you next season";
+    document.getElementById("nextMeta").textContent = "";
+    document.getElementById("nextBadge").style.display = "none";
+  }
+
+  // ---- Availability & leave ----
+  const players = ["Tony","Oscar","Kate","Arul","Angus"];
+  const leaveOut = {
+    Tony:  [4,5],
+    Oscar: [12,13,14],
+    Kate:  [4,5,6],
+    Arul:  [4],
+    Angus: [10,11,12,13,14,15,16],
+  };
+  const avBody = document.querySelector("#av tbody");
+  const shortWeeks = [], tightWeeks = [];
+  fixtures.forEach(f => {
+    const isBye = f.ha === "Bye";
+    let avail = 0, cells = "";
+    players.forEach(p => {
+      const out = leaveOut[p].includes(f.wk);
+      if (!out && !isBye) avail++;
+      if (isBye) cells += `<td class="av-out">&ndash;</td>`;
+      else cells += out ? `<td class="outcell av-out">away</td>` : `<td class="av-in">&#10003;</td>`;
+    });
+    let fit;
+    if (isBye) fit = `<span class="fit" style="background:rgba(140,150,175,.18);color:#b6c0d6">BYE</span>`;
+    else if (avail < 3){ fit = `<span class="fit short">SHORT &middot; ${avail}</span>`; shortWeeks.push(f); }
+    else if (avail === 3){ fit = `<span class="fit tight">3 &middot; no cover</span>`; tightWeeks.push(f); }
+    else fit = `<span class="fit ok">${avail}</span>`;
+    const tr = document.createElement("tr");
+    if (isBye) tr.classList.add("byerow");
+    tr.innerHTML = `<td class="wk">${f.wk}</td><td>${f.date.replace('Mon ','')}</td>`+
+      `<td>${isBye?'— Bye —':f.op}</td>${cells}<td>${fit}</td>`;
+    avBody.appendChild(tr);
+  });
+
+  const wb = document.getElementById("warnBox");
+  let html = "";
+  if (shortWeeks.length){
+    const list = shortWeeks.map(f=>`Wk ${f.wk} (${f.date.replace('Mon ','')}) v ${f.op}`).join("; ");
+    html += `<div class="callout"><div class="ct">&#9888; ${shortWeeks.length} week${shortWeeks.length>1?'s':''} short of a legal team</div>`+
+      `<p>${list}. Fewer than 3 players available &mdash; line up a fill-in (within 35 FargoRate of who they replace, keeping the team under 1775), or the match risks a forfeit.</p></div>`;
+  }
+  if (tightWeeks.length){
+    const list = tightWeeks.map(f=>`Wk ${f.wk} (${f.date.replace('Mon ','')})`).join(", ");
+    html += `<div class="note"><div class="ct">Tight weeks &mdash; exactly 3, no cover</div>`+
+      `<p>${list}. Everyone available has to turn up; if one more drops you're short. Worth having a fill-in on standby.</p></div>`;
+  }
+  wb.innerHTML = html;
+</script>
+</body>
+</html>
