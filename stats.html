@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DK Stats · Double Kiss</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Double Kiss">
+</head>
+<body data-page="stats">
+<div class="wrap">
+  <h1>DK Stats</h1>
+  <div class="sub">Our Season 28 record and performance.</div>
+
+  <div id="emptyNote"></div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <h2>Results</h2>
+  <div id="results"></div>
+
+  <p class="sub" style="margin-top:16px">Winning games scores your opponent's scalp; no points for losses. Break &amp; Run = 4, Table Run = 2. See <a href="info.html">League info</a> for the full scoring.</p>
+
+  <footer>Stats update here after each Monday.</footer>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  const D = DK, s = D.stats, esc = x => String(x).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+
+  if (s.played === 0) {
+    document.getElementById("emptyNote").innerHTML =
+      '<div class="fitbanner ok">No results yet — season starts Mon 20 Jul. This page fills in as matches are played.</div>';
+  }
+
+  const diff = (s.scalpFor - s.scalpAgainst);
+  const tiles = [
+    { v: s.played, l: "Played" },
+    { v: s.won, l: "Won" },
+    { v: s.lost, l: "Lost" },
+    { v: s.ladderPoints, l: "Ladder pts" },
+    { v: s.position ? "#" + s.position : "—", l: "Position" },
+    { v: (diff > 0 ? "+" : "") + diff, l: "Scalp diff" },
+    { v: s.br, l: "Break & Runs" },
+    { v: s.tr, l: "Table Runs" },
+    { v: s.drawn, l: "Drawn" },
+  ];
+  document.getElementById("tiles").innerHTML = tiles.map(t =>
+    '<div class="tile"><div class="v">' + esc(t.v) + '</div><div class="l">' + esc(t.l) + '</div></div>').join("");
+
+  const res = document.getElementById("results");
+  if (!s.results.length) {
+    res.innerHTML = '<div class="card"><div class="empty">No matches played yet.<br>Results will appear here week by week.</div></div>';
+  } else {
+    res.innerHTML = '<div class="tablewrap"><table><thead><tr><th>Wk</th><th>Opponent</th><th>H/A</th><th>Result</th><th>Score</th></tr></thead><tbody>' +
+      s.results.map(r => {
+        const rc = r.result === "W" ? "home" : r.result === "L" ? "away" : "bye";
+        return '<tr><td class="wk">' + r.wk + '</td><td>' + esc(r.op) + '</td><td>' + esc(r.ha || "") +
+          '</td><td><span class="tag ' + rc + '">' + esc(r.result) + '</span></td><td>' + esc(r.score || "—") + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  }
+})();
+</script>
+</body>
+</html>

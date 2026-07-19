@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Teams · Double Kiss</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Double Kiss">
+</head>
+<body data-page="teams">
+<div class="wrap">
+  <h1>Teams</h1>
+  <div class="sub">The 13 Monday teams in Season 28. Per-team pages coming soon.</div>
+
+  <div class="teamgrid" id="teamgrid"></div>
+
+  <footer>Sydney Diamond League · Monday competition · Club9</footer>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+  document.getElementById("teamgrid").innerHTML = D.teams.map(t =>
+    '<div class="teamcard' + (t.us ? ' me' : '') + '">' +
+    '<div class="n">' + esc(t.name) + '</div>' +
+    '<div class="c">Captain: ' + esc(t.captain) + '</div>' +
+    (t.us ? '<span class="badge">OUR TEAM</span>' : '') + '</div>').join("");
+})();
+</script>
+</body>
+</html>

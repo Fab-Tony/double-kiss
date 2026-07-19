@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Roster · Double Kiss</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Double Kiss">
+</head>
+<body data-page="roster">
+<div class="wrap">
+  <h1>Roster</h1>
+  <div class="sub">Games by week — tap a match to see who's on. Filter to one player to see when they play.</div>
+
+  <div class="filterbar">
+    <label for="filter">Show only</label>
+    <select id="filter"><option value="">All players</option></select>
+  </div>
+  <div class="filterinfo" id="filterinfo"></div>
+
+  <div class="games" id="games"></div>
+
+  <h2>Squad &amp; finals targets</h2>
+  <div class="rlist" id="squad"></div>
+  <p class="sub" style="margin-top:12px">Only 3 play each night (45 slots across the 15 matches) — rotate the lineup so everyone hits their finals target.</p>
+
+  <footer>Season 28 · availability &amp; targets live in one file; every page updates together.</footer>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+  const mi = D.nextMatchIndex();
+
+  // filter options
+  const sel = document.getElementById("filter");
+  D.roster.forEach(p => { const o = document.createElement("option"); o.value = p.name; o.textContent = p.name; sel.appendChild(o); });
+
+  // build accordion of games
+  const gwrap = document.getElementById("games");
+  D.fixtures.forEach((f, idx) => {
+    const isBye = f.ha === "Bye", a = D.availability(f.wk), n = a.count;
+    const g = document.createElement("div");
+    g.className = "game" + (idx === mi ? " next" : "");
+    g.dataset.wk = f.wk;
+
+    let fitCls = "", fitTxt, tagHtml, title;
+    if (isBye) {
+      fitTxt = f.date.replace("Mon ", "") + " · no match";
+      tagHtml = '<span class="tag bye">BYE</span>'; title = "Bye week";
+    } else {
+      fitCls = n < 3 ? "short" : n === 3 ? "tight" : "ok";
+      const na = n < 3 ? "only " + n + " available" : n === 3 ? "3 available" : n + " available";
+      fitTxt = f.date.replace("Mon ", "") + " · T" + f.tbl + " · " + na;
+      tagHtml = '<span class="tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + '</span>';
+      title = "vs " + esc(f.op);
+    }
+    const head = '<button class="ghead" type="button">' +
+      '<span class="gwk">W' + f.wk + '</span>' +
+      '<span class="gmain"><b>' + title + '</b><small class="' + fitCls + '">' + fitTxt + '</small></span>' +
+      tagHtml + '<span class="chev">›</span></button>';
+
+    let body;
+    if (isBye) {
+      body = '<div class="gbody"><div class="empty" style="padding:8px">Bye week — no match this week.</div></div>';
+    } else {
+      let cls, msg;
+      if (n < 3) { cls = "short"; msg = "Only " + n + " available — need a fill-in or it's a forfeit risk."; }
+      else if (n === 3) { cls = "tight"; msg = "Exactly 3 available — enough to field, no cover."; }
+      else { cls = "ok"; msg = n + " of " + D.roster.length + " available."; }
+      const rows = D.roster.map(p => ({ p, out: p.out.includes(f.wk) })).sort((x, y) => x.out - y.out)
+        .map(({ p, out }) => '<div class="row' + (out ? ' out' : '') + '"><div><div class="nm">' + esc(p.name) +
+          '</div><div class="rl">' + esc(p.role) + '</div></div><div class="st ' + (out ? 'out' : 'in') + '">' +
+          (out ? 'Away' : 'In') + '</div></div>').join("");
+      body = '<div class="gbody"><div class="fitbanner ' + cls + '">' + msg + '</div><div class="who">' + rows + '</div></div>';
+    }
+    g.innerHTML = head + body;
+    gwrap.appendChild(g);
+  });
+
+  // open the next match by default
+  const nextEl = gwrap.querySelector(".game.next");
+  if (nextEl) nextEl.classList.add("open");
+
+  // accordion toggle
+  gwrap.addEventListener("click", e => {
+    const h = e.target.closest(".ghead");
+    if (h) h.parentElement.classList.toggle("open");
+  });
+
+  // player filter
+  const info = document.getElementById("filterinfo");
+  const totalMatches = D.fixtures.filter(f => f.ha !== "Bye").length;
+  sel.addEventListener("change", () => {
+    const name = sel.value;
+    const p = name ? D.roster.find(r => r.name === name) : null;
+    let shown = 0;
+    gwrap.querySelectorAll(".game").forEach(g => {
+      const wk = +g.dataset.wk, f = D.fixture(wk);
+      const show = !p ? true : (f.ha !== "Bye" && !p.out.includes(wk));
+      g.classList.toggle("hide", !show);
+      if (show) shown++;
+    });
+    info.textContent = p ? (name + " is available for " + shown + " of the " + totalMatches + " matches.") : "";
+  });
+
+  // squad & finals targets
+  document.getElementById("squad").innerHTML = D.roster.map(p => {
+    const avail = D.matchesAvailable(p), clear = p.out.length === 0;
+    const leaveTxt = p.leave || (clear ? "Available all season" : "");
+    const leaveStyle = clear ? "color:var(--home)" : "color:var(--away)";
+    const role = '<span style="color:var(--muted);font-weight:400;font-size:12px">· ' + esc(p.role) + '</span>';
+    if (!p.finals) {
+      return '<div class="rcard"><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
+        '<div class="mid"><div class="nm">' + esc(p.name) + ' ' + role + '</div>' +
+        '<div class="rl" style="' + leaveStyle + '">' + esc(leaveTxt) + '</div>' +
+        '<div class="status off">Not contesting Finals — expected to drop after mid-Sept</div></div>' +
+        '<div class="goal" style="color:var(--muted)">—</div></div>';
+    }
+    const need = Math.max(0, p.target - p.played);
+    let cls, txt;
+    if (need === 0) { cls = "ok"; txt = "Qualified ✓"; }
+    else if (avail < need) { cls = "warn"; txt = "At risk — only " + avail + " available, needs " + need; }
+    else if (avail === need) { cls = "warn"; txt = "Must play all " + avail + " remaining"; }
+    else { cls = "ok"; txt = "Needs " + need + " of " + avail + " available"; }
+    const pct = Math.min(100, Math.round(p.played / p.target * 100));
+    return '<div class="rcard"><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
+      '<div class="mid"><div class="nm">' + esc(p.name) + ' ' + role + '</div>' +
+      '<div class="rl" style="' + leaveStyle + '">' + esc(leaveTxt) + '</div>' +
+      '<div class="status ' + cls + '">' + txt + '</div>' +
+      '<div class="bar"><span style="width:' + pct + '%"></span></div></div>' +
+      '<div class="goal">' + p.played + ' / ' + p.target + '<small>' + avail + ' avail</small></div></div>';
+  }).join("");
+})();
+</script>
+</body>
+</html>
