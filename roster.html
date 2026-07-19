@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
 <link rel="stylesheet" href="styles.css?v=6">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=6">
+<link rel="manifest" href="manifest.json?v=6">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -127,17 +127,11 @@
     const leaveTxt = p.leave || (clear ? "Available all season" : "");
     const leaveStyle = clear ? "color:var(--home)" : "color:var(--away)";
     const role = '<span style="color:var(--muted);font-weight:400;font-size:12px">· ' + esc(p.role) + '</span>';
-    if (!p.finals) {
-      return '<div class="rcard"><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
-        '<div class="mid"><div class="nm">' + esc(p.name) + ' ' + role + '</div>' +
-        '<div class="rl" style="' + leaveStyle + '">' + esc(leaveTxt) + '</div>' +
-        '<div class="status off">Not contesting Finals — rostered for ' + sched + ' games</div></div>' +
-        '<div class="goal" style="color:var(--muted)">—</div></div>';
-    }
-    const ok = sched >= p.target;
-    const cls = ok ? "ok" : "warn";
-    const txt = ok ? ("On track — rostered for " + sched) : ("Only rostered " + sched + " of " + p.target + " needed");
     const pct = Math.min(100, Math.round(sched / p.target * 100));
+    let cls, txt;
+    if (!p.finals) { cls = "off"; txt = "Not contesting Finals — expected to drop after mid-Sept"; }
+    else if (sched >= p.target) { cls = "ok"; txt = "On track — rostered for " + sched; }
+    else { cls = "warn"; txt = "Only rostered " + sched + " of " + p.target + " needed"; }
     return '<div class="rcard"><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
       '<div class="mid"><div class="nm">' + esc(p.name) + ' ' + role + '</div>' +
       '<div class="rl" style="' + leaveStyle + '">' + esc(leaveTxt) + '</div>' +
