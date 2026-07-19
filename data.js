@@ -51,7 +51,7 @@ window.DK = (function () {
     5:  ["Oscar", "Arul", "Angus"],
     6:  ["Tony", "Oscar", "Angus"],
     7:  ["Kate", "Arul", "Angus"],
-    8:  ["Tony", "Oscar", "Angus"],
+    8:  ["Tony", "Oscar", "Arul"],
     9:  ["Oscar", "Kate", "Angus"],
     10: ["Oscar", "Kate", "Arul"],
     11: ["Tony", "Kate", "Arul"],
