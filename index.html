@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=8">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=8">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=8">
-<link rel="manifest" href="manifest.json?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=9">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=9">
+<link rel="manifest" href="manifest.json?v=9">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,7 +20,6 @@
   <div class="next" id="next"></div>
 
   <h2 id="whoHdr">Who's available</h2>
-  <div id="fitBanner"></div>
   <div class="who" id="who"></div>
 
   <h2>News</h2>
@@ -32,8 +31,8 @@
   <footer>Sydney Diamond League · Club9, North Strathfield · Season 28</footer>
 </div>
 
-<script src="data.js?v=8"></script>
-<script src="app.js?v=8"></script>
+<script src="data.js?v=9"></script>
+<script src="app.js?v=9"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -59,7 +58,6 @@
   // lineup for the next actual match
   const mi = D.nextMatchIndex();
   const whoHdr = document.getElementById("whoHdr");
-  const fb = document.getElementById("fitBanner");
   const who = document.getElementById("who");
   const roleOf = {}; D.roster.forEach(p => roleOf[p.name] = p.role);
   if (mi === -1) {
@@ -68,16 +66,18 @@
   } else {
     const f = D.fixtures[mi], rostered = f.lineup.length, shortNight = rostered < 3;
     whoHdr.textContent = "Lineup · Wk " + f.wk + " vs " + f.op;
-    if (shortNight) { fb.className = "fitbanner short"; fb.textContent = "Only " + rostered + " rostered — line up a fill-in or it's a forfeit risk."; }
-    else { fb.className = "fitbanner ok"; fb.textContent = "Lineup set — 3 playing."; }
     let rows = '<div class="row"><div><div class="nm">' + f.lineup.map(esc).join(" · ") + '</div></div></div>';
     if (shortNight) rows += '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
       (3 - rostered) + ' more</div></div><div class="st out">TBC</div></div>';
     who.innerHTML = rows;
   }
 
-  // news
-  document.getElementById("news").innerHTML = D.news.map(n =>
+  // news — sub-needed alerts first, from live lineup data
+  const alerts = ni === -1 ? "" : D.fixtures.filter((f, i) =>
+    i >= ni && f.ha !== "Bye" && f.lineup.length < 3).map(f =>
+    '<div class="fitbanner short">We need a sub — Wk ' + f.wk + ' (' + f.date +
+    ') vs ' + esc(f.op) + ': only ' + f.lineup.length + ' rostered.</div>').join("");
+  document.getElementById("news").innerHTML = alerts + D.news.map(n =>
     '<div class="item"><div class="d">' + esc(n.date) + '</div><div class="t">' + esc(n.title) +
     '</div><div class="b">' + esc(n.body) + '</div></div>').join("");
 
