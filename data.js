@@ -71,7 +71,9 @@ window.DK = (function () {
     { name: "Balls Deep", captain: "Fenn Warth", players: [
       { name: "Sev Gharedaghi", r: 452 }, { name: "Elliot Osborne", r: 397 },
       { name: "Gian Romeo", r: 350 }, { name: "Fenn Warth", r: 293, c: true } ] },
-    { name: "Break & Enter", captain: "Nathan Wood", players: [] },
+    { name: "Break & Enter", captain: "Nathan Wood", players: [
+      { name: "Lee Hopwood", r: 610 }, { name: "Daniel Jenkins", r: 566 }, { name: "Nick Nicolaou", r: 550 },
+      { name: "Rob Carnell", r: 542 }, { name: "Nathan Wood", r: 381, c: true } ] },
     { name: "Cue The Good Times", captain: "Mike Dogan", players: [
       { name: "Joe Chao", r: 704 }, { name: "Philip Campbell", r: 504 }, { name: "Wesley Valele", r: 489 },
       { name: "Mike Dogan", r: 432, c: true }, { name: "Kubilay Akin", r: 303 } ] },
