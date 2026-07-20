@@ -104,6 +104,7 @@ window.DK = (function () {
 
   // Home-page news feed — newest first. Add items as things happen.
   const news = [
+    { date: "20 Jul 2026", title: "Opening night — reminders", body: "League shirts must be worn (brand-new players without one yet: buy ASAP). Matches start 7pm; tables open for free play from 6:30. Light supper from 8:15. BCA registration is due by Week 3 for anyone who didn't play last season. Need a sub or have an issue? Let Tony know ASAP." },
     { date: "19 Jul 2026", title: "Season 28 starts Monday", body: "First up: away to Extorting Dogs, Table 7, 7pm at Club9. Full squad available." },
     { date: "19 Jul 2026", title: "Team site is live", body: "Fixtures, roster, availability and league info all in one place. Stats and per-team pages to come." },
   ];
