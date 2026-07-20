@@ -14,11 +14,11 @@ window.DK = (function () {
   // finals = whether the player is contesting Finals at all
   // played = matches played so far — bump these as the season goes
   const roster = [
-    { name: "Tony",  role: "Captain", out: [4, 5],               leave: "Away 10 & 17 Aug",             target: 6, finals: true,  played: 0 },
-    { name: "Oscar", role: "Player",  out: [12, 13, 14],         leave: "Away all October",             target: 6, finals: true,  played: 0 },
-    { name: "Kate",  role: "Player",  out: [4, 5, 6],            leave: "Most of Aug — back 31 Aug",    target: 6, finals: true,  played: 0 },
-    { name: "Arul",  role: "Player",  out: [4],                  leave: "Away first fortnight of Aug",  target: 8, finals: true,  played: 0 },
-    { name: "Angus", role: "Player",  out: [10,11,12,13,14,15,16], leave: "Available to 15 Sep, then unsure", target: 8, finals: false, played: 0 },
+    { name: "Tony",  role: "Captain", r: 453, out: [4, 5],               leave: "Away 10 & 17 Aug",             target: 6, finals: true,  played: 0 },
+    { name: "Oscar", role: "Player",  r: 502, out: [12, 13, 14],         leave: "Away all October",             target: 6, finals: true,  played: 0 },
+    { name: "Kate",  role: "Player",  r: 361, out: [4, 5, 6],            leave: "Most of Aug — back 31 Aug",    target: 6, finals: true,  played: 0 },
+    { name: "Arul",  role: "Player",  r: 543, out: [4],                  leave: "Away first fortnight of Aug",  target: 8, finals: true,  played: 0 },
+    { name: "Angus", role: "Player",  r: 525, out: [10,11,12,13,14,15,16], leave: "Available to 15 Sep, then unsure", target: 8, finals: false, played: 0 },
   ];
 
   const PLAYERS_PER_NIGHT = 3; // only 3 play each Monday — the captain picks from those available

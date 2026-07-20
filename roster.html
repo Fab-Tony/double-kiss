@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=10">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=10">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=10">
-<link rel="manifest" href="manifest.json?v=10">
+<link rel="stylesheet" href="styles.css?v=11">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=11">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=11">
+<link rel="manifest" href="manifest.json?v=11">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=10"></script>
-<script src="app.js?v=10"></script>
+<script src="data.js?v=11"></script>
+<script src="app.js?v=11"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -58,11 +58,11 @@
 
     let fitCls = "", fitTxt, tagHtml, title;
     if (isBye) {
-      fitTxt = f.date.replace("Mon ", "") + " · no match";
+      fitTxt = '<b class="gdate">' + f.date.replace("Mon ", "") + '</b> · no match';
       tagHtml = '<span class="tag bye">BYE</span>'; title = "Bye week";
     } else {
       fitCls = shortNight ? "short" : "";
-      fitTxt = f.date.replace("Mon ", "") + " · T" + f.tbl + (shortNight ? " · fill-in needed" : "");
+      fitTxt = '<b class="gdate">' + f.date.replace("Mon ", "") + '</b> · T' + f.tbl + (shortNight ? " · fill-in needed" : "");
       tagHtml = '<span class="tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + '</span>';
       title = "vs " + esc(f.op);
     }

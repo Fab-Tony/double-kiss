@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=10">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=10">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=10">
-<link rel="manifest" href="manifest.json?v=10">
+<link rel="stylesheet" href="styles.css?v=11">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=11">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=11">
+<link rel="manifest" href="manifest.json?v=11">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -25,14 +25,14 @@
   <h2>News</h2>
   <div class="news" id="news"></div>
 
-  <h2>Upcoming</h2>
-  <div class="linkrow" id="upcoming"></div>
+  <h2><a class="h2link" href="roster.html">Upcoming <span class="arw" aria-hidden="true">›</span></a></h2>
+  <div class="uplist" id="upcoming"></div>
 
   <footer>Sydney Diamond League · Club9, North Strathfield · Season 28</footer>
 </div>
 
-<script src="data.js?v=10"></script>
-<script src="app.js?v=10"></script>
+<script src="data.js?v=11"></script>
+<script src="app.js?v=11"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -59,14 +59,15 @@
   const mi = D.nextMatchIndex();
   const whoHdr = document.getElementById("whoHdr");
   const who = document.getElementById("who");
-  const roleOf = {}; D.roster.forEach(p => roleOf[p.name] = p.role);
+  const roleOf = {}, ratingOf = {}; D.roster.forEach(p => { roleOf[p.name] = p.role; ratingOf[p.name] = p.r; });
   if (mi === -1) {
     whoHdr.textContent = "Lineup";
     who.innerHTML = '<div class="empty">No upcoming matches.</div>';
   } else {
     const f = D.fixtures[mi], rostered = f.lineup.length, shortNight = rostered < 3;
     whoHdr.textContent = "Lineup · Wk " + f.wk + " vs " + f.op;
-    let rows = '<div class="row"><div><div class="nm">' + f.lineup.map(esc).join(" · ") + '</div></div></div>';
+    let rows = f.lineup.map(name => '<div class="row"><div class="nm">' + esc(name) + '</div>' +
+      (ratingOf[name] != null ? '<div class="fargo">(' + ratingOf[name] + ')</div>' : '') + '</div>').join("");
     if (shortNight) rows += '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
       (3 - rostered) + ' more</div></div><div class="st out">TBC</div></div>';
     who.innerHTML = rows;
@@ -86,13 +87,17 @@
   if (ni === -1) { up.innerHTML = '<div class="empty">Season finished.</div>'; }
   else {
     up.innerHTML = D.fixtures.slice(ni, ni + 5).map(f => {
-      const right = f.ha === "Bye" ? '<span class="tag bye">BYE</span>'
-        : '<span class="tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + ' · T' + f.tbl + '</span>';
-      const opp = f.ha === "Bye" ? "Bye week" : "vs " + esc(f.op);
-      const inner = '<span><b>' + opp + '</b><small>Wk ' + f.wk + ' · ' + f.date + '</small></span>' + right;
-      return f.ha === "Bye"
-        ? '<div class="btn">' + inner + '</div>'
-        : '<a class="btn" href="roster.html?wk=' + f.wk + '">' + inner + '<span class="arw">›</span></a>';
+      const parts = f.date.replace("Mon ", "").split(" ");   // ["20","Jul"]
+      const cal = '<div class="cal"><span class="mon">' + esc(parts[1] || "") + '</span>' +
+        '<span class="day">' + esc(parts[0] || "") + '</span></div>';
+      if (f.ha === "Bye") {
+        return '<div class="up bye">' + cal + '<div class="upmain"><div class="upt">Bye week</div>' +
+          '<div class="ups">Week ' + f.wk + '</div></div></div>';
+      }
+      const ha = f.ha === "Home" ? "(H)" : "(A)";
+      return '<div class="up">' + cal + '<div class="upmain">' +
+        '<div class="upt">vs ' + esc(f.op) + ' ' + ha + '</div>' +
+        '<div class="ups">Week ' + f.wk + ' · Table ' + f.tbl + '</div></div></div>';
     }).join("");
   }
 })();

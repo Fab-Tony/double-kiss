@@ -14,10 +14,15 @@
   // top bar
   const top = document.createElement("header");
   top.className = "topbar";
+  const snum = (D.SEASON || "").replace(/\D+/g, "") || "28";
   top.innerHTML =
     '<div class="inner"><img class="logo" src="logo.svg?v=3" alt="Double Kiss logo" width="40" height="40">' +
-    '<div><div class="tt">' + (D.TEAM || "Double Kiss") + '</div>' +
-    '<div class="ss">' + (D.SEASON || "") + ' · ' + (D.LEAGUE || "") + '</div></div></div>';
+    '<div class="tt">' + (D.TEAM || "Double Kiss") + '</div>' +
+    '<div class="season" aria-label="Season ' + snum + '">' +
+    '<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">' +
+    '<path d="M6 3h12l4 6-10 12L2 9z" fill="#39b0ff" stroke="#8fd6ff" stroke-width="1" stroke-linejoin="round"/>' +
+    '<path d="M2 9h20M8.5 3 6 9l6 12M15.5 3 18 9l-6 12" stroke="#0a1330" stroke-width="0.8" opacity="0.4" fill="none"/></svg>' +
+    '<span>' + snum + '</span></div></div>';
   document.body.insertBefore(top, document.body.firstChild);
 
   // pull-to-refresh — the installed app has no native reload gesture
