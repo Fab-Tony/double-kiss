@@ -46,28 +46,27 @@ window.DK = (function () {
 
   // Set lineup — the 3 players rostered to play each week. Edit to change who's on.
   // Wks 1 & 2 set by Tony; the rest allocated for equal spread (≈9 games each) within leave.
-  // Set lineup — 3 players each week. Rebalanced now Angus is available all
-  // season: an even 9 games each (Angus 8), and ROTATED so nobody is rostered
-  // more than 3 weeks in a row. Tony plays Wk9 (Cue The Good Times). Wk4 & Wk5
-  // are forced by leave (only 2 / 3 available). One player must cover all of
-  // October (Wk12–14) as Oscar's away — that's Kate; Tony, Angus & Arul each
-  // get an October week off (Wk12/13/14 respectively).
+  // Set lineup — 3 players each week. W1 & W2 are Tony's fixed picks (W1
+  // Oscar/Arul/Angus; W2 Tony/Kate/Arul — must be Tony+Kate, NOT Oscar). The
+  // rest is balanced to an even 9 games each (Angus 8) and rotated so nobody is
+  // rostered more than 3 weeks in a row. Tony plays Wk9 (Cue The Good Times).
+  // Wk4 & Wk5 are leave-forced (only 2 / 3 available).
   const lineups = {
-    1:  ["Kate", "Oscar", "Tony"],
-    2:  ["Tony", "Arul", "Kate"],
+    1:  ["Oscar", "Arul", "Angus"],    // set by Tony
+    2:  ["Tony", "Kate", "Arul"],      // set by Tony (Tony + Kate, not Oscar)
     4:  ["Oscar", "Angus"],            // Tony/Kate/Arul out — needs a fill-in
     5:  ["Oscar", "Arul", "Angus"],    // only 3 available — forced
-    6:  ["Tony", "Oscar", "Angus"],
-    7:  ["Tony", "Arul", "Kate"],
-    8:  ["Angus", "Arul", "Kate"],
-    9:  ["Tony", "Oscar", "Kate"],     // vs Cue The Good Times — Tony in
-    10: ["Oscar", "Arul", "Tony"],
-    11: ["Oscar", "Angus", "Tony"],
-    12: ["Kate", "Arul", "Angus"],
-    13: ["Kate", "Tony", "Arul"],
-    14: ["Kate", "Angus", "Tony"],
-    15: ["Angus", "Oscar", "Arul"],
-    16: ["Oscar", "Arul", "Kate"],
+    6:  ["Tony", "Arul", "Oscar"],
+    7:  ["Tony", "Kate", "Angus"],
+    8:  ["Arul", "Oscar", "Kate"],
+    9:  ["Tony", "Kate", "Angus"],     // vs Cue The Good Times — Tony in
+    10: ["Arul", "Oscar", "Tony"],
+    11: ["Oscar", "Angus", "Kate"],
+    12: ["Tony", "Kate", "Arul"],
+    13: ["Angus", "Tony", "Arul"],
+    14: ["Kate", "Arul", "Angus"],
+    15: ["Kate", "Oscar", "Tony"],
+    16: ["Tony", "Oscar", "Kate"],
   };
   fixtures.forEach(f => { f.lineup = lineups[f.wk] || []; });
 
