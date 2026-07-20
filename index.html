@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=13">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=13">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=13">
-<link rel="manifest" href="manifest.json?v=13">
+<link rel="stylesheet" href="styles.css?v=14">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=14">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=14">
+<link rel="manifest" href="manifest.json?v=14">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,8 +36,8 @@
   <footer>Sydney Diamond League · Club9, North Strathfield · Season 28</footer>
 </div>
 
-<script src="data.js?v=13"></script>
-<script src="app.js?v=13"></script>
+<script src="data.js?v=14"></script>
+<script src="app.js?v=14"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -52,6 +52,11 @@
     if (f.ha === "Bye") {
       nextEl.innerHTML = '<div class="lbl">Round ' + f.wk + ' · ' + f.date.replace("Mon ", "") + '</div>' +
         '<div class="op">Bye week</div><div class="meta">No match this week</div>';
+    } else if (f.ha === "Finals") {
+      nextEl.innerHTML = '<div class="lbl">' + esc(f.date) + '</div>' +
+        '<div class="op">Finals</div>' +
+        '<div class="meta">' + esc(f.op.replace("Finals — ", "")) + ' · Top 16 · ' + esc(D.VENUE) + '</div>' +
+        '<span class="ha tag finals">FINALS</span>';
     } else {
       nextEl.innerHTML = '<div class="lbl">Round ' + f.wk + ' · ' + f.date + '</div>' +
         '<div class="op">vs ' + esc(f.op) + '</div>' +
@@ -80,7 +85,7 @@
 
   // news — sub-needed alerts first, from live lineup data
   const alerts = ni === -1 ? "" : D.fixtures.filter((f, i) =>
-    i >= ni && f.ha !== "Bye" && f.lineup.length < 3).map(f =>
+    i >= ni && D.isMatch(f) && f.lineup.length < 3).map(f =>
     '<div class="fitbanner short">We need a sub — Wk ' + f.wk + ' (' + f.date +
     ') vs ' + esc(f.op) + ': only ' + f.lineup.length + ' rostered.</div>').join("");
   document.getElementById("news").innerHTML = alerts + D.news.map(n =>
@@ -92,12 +97,16 @@
   if (ni === -1) { up.innerHTML = '<div class="empty">Season finished.</div>'; }
   else {
     up.innerHTML = D.fixtures.slice(ni, ni + 5).map(f => {
-      const parts = f.date.replace("Mon ", "").split(" ");   // ["20","Jul"]
+      const parts = f.date.split(" ").slice(-2);   // ["20","Jul"] — weekday-agnostic
       const cal = '<div class="cal"><span class="mon">' + esc(parts[1] || "") + '</span>' +
         '<span class="day">' + esc(parts[0] || "") + '</span></div>';
       if (f.ha === "Bye") {
         return '<div class="up bye">' + cal + '<div class="upmain"><div class="upt">Bye week</div>' +
           '<div class="ups">Week ' + f.wk + '</div></div></div>';
+      }
+      if (f.ha === "Finals") {
+        return '<div class="up finals">' + cal + '<div class="upmain"><div class="upt">Finals</div>' +
+          '<div class="ups">' + esc(f.date) + ' · Top 16</div></div></div>';
       }
       const ha = f.ha === "Home" ? "(H)" : "(A)";
       return '<div class="up">' + cal + '<div class="upmain">' +
@@ -110,7 +119,12 @@
   const tb = document.getElementById("tablesbtnsub");
   if (tb) {
     if (ni === -1) tb.textContent = "Season complete";
-    else { const ff = D.fixtures[ni]; tb.textContent = "Round " + ff.wk + " · " + ff.date.replace("Mon ", "") + " — where every team's playing"; }
+    else {
+      const ff = D.fixtures[ni];
+      tb.textContent = D.isMatch(ff)
+        ? ("Round " + ff.wk + " · " + ff.date.replace("Mon ", "") + " — where every team's playing")
+        : "The weekly table draw for every team";
+    }
   }
 })();
 </script>

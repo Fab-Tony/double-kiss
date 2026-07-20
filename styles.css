@@ -73,6 +73,12 @@ h2 .h2link .arw{font-size:17px}
 .tag.home{background:rgba(31,122,77,.25);color:var(--home);border:1px solid rgba(95,224,160,.35)}
 .tag.away{background:rgba(190,130,40,.22);color:var(--away);border:1px solid rgba(240,184,106,.35)}
 .tag.bye{background:rgba(140,150,175,.18);color:#b6c0d6;border:1px solid rgba(182,192,214,.3)}
+.tag.finals{background:rgba(255,210,63,.18);color:var(--accent2);border:1px solid rgba(255,210,63,.4)}
+
+/* ---- finals rows (roster accordion + home upcoming) ---- */
+.game.finals{border-color:var(--accent2);box-shadow:0 0 0 1px rgba(255,210,63,.22)}
+.game.finals .cal .mon,.up.finals .cal .mon{background:rgba(255,210,63,.2);color:var(--accent2)}
+.up.finals{border-color:var(--accent2)}
 
 /* ---- "who's available" / lineup list ---- */
 .who{display:flex;flex-direction:column;gap:8px}

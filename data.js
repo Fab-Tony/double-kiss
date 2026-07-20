@@ -18,7 +18,7 @@ window.DK = (function () {
     { name: "Oscar", role: "Player",  r: 502, out: [12, 13, 14],         leave: "Away all October",             target: 6, finals: true,  played: 0 },
     { name: "Kate",  role: "Player",  r: 361, out: [4, 5, 6],            leave: "Most of Aug — back 31 Aug",    target: 6, finals: true,  played: 0 },
     { name: "Arul",  role: "Player",  r: 543, out: [4],                  leave: "Away first fortnight of Aug",  target: 8, finals: true,  played: 0 },
-    { name: "Angus", role: "Player",  r: 525, out: [10,11,12,13,14,15,16], leave: "Available to 15 Sep, then unsure", target: 8, finals: false, played: 0 },
+    { name: "Angus", role: "Player",  r: 525, out: [],                   leave: "Available all season",         target: 8, finals: true,  played: 0 },
   ];
 
   const PLAYERS_PER_NIGHT = 3; // only 3 play each Monday — the captain picks from those available
@@ -40,26 +40,30 @@ window.DK = (function () {
     { wk: 14, date: "Mon 26 Oct", iso: "2026-10-26", op: "Nice Rack",          ha: "Home", tbl: "8" },
     { wk: 15, date: "Mon 2 Nov",  iso: "2026-11-02", op: "Balls Deep",         ha: "Away", tbl: "4" },
     { wk: 16, date: "Mon 9 Nov",  iso: "2026-11-09", op: "Dragonball Z",       ha: "Home", tbl: "1" },
+    { wk: "F1", date: "Sat 21 Nov", iso: "2026-11-21", op: "Finals — Vegas Showdown (Day 1)", ha: "Finals", tbl: "—" },
+    { wk: "F2", date: "Sun 22 Nov", iso: "2026-11-22", op: "Finals — Vegas Showdown (Day 2)", ha: "Finals", tbl: "—" },
   ];
 
   // Set lineup — the 3 players rostered to play each week. Edit to change who's on.
   // Wks 1 & 2 set by Tony; the rest allocated for equal spread (≈9 games each) within leave.
+  // Rebalanced for an even ~9 games each now Angus is available all season
+  // (Angus 8, everyone else 9). Tony is in Wk9 for Cue The Good Times.
   const lineups = {
-    1:  ["Oscar", "Arul", "Angus"],
-    2:  ["Tony", "Kate", "Angus"],
-    4:  ["Oscar", "Angus"],            // only 2 available — needs a fill-in
-    5:  ["Oscar", "Arul", "Angus"],
-    6:  ["Tony", "Oscar", "Angus"],
-    7:  ["Kate", "Arul", "Angus"],
-    8:  ["Tony", "Oscar", "Arul"],
-    9:  ["Oscar", "Kate", "Angus"],
-    10: ["Oscar", "Kate", "Arul"],
-    11: ["Tony", "Kate", "Arul"],
+    1:  ["Oscar", "Kate", "Angus"],
+    2:  ["Tony", "Oscar", "Kate"],
+    4:  ["Oscar", "Angus"],            // Tony/Kate/Arul all out — needs a fill-in
+    5:  ["Oscar", "Arul", "Angus"],    // only 3 available — forced
+    6:  ["Tony", "Oscar", "Arul"],
+    7:  ["Tony", "Arul", "Angus"],
+    8:  ["Oscar", "Kate", "Arul"],
+    9:  ["Tony", "Oscar", "Angus"],    // vs Cue The Good Times — Tony in
+    10: ["Kate", "Arul", "Angus"],
+    11: ["Tony", "Oscar", "Kate"],
     12: ["Tony", "Kate", "Arul"],
-    13: ["Tony", "Kate", "Arul"],
+    13: ["Tony", "Kate", "Angus"],
     14: ["Tony", "Kate", "Arul"],
-    15: ["Tony", "Oscar", "Arul"],
-    16: ["Tony", "Oscar", "Kate"],
+    15: ["Tony", "Arul", "Angus"],
+    16: ["Oscar", "Kate", "Arul"],
   };
   fixtures.forEach(f => { f.lineup = lineups[f.wk] || []; });
 
@@ -126,6 +130,7 @@ window.DK = (function () {
 
   // Home-page news feed — newest first. Add items as things happen.
   const news = [
+    { date: "20 Jul 2026", title: "Angus back full-time + Finals dates", body: "Angus is available all season now, so the set lineups have been evened out — roughly 9 games each. Finals are locked in: Sat 21 & Sun 22 Nov (Vegas Showdown, top 16, Club9). Check the Roster page for your weeks — and Tony's in for the Cue The Good Times match (Wk9)." },
     { date: "20 Jul 2026", title: "New: table allocations", body: "There's a new Table allocations link on the Home screen showing which tables every team's playing on each week — our table's highlighted. Handy for finding where we're set up when you get to Club9." },
     { date: "20 Jul 2026", title: "Opening night — reminders", body: "League shirts must be worn (brand-new players without one yet: buy ASAP). Matches start 7pm; tables open for free play from 6:30. Light supper from 8:15. BCA registration is due by Week 3 for anyone who didn't play last season. Need a sub or have an issue? Let Tony know ASAP." },
     { date: "19 Jul 2026", title: "Season 28 starts Monday", body: "First up: away to Extorting Dogs, Table 7, 7pm at Club9. Full squad available." },
@@ -143,9 +148,12 @@ window.DK = (function () {
   /* ---- helpers ---- */
   function fixture(wk) { return fixtures.find(f => f.wk === wk); }
 
+  // is this fixture a real league match (not a Bye or Finals)?
+  function isMatch(f) { return f.ha === "Home" || f.ha === "Away"; }
+
   // how many non-bye matches this player is available for across the season
   function matchesAvailable(p) {
-    return fixtures.filter(f => f.ha !== "Bye" && !p.out.includes(f.wk)).length;
+    return fixtures.filter(f => isMatch(f) && !p.out.includes(f.wk)).length;
   }
 
   // how many matches this player is actually rostered (set lineup) to play
@@ -166,15 +174,15 @@ window.DK = (function () {
     const t = today || new Date(); t.setHours(0, 0, 0, 0);
     return fixtures.findIndex(f => new Date(f.iso + "T00:00:00") >= t);
   }
-  // index of the next actual MATCH today-or-later (skips BYE)
+  // index of the next actual MATCH today-or-later (skips BYE and Finals)
   function nextMatchIndex(today) {
     const t = today || new Date(); t.setHours(0, 0, 0, 0);
-    return fixtures.findIndex(f => f.ha !== "Bye" && new Date(f.iso + "T00:00:00") >= t);
+    return fixtures.findIndex(f => isMatch(f) && new Date(f.iso + "T00:00:00") >= t);
   }
 
   // table allocations for a given week (or null if none listed)
   function tablesFor(wk) { return tableAlloc[wk] || null; }
 
   return { TEAM, SEASON, LEAGUE, VENUE, PLAYERS_PER_NIGHT, roster, fixtures, teams, tableAlloc, news, stats,
-           fixture, matchesAvailable, scheduledGames, availability, nextIndex, nextMatchIndex, tablesFor };
+           fixture, isMatch, matchesAvailable, scheduledGames, availability, nextIndex, nextMatchIndex, tablesFor };
 })();

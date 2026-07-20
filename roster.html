@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=13">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=13">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=13">
-<link rel="manifest" href="manifest.json?v=13">
+<link rel="stylesheet" href="styles.css?v=14">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=14">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=14">
+<link rel="manifest" href="manifest.json?v=14">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=13"></script>
-<script src="app.js?v=13"></script>
+<script src="data.js?v=14"></script>
+<script src="app.js?v=14"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -50,18 +50,22 @@
   const gwrap = document.getElementById("games");
   D.fixtures.forEach((f, idx) => {
     const isBye = f.ha === "Bye";
+    const isFinals = f.ha === "Finals";
+    const isSpecial = isBye || isFinals;
     const rostered = f.lineup.length;
-    const shortNight = !isBye && rostered < 3;
+    const shortNight = !isSpecial && rostered < 3;
     const g = document.createElement("div");
-    g.className = "game" + (idx === mi ? " next" : "");
+    g.className = "game" + (idx === mi ? " next" : "") + (isFinals ? " finals" : "");
     g.dataset.wk = f.wk;
 
-    const parts = f.date.replace("Mon ", "").split(" ");   // ["20","Jul"]
+    const parts = f.date.split(" ").slice(-2);   // ["20","Jul"] — weekday-agnostic
     const cal = '<div class="cal"><span class="mon">' + esc(parts[1] || "") + '</span>' +
       '<span class="day">' + esc(parts[0] || "") + '</span></div>';
     let title, sub, fitCls = "";
     if (isBye) {
       title = "Bye week"; sub = "Week " + f.wk;
+    } else if (isFinals) {
+      title = "Finals"; sub = esc(f.date) + " · " + esc(f.op.replace("Finals — ", "")) + " · Top 16";
     } else {
       const ha = f.ha === "Home" ? "(H)" : "(A)";
       title = "vs " + esc(f.op) + " " + ha;
@@ -69,12 +73,12 @@
       sub = "Week " + f.wk + " · Table " + f.tbl + (shortNight ? " · fill-in needed" : "");
     }
     const headInner = cal + '<span class="gmain"><b>' + title + '</b><small class="' + fitCls + '">' + sub + '</small></span>';
-    const head = isBye
+    const head = isSpecial
       ? '<div class="ghead flat">' + headInner + '</div>'
       : '<button class="ghead" type="button" aria-expanded="false">' + headInner + '<span class="chev" aria-hidden="true">›</span></button>';
 
     let body;
-    if (isBye) {
+    if (isSpecial) {
       body = "";
     } else {
       const rows = f.lineup.map(name =>
@@ -123,13 +127,13 @@
 
   // player filter — show weeks that player is rostered to play
   const info = document.getElementById("filterinfo");
-  const totalMatches = D.fixtures.filter(f => f.ha !== "Bye").length;
+  const totalMatches = D.fixtures.filter(D.isMatch).length;
   sel.addEventListener("change", () => {
     const name = sel.value;
     let shown = 0;
     gwrap.querySelectorAll(".game").forEach(g => {
-      const f = D.fixture(+g.dataset.wk);
-      const show = !name ? true : f.lineup.includes(name);
+      const f = D.fixture(+g.dataset.wk) || D.fixture(g.dataset.wk);
+      const show = !name ? true : (!!f && f.lineup.includes(name));
       g.classList.toggle("hide", !show);
       if (show) shown++;
     });
