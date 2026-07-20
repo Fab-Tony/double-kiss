@@ -22,11 +22,11 @@ a{color:var(--accent)}
 .topbar .inner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:11px;padding:11px 16px}
 .topbar .logo{width:40px;height:40px;flex:0 0 auto;display:block;
   filter:drop-shadow(0 2px 5px rgba(0,0,0,.45))}
-.topbar .tt{font-family:var(--display);font-style:italic;font-weight:800;font-size:28px;
-  line-height:1;letter-spacing:.3px;color:var(--ink)}
+.topbar .tt{font-family:var(--display);font-style:italic;font-weight:800;font-size:25px;
+  line-height:1;letter-spacing:.5px;text-transform:uppercase;color:var(--ink)}
 .topbar .season{margin-left:auto;display:flex;align-items:center;gap:5px;flex:0 0 auto;
   font-family:var(--display);font-style:italic;font-weight:800;font-size:22px;color:var(--accent)}
-.topbar .season svg{display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.topbar .season .dia{font-style:normal;font-size:19px;line-height:1}
 
 /* ---- bottom tab bar (app nav) ---- */
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
@@ -105,11 +105,11 @@ h2 .h2link .arw{font-size:17px}
 .up{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line);
   border-radius:13px;padding:12px 14px}
 .up.bye{opacity:.75}
-.up .cal{flex:0 0 auto;width:48px;text-align:center;background:var(--panel2);
+.cal{flex:0 0 auto;width:48px;text-align:center;background:var(--panel2);
   border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.up .cal .mon{display:block;background:rgba(57,176,255,.18);color:var(--accent);
+.cal .mon{display:block;background:rgba(57,176,255,.18);color:var(--accent);
   font-size:10.5px;font-weight:800;letter-spacing:.6px;padding:2px 0;text-transform:uppercase}
-.up .cal .day{display:block;font-size:19px;font-weight:800;padding:3px 0;font-variant-numeric:tabular-nums}
+.cal .day{display:block;font-size:19px;font-weight:800;padding:3px 0;font-variant-numeric:tabular-nums}
 .up .upmain{min-width:0}
 .up .upt{font-weight:700;font-size:16.5px}
 .up .ups{color:var(--muted);font-size:13px;margin-top:2px}

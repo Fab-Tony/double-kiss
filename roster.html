@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=11">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=11">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=11">
-<link rel="manifest" href="manifest.json?v=11">
+<link rel="stylesheet" href="styles.css?v=12">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=12">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=12">
+<link rel="manifest" href="manifest.json?v=12">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=11"></script>
-<script src="app.js?v=11"></script>
+<script src="data.js?v=12"></script>
+<script src="app.js?v=12"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -56,18 +56,19 @@
     g.className = "game" + (idx === mi ? " next" : "");
     g.dataset.wk = f.wk;
 
-    let fitCls = "", fitTxt, tagHtml, title;
+    const parts = f.date.replace("Mon ", "").split(" ");   // ["20","Jul"]
+    const cal = '<div class="cal"><span class="mon">' + esc(parts[1] || "") + '</span>' +
+      '<span class="day">' + esc(parts[0] || "") + '</span></div>';
+    let title, sub, fitCls = "";
     if (isBye) {
-      fitTxt = '<b class="gdate">' + f.date.replace("Mon ", "") + '</b> · no match';
-      tagHtml = '<span class="tag bye">BYE</span>'; title = "Bye week";
+      title = "Bye week"; sub = "Week " + f.wk;
     } else {
+      const ha = f.ha === "Home" ? "(H)" : "(A)";
+      title = "vs " + esc(f.op) + " " + ha;
       fitCls = shortNight ? "short" : "";
-      fitTxt = '<b class="gdate">' + f.date.replace("Mon ", "") + '</b> · T' + f.tbl + (shortNight ? " · fill-in needed" : "");
-      tagHtml = '<span class="tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + '</span>';
-      title = "vs " + esc(f.op);
+      sub = "Week " + f.wk + " · Table " + f.tbl + (shortNight ? " · fill-in needed" : "");
     }
-    const headInner = '<span class="gwk">W' + f.wk + '</span>' +
-      '<span class="gmain"><b>' + title + '</b><small class="' + fitCls + '">' + fitTxt + '</small></span>' + tagHtml;
+    const headInner = cal + '<span class="gmain"><b>' + title + '</b><small class="' + fitCls + '">' + sub + '</small></span>';
     const head = isBye
       ? '<div class="ghead flat">' + headInner + '</div>'
       : '<button class="ghead" type="button" aria-expanded="false">' + headInner + '<span class="chev" aria-hidden="true">›</span></button>';
