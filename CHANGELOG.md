@@ -23,6 +23,11 @@ targets, results).
 
 ## Roster/season
 
+- 2026-07-20 — **Lineups re-cut for rotation** (cache v15): still an even 9
+  games each (Angus 8), but now nobody is rostered more than 3 weeks in a row
+  (was two 5-week runs). October rotates — Tony rests Wk12, Angus Wk13, Arul
+  Wk14; Kate covers all three (unavoidable with 4 players / 3 weeks while Oscar's
+  away). Tony still in Wk9 (Cue The Good Times); Wk4/Wk5 unchanged (leave-forced).
 - 2026-07-20 — **Angus available all season** (was out Wk10–16); now a Finals
   contender (`finals:true`). Set **lineups rebalanced** to an even spread now
   he's back — Tony/Oscar/Kate/Arul 9 games each, Angus 8 (44 total). **Tony
