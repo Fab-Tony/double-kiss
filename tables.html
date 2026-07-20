@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tables · Double Kiss</title>
+<link rel="stylesheet" href="styles.css?v=13">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=13">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=13">
+<link rel="manifest" href="manifest.json?v=13">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Double Kiss">
+</head>
+<body data-page="tables">
+<div class="wrap">
+  <h1>Table allocations</h1>
+  <div class="sub" id="sub">Which teams are on which tables this week.</div>
+
+  <div class="talloc" id="talloc"></div>
+
+  <div class="byeline" id="byeline"></div>
+
+  <footer>From the Diamond League Monday schedule · Club9, North Strathfield.</footer>
+</div>
+
+<script src="data.js?v=13"></script>
+<script src="app.js?v=13"></script>
+<script>
+(function () {
+  const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+  const US = D.TEAM; // "Double Kiss"
+  const wrap = document.getElementById("talloc");
+  const sub = document.getElementById("sub");
+  const byeline = document.getElementById("byeline");
+
+  const ni = D.nextIndex();
+  if (ni === -1) {
+    sub.textContent = "Season complete — no more matches.";
+    wrap.innerHTML = '<div class="empty">See you next season.</div>';
+    return;
+  }
+
+  const f = D.fixtures[ni];
+  const alloc = D.tablesFor ? D.tablesFor(f.wk) : (D.tableAlloc || {})[f.wk];
+  sub.innerHTML = 'Round ' + f.wk + ' · <b style="color:var(--ink)">' + esc(f.date) +
+    '</b> · Club9, 7pm.';
+
+  if (!alloc || !alloc.rows) {
+    wrap.innerHTML = '<div class="empty">Table allocations aren’t available for this round yet.</div>';
+    return;
+  }
+
+  const teamHtml = (name, ha) => {
+    const us = name === US;
+    return '<div class="tteam' + (us ? ' us' : '') + '">' +
+      '<span class="nm">' + esc(name) + (us ? ' <span class="capb">OURS</span>' : '') + '</span>' +
+      '<span class="ha2 ' + ha + '">' + (ha === 'home' ? 'H' : 'A') + '</span></div>';
+  };
+
+  wrap.innerHTML = alloc.rows.slice().sort((a, b) => a.t - b.t).map(r => {
+    const ours = r.h === US || r.a === US;
+    return '<div class="tcard' + (ours ? ' ours' : '') + '">' +
+      '<div class="tnum"><span class="k">Table</span><span class="n">' + r.t + '</span></div>' +
+      '<div class="tmatch">' + teamHtml(r.h, 'home') + teamHtml(r.a, 'away') + '</div></div>';
+  }).join("");
+
+  // bye note
+  if (alloc.bye) {
+    if (alloc.bye === US) {
+      byeline.className = "byeline us";
+      byeline.innerHTML = '<b>Double Kiss has the bye</b> this round — no match, but here’s where everyone else is playing.';
+    } else {
+      byeline.className = "byeline";
+      byeline.innerHTML = '<b>' + esc(alloc.bye) + '</b> has the bye this round.';
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -127,6 +127,31 @@ tr.nextmatch td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
 tr.done td{opacity:.5}
 .wk,.tbl{font-variant-numeric:tabular-nums}
 
+/* ---- table allocations ---- */
+.talloc{display:flex;flex-direction:column;gap:10px}
+.tcard{display:flex;align-items:stretch;gap:13px;background:var(--panel);
+  border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+.tcard.ours{border-color:#2f7fb8;box-shadow:0 0 0 1px rgba(57,176,255,.25)}
+.tnum{flex:0 0 auto;width:52px;text-align:center;background:var(--panel2);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center}
+.tnum .k{display:block;background:rgba(57,176,255,.18);color:var(--accent);
+  font-size:9.5px;font-weight:800;letter-spacing:.6px;padding:2px 0;text-transform:uppercase}
+.tnum .n{display:block;font-size:22px;font-weight:800;padding:5px 0;font-variant-numeric:tabular-nums}
+.tmatch{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px}
+.tteam{display:flex;align-items:center;gap:8px;min-width:0}
+.tteam .nm{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tteam.us .nm{color:var(--accent)}
+.tteam .ha2{margin-left:auto;flex:0 0 auto;font-size:10.5px;font-weight:800;
+  letter-spacing:.4px;padding:2px 8px;border-radius:6px}
+.tteam .ha2.home{background:rgba(31,122,77,.22);color:var(--home);border:1px solid rgba(95,224,160,.35)}
+.tteam .ha2.away{background:rgba(190,130,40,.22);color:var(--away);border:1px solid rgba(240,184,106,.35)}
+.byeline{margin-top:14px;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:13px 15px;font-size:14px;color:var(--muted)}
+.byeline b{color:var(--ink)}
+.byeline.us{background:rgba(57,176,255,.10);border-color:#2f7fb8}
+.byeline:empty{display:none}
+
 /* ---- roster cards ---- */
 .rlist{display:flex;flex-direction:column;gap:10px}
 .rcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;

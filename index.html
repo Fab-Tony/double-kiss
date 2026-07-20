@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=12">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=12">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=12">
-<link rel="manifest" href="manifest.json?v=12">
+<link rel="stylesheet" href="styles.css?v=13">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=13">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=13">
+<link rel="manifest" href="manifest.json?v=13">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,6 +18,11 @@
   <h1>This Monday</h1>
 
   <div class="next" id="next"></div>
+
+  <a class="btn" id="tablesbtn" href="tables.html" style="margin-top:12px">
+    <span><b>Table allocations</b><small id="tablesbtnsub">Which tables every team's on this week</small></span>
+    <span class="arw" aria-hidden="true">›</span>
+  </a>
 
   <h2 id="whoHdr">Who's available</h2>
   <div class="who" id="who"></div>
@@ -31,8 +36,8 @@
   <footer>Sydney Diamond League · Club9, North Strathfield · Season 28</footer>
 </div>
 
-<script src="data.js?v=12"></script>
-<script src="app.js?v=12"></script>
+<script src="data.js?v=13"></script>
+<script src="app.js?v=13"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -99,6 +104,13 @@
         '<div class="upt">vs ' + esc(f.op) + ' ' + ha + '</div>' +
         '<div class="ups">Week ' + f.wk + ' · Table ' + f.tbl + '</div></div></div>';
     }).join("");
+  }
+
+  // table-allocations link subtitle → current round
+  const tb = document.getElementById("tablesbtnsub");
+  if (tb) {
+    if (ni === -1) tb.textContent = "Season complete";
+    else { const ff = D.fixtures[ni]; tb.textContent = "Round " + ff.wk + " · " + ff.date.replace("Mon ", "") + " — where every team's playing"; }
   }
 })();
 </script>

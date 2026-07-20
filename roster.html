@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=12">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=12">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=12">
-<link rel="manifest" href="manifest.json?v=12">
+<link rel="stylesheet" href="styles.css?v=13">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=13">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=13">
+<link rel="manifest" href="manifest.json?v=13">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=12"></script>
-<script src="app.js?v=12"></script>
+<script src="data.js?v=13"></script>
+<script src="app.js?v=13"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -79,7 +79,6 @@
     } else {
       const rows = f.lineup.map(name =>
         '<div class="row"><div><div class="nm">' + esc(name) + '</div>' +
-        (roleOf[name] === "Captain" ? '<div class="rl">Captain</div>' : '') +
         '</div><div class="st in">Playing</div></div>').join("");
       const fillRow = shortNight
         ? '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
@@ -142,15 +141,13 @@
     const sched = D.scheduledGames(p), clear = p.out.length === 0;
     const leaveTxt = p.leave || (clear ? "Available all season" : "");
     const leaveStyle = clear ? "color:var(--home)" : "color:var(--away)";
-    const role = p.role === "Captain"
-      ? '<span style="color:var(--muted);font-weight:400;font-size:12px">· Captain</span>' : '';
     const pct = Math.min(100, Math.round(sched / p.target * 100));
     let cls, txt;
     if (!p.finals) { cls = "off"; txt = "Not contesting Finals — expected to drop after mid-Sept"; }
     else if (sched >= p.target) { cls = "ok"; txt = "On track — rostered for " + sched; }
     else { cls = "warn"; txt = "Only rostered " + sched + " of " + p.target + " needed"; }
     return '<div class="rcard"><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
-      '<div class="mid"><div class="nm">' + esc(p.name) + ' ' + role + '</div>' +
+      '<div class="mid"><div class="nm">' + esc(p.name) + '</div>' +
       '<div class="rl" style="' + leaveStyle + '">' + esc(leaveTxt) + '</div>' +
       '<div class="status ' + cls + '">' + txt + '</div>' +
       '<div class="bar"><span style="width:' + pct + '%"></span></div></div>' +
