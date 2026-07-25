@@ -47,7 +47,7 @@ GitHub Actions rebuilds and the live site updates in ~1–2 minutes. (Or ask Cla
 3. Pull any data from `window.DK` in `data.js`.
 
 ## Context for Claude (future Cowork sessions)
-- **The cloud sandbox cannot reach `api.github.com`** (Anthropic proxy blocks it) — the REST API and `gh` CLI don't work here. Use **git over HTTPS**; that path works. Standard clone location: `~/lifework/apps/double-kiss/` (disposable working copy - this repo is canonical; auth from `~/lifework/secrets/double-kiss-pat.env`).
+- **The cloud sandbox cannot reach `api.github.com`** (Anthropic proxy blocks it) — the REST API and `gh` CLI don't work here. Use **git over HTTPS**; that path works. Clone to session temp by default, or `~/lifework/apps/double-kiss/` if Tony wants a visible copy (this repo is canonical; auth from `~/lifework/secrets/double-kiss-pat.env`).
 - Pages is deployed by the Actions workflow `.github/workflows/pages.yml` (source = "GitHub Actions").
 - **Auth:** a fine-grained PAT on `Fab-Tony/double-kiss` with **Contents, Pages, and Workflows** (read/write). It's stored in **`secrets.env` at the root of Tony's `Double kiss` folder** (one level *above* the `site/` repo copy) as `GITHUB_PAT=...`. That file lives outside the repo and is also gitignored, so it is never pushed — read the token from there instead of asking Tony to re-paste. **Never write the token into any file inside the repo.**
 - Verify locally with the pre-installed Chromium via Playwright (`iPhone 12` device) before pushing.
