@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Teams · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=17">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=17">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=17">
-<link rel="manifest" href="manifest.json?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=18">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=18">
+<link rel="manifest" href="manifest.json?v=18">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,17 +18,22 @@
   <h1>Teams</h1>
   <div class="sub">The 13 Monday teams — tap for the squad and FargoRate ratings. The number is each team's top-three total; the three who play must stay under <b style="color:var(--ink)">1775</b>, so teams shown in <span style="color:var(--danger)">red</span> can't field their strongest trio.</div>
 
+  <a class="btn" href="players.html" style="margin-bottom:14px">
+    <span><b>All players</b><small>Every player in the division ranked by Fargo and win rate</small></span>
+    <span class="arw" aria-hidden="true">›</span>
+  </a>
+
   <div class="games" id="teamlist"></div>
 
   <div class="card" style="margin-top:14px">
-    <div style="font-size:12.5px;color:var(--muted);line-height:1.65"><b style="color:var(--ink)">Ratings note:</b> FargoRate figures are accurate as at season start and are <b style="color:var(--ink)">not synced live</b> — they won't update here through the season. Check the BCAPL app for current ratings.</div>
+    <div style="font-size:12.5px;color:var(--muted);line-height:1.65"><b style="color:var(--ink)">Ratings note:</b> FargoRate figures and win rates are pulled from the league's public report and refreshed each week — current as at <b style="color:var(--ink)" id="asof">—</b>. Squads update automatically too, so new signings and departures show here.</div>
   </div>
 
   <footer>Ranked by top-three FargoRate total.</footer>
 </div>
 
-<script src="data.js?v=17"></script>
-<script src="app.js?v=17"></script>
+<script src="data.js?v=18"></script>
+<script src="app.js?v=18"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -49,6 +54,8 @@
     return tb - ta;
   });
 
+  const asof = document.getElementById("asof"); if (asof) asof.textContent = D.FARGO_ASOF || "—";
+
   const wrap = document.getElementById("teamlist");
   list.forEach(t => {
     const t3 = top3(t), over = t3 != null && t3 > CAP;
@@ -67,10 +74,14 @@
     if (!t.players.length) {
       body = '<div class="gbody"><div class="empty" style="padding:8px">Squad details to come.</div></div>';
     } else {
-      const rows = [...t.players].sort((a, b) => (b.r || 0) - (a.r || 0)).map(p =>
-        '<div class="row"><div><div class="nm">' + esc(p.name) + (p.c ? ' <span class="capb">C</span>' : '') +
-        '</div></div>' + (p.r ? ('<div class="rr">' + p.r + '</div>') : '<div class="rr none">unrated</div>') +
-        '</div>').join("");
+      const rows = [...t.players].sort((a, b) => (b.r || 0) - (a.r || 0)).map(p => {
+        const form = p.wp == null ? '<div class="rl">not played yet</div>'
+                                  : '<div class="rl">' + p.wp + '% · ' + p.gw + '/' + p.gp + ' games</div>';
+        return '<div class="row"><div><div class="nm">' + esc(p.name) + (p.c ? ' <span class="capb">C</span>' : '') +
+          '</div>' + form + '</div>' +
+          (p.r ? ('<div class="rr">' + p.r + '</div>') : '<div class="rr none">unrated</div>') +
+          '</div>';
+      }).join("");
       const note = over ? '<div class="overnote">Top three total ' + t3 + ' — over the 1775 cap, so they can\'t field their three strongest together.</div>' : '';
       body = '<div class="gbody"><div class="who">' + rows + '</div>' + note + '</div>';
     }

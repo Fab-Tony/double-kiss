@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Stats · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=17">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=17">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=17">
-<link rel="manifest" href="manifest.json?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=18">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=18">
+<link rel="manifest" href="manifest.json?v=18">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,7 +16,7 @@
 <body data-page="stats">
 <div class="wrap">
   <h1>Stats</h1>
-  <div class="sub">Our Season 28 record and performance.</div>
+  <div class="sub">Our Season 28 record, straight from the league's match reports.</div>
 
   <div id="emptyNote"></div>
 
@@ -25,33 +25,40 @@
   <h2>Results</h2>
   <div id="results"></div>
 
-  <p class="sub" style="margin-top:16px">Winning games scores your opponent's scalp; no points for losses. Break &amp; Run = 4, Table Run = 2. See <a href="info.html">League info</a> for the full scoring.</p>
+  <h2>Our players</h2>
+  <div id="players"></div>
 
-  <footer>Stats update here after each Monday.</footer>
+  <p class="sub" style="margin-top:16px">Seven match points a night, one per individual match. See <a href="info.html">League info</a> for the full scoring.</p>
+
+  <a class="btn" href="players.html" style="margin-top:12px">
+    <span><b>All players</b><small>Every player in the division by Fargo and win rate</small></span>
+    <span class="arw" aria-hidden="true">›</span>
+  </a>
+
+  <footer id="foot">Updated weekly from the league's public match report.</footer>
 </div>
 
-<script src="data.js?v=17"></script>
-<script src="app.js?v=17"></script>
+<script src="data.js?v=18"></script>
+<script src="app.js?v=18"></script>
 <script>
 (function () {
   const D = DK, s = D.stats, esc = x => String(x).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
 
   if (s.played === 0) {
     document.getElementById("emptyNote").innerHTML =
-      '<div class="fitbanner ok">No results yet — season starts Mon 20 Jul. This page fills in as matches are played.</div>';
+      '<div class="fitbanner ok">No results yet — this page fills in as matches are played.</div>';
   }
 
-  const diff = (s.scalpFor - s.scalpAgainst);
+  const pct = (w, p) => p ? Math.round(w / p * 100) + "%" : "—";
   const tiles = [
     { v: s.played, l: "Played" },
     { v: s.won, l: "Won" },
     { v: s.lost, l: "Lost" },
-    { v: s.ladderPoints, l: "Ladder pts" },
-    { v: s.position ? "#" + s.position : "—", l: "Position" },
-    { v: (diff > 0 ? "+" : "") + diff, l: "Scalp diff" },
+    { v: s.matchFor + "–" + s.matchAgainst, l: "Match pts" },
+    { v: pct(s.gamesWon, s.gamesPlayed), l: "Game win %" },
+    { v: s.gamesWon + "/" + s.gamesPlayed, l: "Games won" },
     { v: s.br, l: "B&Rs" },
     { v: s.tr, l: "Table runs" },
-    { v: s.drawn, l: "Drawn" },
   ];
   document.getElementById("tiles").innerHTML = s.played === 0 ? "" : tiles.map(t =>
     '<div class="tile"><div class="v">' + esc(t.v) + '</div><div class="l">' + esc(t.l) + '</div></div>').join("");
@@ -67,6 +74,19 @@
           '</td><td><span class="tag ' + rc + '">' + esc(r.result) + '</span></td><td>' + esc(r.score || "—") + '</td></tr>';
       }).join("") + '</tbody></table></div>';
   }
+
+  // per-player season numbers, best win rate first
+  const ps = [...D.roster].sort((a, b) => {
+    const aw = a.gp ? a.gw / a.gp : -1, bw = b.gp ? b.gw / b.gp : -1;
+    return bw - aw || b.r - a.r;
+  });
+  document.getElementById("players").innerHTML =
+    '<div class="tablewrap"><table><thead><tr><th>Player</th><th>Fargo</th><th>Wks</th><th>Games</th><th>Win %</th></tr></thead><tbody>' +
+    ps.map(p => '<tr><td><b>' + esc(p.name) + '</b></td><td>' + p.r + '</td><td>' + (p.played || 0) +
+      '</td><td>' + (p.gw || 0) + '/' + (p.gp || 0) + '</td><td>' +
+      (p.gp ? pct(p.gw, p.gp) : '<span style="color:var(--muted)">—</span>') + '</td></tr>').join("") +
+    '</tbody></table></div>';
+
 })();
 </script>
 </body>

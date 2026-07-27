@@ -6,6 +6,15 @@ targets, results).
 
 ## App/UI
 
+- 2026-07-27 — **Live FargoRate sync + Players page** (cache v18). New
+  `players.html`: all 57 division players ranked by live Fargo, with team and win
+  rate, searchable and sortable (Fargo / Win % / Name / Team), Double Kiss rows
+  highlighted. Linked from Teams and Stats. Teams page now shows each player's win
+  rate and games record under their name, and the "not synced live" ratings note is
+  replaced with a weekly-refresh note stamped `FARGO_ASOF`. Stats page reworked:
+  ladder points and position tiles dropped (the division ladder isn't the combined
+  one), replaced with match points, game win % and games won, plus a new per-player
+  season table.
 - 2026-07-20 — Added **Finals** to the schedule: Sat 21 & Sun 22 Nov (Vegas
   Showdown, top 16). Two `fixtures` entries (`ha:"Finals"`) shown on Roster
   (gold flat rows) and Home (next-match card + Upcoming, with a FINALS tag).
@@ -23,6 +32,13 @@ targets, results).
 
 ## Roster/season
 
+- 2026-07-27 — **Data now sourced from the FargoRate LMS public reports.** Player
+  ratings switched to live Fargo (was season-start snapshot); `divisionPlayers`,
+  `FARGO_ASOF` and `FARGO_SOURCES` added to `data.js`. Squads refreshed — Break &
+  Enter is now Greg Jenkins (698) / Carnell / Rachel Lewis / Wood (Hopwood, Daniel
+  Jenkins and Nicolaou gone); Extorting Dogs added Ned Pulido; Gilas added Jan Amiel
+  Baste; Nice Rack added Kate Harrison. Wk 1 result recorded: lost 2–5 away to
+  Extorting Dogs (Arul 3/7, Angus 3/7, Oscar 2/7).
 - 2026-07-27 — **Wk 4 sub confirmed**: Liam Anderson fills in on Mon 10 Aug
   (home vs Dragonball Z, Table 1) alongside Oscar and Angus — Tony, Kate and
   Arul are all away. Clears the last outstanding sub-needed alert.

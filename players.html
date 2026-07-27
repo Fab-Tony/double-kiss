@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Players · Double Kiss</title>
+<link rel="stylesheet" href="styles.css?v=18">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=18">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=18">
+<link rel="manifest" href="manifest.json?v=18">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Double Kiss">
+<style>
+  .ptools{display:flex;gap:8px;margin:12px 0 10px}
+  .ptools input{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);color:var(--ink);
+    border-radius:10px;padding:10px 12px;font:inherit;font-size:14px}
+  .ptools input::placeholder{color:var(--muted)}
+  .segs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .seg{background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:999px;
+    padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
+  .seg.on{background:var(--accent);border-color:var(--accent);color:#04101f}
+  table.pl{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.pl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--muted);font-weight:700;padding:0 8px 8px}
+  table.pl td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:middle}
+  table.pl tr.us td{background:rgba(56,189,248,.09)}
+  table.pl tr.us .nm{color:var(--accent)}
+  .rk{color:var(--muted);font-variant-numeric:tabular-nums;width:26px}
+  .nm{font-weight:600}
+  .tm{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .fg{font-variant-numeric:tabular-nums;font-weight:700;text-align:right}
+  .wpc{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  .wpc small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+  .dim{color:var(--muted);font-weight:500}
+</style>
+</head>
+<body data-page="teams">
+<div class="wrap">
+  <h1>Players</h1>
+  <div class="sub" id="sub">Every player in the division, live FargoRate and win rate. Ours are highlighted.</div>
+
+  <div class="ptools"><input id="q" type="search" placeholder="Search a player or team…" autocomplete="off"></div>
+  <div class="segs">
+    <button class="seg on" data-sort="r">Fargo</button>
+    <button class="seg" data-sort="wp">Win %</button>
+    <button class="seg" data-sort="name">Name</button>
+    <button class="seg" data-sort="team">Team</button>
+  </div>
+
+  <div class="tablewrap"><table class="pl">
+    <thead><tr><th></th><th>Player</th><th style="text-align:right">Fargo</th><th style="text-align:right">Win %</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script src="data.js?v=18"></script>
+<script src="app.js?v=18"></script>
+<script>
+(function () {
+  const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+  const all = D.divisionPlayers || [];
+  const ourTeam = (D.teams.find(t => t.us) || {}).name || "Double Kiss";
+  let sort = "r", q = "";
+
+  document.getElementById("sub").textContent =
+    "All " + all.length + " players in " + D.LEAGUE + " " + D.SEASON + " — live FargoRate and win rate. Ours are highlighted.";
+
+  function sorted(list) {
+    const c = [...list];
+    if (sort === "r")    c.sort((a, b) => b.r - a.r);
+    if (sort === "name") c.sort((a, b) => a.name.localeCompare(b.name));
+    if (sort === "team") c.sort((a, b) => a.team.localeCompare(b.team) || b.r - a.r);
+    if (sort === "wp")   c.sort((a, b) => (b.wp == null ? -1 : b.wp) - (a.wp == null ? -1 : a.wp) || b.r - a.r);
+    return c;
+  }
+
+  function draw() {
+    const ql = q.trim().toLowerCase();
+    const list = sorted(all).filter(p =>
+      !ql || p.name.toLowerCase().includes(ql) || p.team.toLowerCase().includes(ql));
+    document.getElementById("rows").innerHTML = list.map((p, i) => {
+      const us = p.team === ourTeam;
+      const wp = p.wp == null
+        ? '<span class="dim">—</span>'
+        : p.wp + '%<small>' + p.gw + '/' + p.gp + '</small>';
+      return '<tr class="' + (us ? "us" : "") + '">' +
+        '<td class="rk">' + (sort === "r" ? (i + 1) : "") + '</td>' +
+        '<td><div class="nm">' + esc(p.name) + '</div><div class="tm">' + esc(p.team) + '</div></td>' +
+        '<td class="fg">' + p.r + '</td>' +
+        '<td class="wpc">' + wp + '</td></tr>';
+    }).join("") || '<tr><td colspan="4" class="empty" style="padding:18px">No players match that.</td></tr>';
+    document.getElementById("foot").textContent =
+      "Ratings current as at " + D.FARGO_ASOF + " · from the FargoRate LMS public report · " +
+      list.length + " shown";
+  }
+
+  document.getElementById("q").addEventListener("input", e => { q = e.target.value; draw(); });
+  document.querySelectorAll(".seg").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(".seg").forEach(x => x.classList.remove("on"));
+    b.classList.add("on"); sort = b.dataset.sort; draw();
+  }));
+  draw();
+})();
+</script>
+</body>
+</html>
