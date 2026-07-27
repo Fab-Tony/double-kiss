@@ -54,7 +54,7 @@ window.DK = (function () {
   const lineups = {
     1:  ["Oscar", "Arul", "Angus"],    // set by Tony
     2:  ["Tony", "Kate", "Arul"],      // set by Tony (Tony + Kate, not Oscar)
-    4:  ["Oscar", "Angus"],            // Tony/Kate/Arul out — needs a fill-in
+    4:  ["Oscar", "Angus", "Liam Anderson (sub)"], // Tony/Kate/Arul out — Liam Anderson subbing
     5:  ["Oscar", "Arul", "Angus"],    // only 3 available — forced
     6:  ["Tony", "Arul", "Oscar"],
     7:  ["Tony", "Kate", "Angus"],
@@ -133,11 +133,9 @@ window.DK = (function () {
 
   // Home-page news feed — newest first. Add items as things happen.
   const news = [
-    { date: "20 Jul 2026", title: "Angus back full-time + Finals dates", body: "Angus is available all season now, so the set lineups have been evened out — roughly 9 games each. Finals are locked in: Sat 21 & Sun 22 Nov (Vegas Showdown, top 16, Club9). Check the Roster page for your weeks — and Tony's in for the Cue The Good Times match (Wk9)." },
-    { date: "20 Jul 2026", title: "New: table allocations", body: "There's a new Table allocations link on the Home screen showing which tables every team's playing on each week — our table's highlighted. Handy for finding where we're set up when you get to Club9." },
-    { date: "20 Jul 2026", title: "Opening night — reminders", body: "League shirts must be worn (brand-new players without one yet: buy ASAP). Matches start 7pm; tables open for free play from 6:30. Light supper from 8:15. BCA registration is due by Week 3 for anyone who didn't play last season. Need a sub or have an issue? Let Tony know ASAP." },
-    { date: "19 Jul 2026", title: "Season 28 starts Monday", body: "First up: away to Extorting Dogs, Table 7, 7pm at Club9. Full squad available." },
-    { date: "19 Jul 2026", title: "Team site is live", body: "Fixtures, roster, availability and league info all in one place. Stats and per-team pages to come." },
+    { date: "27 Jul 2026", title: "Liam Anderson subbing on 10 Aug", body: "Wk 4 (Mon 10 Aug, home vs Dragonball Z, Table 1) is sorted — Liam Anderson is filling in alongside Oscar and Angus. Tony, Kate and Arul are all away that night, so we\u2019re a full three again." },
+    { date: "27 Jul 2026", title: "Next Monday is a bye", body: "No match on Mon 3 Aug — Week 3 is our bye. Next time out is Wk 4, Mon 10 Aug at home vs Dragonball Z on Table 1, 7pm at Club9." },
+    { date: "20 Jul 2026", title: "New: table allocations", body: "There\u2019s a new Table allocations link on the Home screen showing which tables every team\u2019s playing on each week — our table\u2019s highlighted. Handy for finding where we\u2019re set up when you get to Club9." },
   ];
 
   // Season stats — fill these in as results come in.

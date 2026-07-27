@@ -23,6 +23,12 @@ targets, results).
 
 ## Roster/season
 
+- 2026-07-27 — **Wk 4 sub confirmed**: Liam Anderson fills in on Mon 10 Aug
+  (home vs Dragonball Z, Table 1) alongside Oscar and Angus — Tony, Kate and
+  Arul are all away. Clears the last outstanding sub-needed alert.
+- 2026-07-27 — **News feed trimmed**: dropped the five opening-week items down
+  to the table-allocations note, plus two new items (Liam subbing 10 Aug; Wk 3
+  bye on 3 Aug).
 - 2026-07-20 — **Lineups re-cut for rotation** (cache v16): even 9 games each
   (Angus 8) with nobody rostered more than 3 weeks in a row (was two 5-week
   runs). W1 (Oscar/Arul/Angus) and W2 (Tony/Kate/Arul) restored as Tony's fixed
