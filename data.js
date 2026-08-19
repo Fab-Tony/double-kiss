@@ -57,9 +57,9 @@ window.DK = (function () {
     4:  ["Oscar", "Angus", "Liam Anderson (sub)"], // Tony/Kate/Arul out — Liam Anderson subbing
     5:  ["Oscar", "Arul", "Angus"],    // only 3 available — forced
     6:  ["Tony", "Arul", "Oscar"],
-    7:  ["Tony", "Kate", "Angus"],
+    7:  ["Oscar", "Kate", "Angus"],  // Tony swapped out for Oscar (Tony's call, 19 Aug)
     8:  ["Arul", "Oscar", "Kate"],
-    9:  ["Tony", "Kate", "Angus"],     // vs Cue The Good Times — Tony in
+    9:  ["Oscar", "Kate", "Angus"],    // vs Cue The Good Times — Tony swapped out for Oscar (19 Aug)
     10: ["Arul", "Oscar", "Tony"],
     11: ["Oscar", "Angus", "Kate"],
     12: ["Tony", "Kate", "Arul"],
