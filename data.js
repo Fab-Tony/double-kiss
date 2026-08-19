@@ -186,7 +186,7 @@ window.DK = (function () {
 
   // Home-page news feed — newest first. Add items as things happen.
   const news = [
-    { date: "19 Aug 2026", title: "Shirts are in production", body: "Our match shirts are in production now. T\u2011shirts are being developed as a second run \u2014 designs are being worked up and we\u2019ll share them here once they\u2019re settled. Nothing to do at your end yet." },
+    { date: "19 Aug 2026", title: "Team t\u2011shirts in the works", body: "Tony\u2019s working on team t\u2011shirts \u2014 black or navy, along the lines of what Gilas have put together. Nothing ordered yet and the colour isn\u2019t settled, so shout if you have a preference. More once there\u2019s something to show." },
     { date: "18 Aug 2026", title: "Wk 5: 2\u20135 at Break & Enter \u2014 2\u20133 for the season", body: "Break & Enter took Monday night 5\u20132, but the game count was our best of the season: 12 of 21 frames, with Arul on 5 from 7, Angus 4 and Oscar 3. That leaves us 2\u20133 across five weeks (Wk 3 was our bye), 13/18 match points and 11th of 13. Arul still leads us on 62% with 2 break-and-runs and 2 table runs. Next out: Wk 6, Mon 24 Aug, home vs Freeballers on Table 4." },
   ];
 
