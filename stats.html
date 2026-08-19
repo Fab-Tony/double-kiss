@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Stats · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=19">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=19">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=19">
-<link rel="manifest" href="manifest.json?v=19">
+<link rel="stylesheet" href="styles.css?v=20">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20">
+<link rel="manifest" href="manifest.json?v=20">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -38,8 +38,8 @@
   <footer id="foot">Updated weekly from the league's public match report.</footer>
 </div>
 
-<script src="data.js?v=19"></script>
-<script src="app.js?v=19"></script>
+<script src="data.js?v=20"></script>
+<script src="app.js?v=20"></script>
 <script>
 (function () {
   const D = DK, s = D.stats, esc = x => String(x).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -59,6 +59,7 @@
     { v: s.gamesWon + "/" + s.gamesPlayed, l: "Games won" },
     { v: s.br, l: "B&Rs" },
     { v: s.tr, l: "Table runs" },
+    { v: s.ladder || "\u2014", l: "Ladder" },
   ];
   document.getElementById("tiles").innerHTML = s.played === 0 ? "" : tiles.map(t =>
     '<div class="tile"><div class="v">' + esc(t.v) + '</div><div class="l">' + esc(t.l) + '</div></div>').join("");
@@ -86,6 +87,14 @@
       '</td><td>' + (p.gw || 0) + '/' + (p.gp || 0) + '</td><td>' +
       (p.gp ? pct(p.gw, p.gp) : '<span style="color:var(--muted)">—</span>') + '</td></tr>').join("") +
     '</tbody></table></div>';
+
+  // subs who played for us but aren't on the roster
+  if (s.subs && s.subs.length) {
+    document.getElementById("players").insertAdjacentHTML("beforeend",
+      '<p class="sub" style="margin-top:8px">Also played for us: ' +
+      s.subs.map(x => esc(x.name) + ' (sub, Wk ' + x.wk + ' \u2014 ' + x.gw + '/' + x.gp + ')').join(", ") +
+      '. Their games are included in the team totals above.</p>');
+  }
 
 })();
 </script>
