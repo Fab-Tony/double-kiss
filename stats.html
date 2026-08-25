@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Stats · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=21">
-<link rel="icon" type="image/svg+xml" href="favicon.svg?v=21">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=21">
-<link rel="manifest" href="manifest.json?v=21">
+<link rel="stylesheet" href="styles.css?v=22">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
+<link rel="manifest" href="manifest.json?v=22">
 <meta name="theme-color" content="#0a1122">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -38,8 +38,8 @@
   <footer id="foot">Updated weekly from the league's public match report.</footer>
 </div>
 
-<script src="data.js?v=21"></script>
-<script src="app.js?v=21"></script>
+<script src="data.js?v=22"></script>
+<script src="app.js?v=22"></script>
 <script>
 (function () {
   const D = DK, s = D.stats, esc = x => String(x).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -63,6 +63,11 @@
   ];
   document.getElementById("tiles").innerHTML = s.played === 0 ? "" : tiles.map(t =>
     '<div class="tile"><div class="v">' + esc(t.v) + '</div><div class="l">' + esc(t.l) + '</div></div>').join("");
+
+  if (s.played > 0 && s.ladderNote) {
+    document.getElementById("tiles").insertAdjacentHTML("afterend",
+      '<p class="sub" style="margin-top:10px">' + esc(s.ladderNote) + '</p>');
+  }
 
   const res = document.getElementById("results");
   if (!s.results.length) {
