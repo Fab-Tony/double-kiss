@@ -36,6 +36,10 @@ targets, results).
 
 ## Roster/season
 
+- 2026-09-08 — **Ladder position dropped from news** (Tony): the league's public
+  ladder has no real ranking logic (match wins only, no losses, no points) so it's
+  not worth surfacing in news items. Removed from the Wk 7–8 news body; still shown,
+  heavily caveated, on the Stats page tile. Cache-bust to `?v=24`.
 - 2026-09-08 — **Wk 7 & 8 results: back-to-back home losses, 2–5 each.**
   Wk 7 vs Unbelief and Wk 8 vs Iron 4 both lost 2–5 (Arul 2 & 3 games, Angus
   and Kate splitting the rest). Season now 3–5, 23–29 on match points, 12th
