@@ -6,6 +6,10 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-08 — **Weekly FargoRate sync** (cache v23): live ratings and
+  `divisionPlayers` refreshed across all 64 division players (3 new: Mitchell
+  Tucker, Sean McAllister, Omid Neshadi). Cache-bust to `?v=23` (data.js /
+  app.js / styles.css) across all pages.
 - 2026-07-27 — **Live FargoRate sync + Players page** (cache v18). New
   `players.html`: all 57 division players ranked by live Fargo, with team and win
   rate, searchable and sortable (Fargo / Win % / Name / Team), Double Kiss rows
@@ -32,6 +36,13 @@ targets, results).
 
 ## Roster/season
 
+- 2026-09-08 — **Wk 7 & 8 results: back-to-back home losses, 2–5 each.**
+  Wk 7 vs Unbelief and Wk 8 vs Iron 4 both lost 2–5 (Arul 2 & 3 games, Angus
+  and Kate splitting the rest). Season now 3–5, 23–29 on match points, 12th
+  of 13 (level with Freeballers on match wins). Corrected Wk 8 lineup to match
+  what was actually played — Angus, not Oscar. Ratings refreshed live: Arul
+  570, Angus 511, Tony 438, Kate 367 (Oscar unchanged at 485). T-shirts are on
+  order (black or navy, Gilas-style).
 - 2026-07-27 — **Data now sourced from the FargoRate LMS public reports.** Player
   ratings switched to live Fargo (was season-start snapshot); `divisionPlayers`,
   `FARGO_ASOF` and `FARGO_SOURCES` added to `data.js`. Squads refreshed — Break &
