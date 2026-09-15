@@ -6,6 +6,14 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-15 — **Weekly FargoRate sync** (cache v25): Wk 9 result (5–2 away over
+  Cue The Good Times), live ratings and `divisionPlayers` refreshed across all 64
+  division players, squads re-synced (Raymart Pangan now listed at Gilas, Andrew
+  Samarjia at Iron 4). Ladder tile now 10th of 13 with a reworked caveat (level
+  with Extorting Dogs on 28 match wins, better record, still listed below them).
+  News: t‑shirts ordered and on the way; Wk 9 write‑up. Cache-bust to `?v=25`
+  (data.js / app.js / styles.css) across all pages.
+
 - 2026-09-08 — **Weekly FargoRate sync** (cache v23): live ratings and
   `divisionPlayers` refreshed across all 64 division players (3 new: Mitchell
   Tucker, Sean McAllister, Omid Neshadi). Cache-bust to `?v=23` (data.js /
