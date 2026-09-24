@@ -55,4 +55,63 @@
     '<span>' + t.label + '</span></a>'
   ).join("");
   document.body.appendChild(nav);
+
+  // ---- player card sheet: any element with data-card="Name" opens it ----
+  const esc = x => String(x).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+  const sheet = document.createElement("div");
+  sheet.className = "pcsheet"; sheet.hidden = true;
+  sheet.innerHTML = '<div class="pcback"></div><div class="pcbox" role="dialog" aria-modal="true" aria-labelledby="pcname"></div>';
+  document.body.appendChild(sheet);
+  const box = sheet.querySelector(".pcbox");
+  let lastFocus = null;
+
+  function openCard(name) {
+    const c = D.card && D.card(name);
+    if (!c) return;
+    const gl = c.gp - c.gw, pctv = c.gp ? Math.round(c.gw / c.gp * 100) : null;
+    const tag = c.us ? "" : (c.next ? '<span class="pcnext">Next opponent \u00b7 Wk ' + c.next + '</span>' : "");
+    const weeks = c.weeks.length ? [...c.weeks].reverse().map(w => {
+      const cls = w.w > w.l ? "up" : w.w < w.l ? "dn" : "";
+      const ha = w.ha === "Home" ? "H" : w.ha === "Away" ? "A" : "";
+      return '<div class="pcwk"><div class="pcwl"><b>Wk ' + w.wk + ' \u00b7 vs ' + esc(w.op) + (ha ? ' (' + ha + ')' : '') + '</b>' +
+        '<small>' + esc(w.date) + ' \u00b7 team <span class="tr ' + (w.team === "W" ? "up" : "dn") + '">' + w.team + ' ' + w.score + '</span></small></div>' +
+        '<div class="pcsc ' + cls + '">' + w.w + '\u2013' + w.l + '</div></div>';
+    }).join("") : '<div class="pcempty">Hasn\u2019t played yet this season.</div>';
+    const sub = (c.allGp && c.allGp > c.gp)
+      ? '<div class="pcnote">Also subbed for other teams \u2014 ' + c.allGw + '/' + c.allGp + ' games across the division. Weeks below are ' + esc(c.team) + ' only.</div>' : "";
+    box.innerHTML =
+      '<button class="pcx" type="button" aria-label="Close">\u00d7</button>' +
+      '<div class="pchead"><div><div class="pcnm" id="pcname">' + esc(c.name) + '</div>' +
+      '<div class="pctm">' + esc(c.team) + ' ' + tag + '</div></div>' +
+      '<div class="pcfg">' + (c.r || "\u2014") + '<small>Fargo</small></div></div>' +
+      '<div class="pcstats">' +
+        '<div><b>' + c.gw + '\u2013' + gl + '</b><small>games W\u2013L</small></div>' +
+        '<div><b>' + (pctv == null ? "\u2014" : pctv + "%") + '</b><small>win rate</small></div>' +
+        '<div><b>' + c.weeks.length + '</b><small>nights</small></div>' +
+        '<div><b>' + c.br + ' / ' + c.tr + '</b><small>B&amp;R / TR</small></div>' +
+      '</div>' + sub +
+      '<h3 class="pch">Week by week</h3><div class="pcweeks">' + weeks + '</div>' +
+      '<div class="pcfoot">7 games a night \u00b7 FargoRate LMS \u00b7 as at ' + esc(D.FARGO_ASOF || "") + '</div>';
+    lastFocus = document.activeElement;
+    sheet.hidden = false; document.body.classList.add("pcopen");
+    requestAnimationFrame(() => { sheet.classList.add("show"); box.querySelector(".pcx").focus(); });
+  }
+  function closeCard() {
+    sheet.classList.remove("show"); document.body.classList.remove("pcopen");
+    setTimeout(() => { sheet.hidden = true; }, 180);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  sheet.addEventListener("click", e => { if (e.target.closest(".pcx") || e.target.classList.contains("pcback")) closeCard(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) closeCard(); });
+  document.addEventListener("click", e => {
+    const el = e.target.closest("[data-card]");
+    if (!el || sheet.contains(el)) return;
+    e.preventDefault(); e.stopPropagation(); openCard(el.dataset.card);
+  }, true);
+  document.addEventListener("keydown", e => {
+    const el = e.target.closest && e.target.closest("[data-card]");
+    if (el && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openCard(el.dataset.card); }
+  });
+  // mark tappable: pages call DK.cardAttr(name) -> ' data-card="..." tabindex="0"' or ""
+  D.cardAttr = name => (D.card && D.card(name)) ? ' data-card="' + esc(name) + '" tabindex="0" role="button"' : "";
 })();

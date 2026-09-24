@@ -6,6 +6,12 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-24 — **Player cards** (cache v27): tap one of our players, or a player from
+  next week's opponent, on Teams / Players / Roster / Stats to open a card showing Fargo,
+  season games W–L, win rate, B&R/TR and every night week by week (games W–L, opponent,
+  team result). Data lives in `playerCards` in data.js (our team + next opponent, from
+  the LMS team report); the shared sheet lives in app.js (`DK.card`, `DK.cardAttr`).
+
 - 2026-09-24 — **Weekly FargoRate sync** (cache v26): Wk 10 result (6–1 away over
   Balls Deep, Arul 7/7), live ratings and `divisionPlayers` refreshed across all 64
   division players, squads re-synced. Record 5–5, 34–32 on match points. Ladder

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Players · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -57,8 +57,8 @@
   <footer id="foot"></footer>
 </div>
 
-<script src="data.js?v=26"></script>
-<script src="app.js?v=26"></script>
+<script src="data.js?v=27"></script>
+<script src="app.js?v=27"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -87,7 +87,7 @@
       const wp = p.wp == null
         ? '<span class="dim">—</span>'
         : p.wp + '%<small>' + p.gw + '/' + p.gp + '</small>';
-      return '<tr class="' + (us ? "us" : "") + '">' +
+      return '<tr class="' + (us ? "us" : "") + '"' + D.cardAttr(p.name) + '>' +
         '<td class="rk">' + (sort === "r" ? (i + 1) : "") + '</td>' +
         '<td><div class="nm">' + esc(p.name) + '</div><div class="tm">' + esc(p.team) + '</div></td>' +
         '<td class="fg">' + p.r + '</td>' +

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Teams · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -16,7 +16,7 @@
 <body data-page="teams">
 <div class="wrap">
   <h1>Teams</h1>
-  <div class="sub">The 13 Monday teams — tap for the squad and FargoRate ratings. The number is each team's top-three total; the three who play must stay under <b style="color:var(--ink)">1775</b>, so teams shown in <span style="color:var(--danger)">red</span> can't field their strongest trio.</div>
+  <div class="sub">The 13 Monday teams — tap for the squad and FargoRate ratings. Tap one of our players, or next week's opponents, for their week-by-week card. The number is each team's top-three total; the three who play must stay under <b style="color:var(--ink)">1775</b>, so teams shown in <span style="color:var(--danger)">red</span> can't field their strongest trio.</div>
 
   <a class="btn" href="players.html" style="margin-bottom:14px">
     <span><b>All players</b><small>Every player in the division ranked by Fargo and win rate</small></span>
@@ -32,8 +32,8 @@
   <footer>Ranked by top-three FargoRate total.</footer>
 </div>
 
-<script src="data.js?v=26"></script>
-<script src="app.js?v=26"></script>
+<script src="data.js?v=27"></script>
+<script src="app.js?v=27"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -77,7 +77,7 @@
       const rows = [...t.players].sort((a, b) => (b.r || 0) - (a.r || 0)).map(p => {
         const form = p.wp == null ? '<div class="rl">not played yet</div>'
                                   : '<div class="rl">' + p.wp + '% · ' + p.gw + '/' + p.gp + ' games</div>';
-        return '<div class="row"><div><div class="nm">' + esc(p.name) + (p.c ? ' <span class="capb">C</span>' : '') +
+        return '<div class="row"' + D.cardAttr(p.name) + '><div><div class="nm">' + esc(p.name) + (p.c ? ' <span class="capb">C</span>' : '') +
           '</div>' + form + '</div>' +
           (p.r ? ('<div class="rr">' + p.r + '</div>') : '<div class="rr none">unrated</div>') +
           '</div>';

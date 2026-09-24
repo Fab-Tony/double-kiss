@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=26"></script>
-<script src="app.js?v=26"></script>
+<script src="data.js?v=27"></script>
+<script src="app.js?v=27"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -150,7 +150,7 @@
     if (!p.finals) { cls = "off"; txt = "Not contesting Finals — expected to drop after mid-Sept"; }
     else if (sched >= p.target) { cls = "ok"; txt = "On track — rostered for " + sched; }
     else { cls = "warn"; txt = "Only rostered " + sched + " of " + p.target + " needed"; }
-    return '<div class="rcard"><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
+    return '<div class="rcard"' + D.cardAttr(p.name) + '><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +
       '<div class="mid"><div class="nm">' + esc(p.name) + '</div>' +
       '<div class="rl" style="' + leaveStyle + '">' + esc(leaveTxt) + '</div>' +
       '<div class="status ' + cls + '">' + txt + '</div>' +

@@ -292,6 +292,85 @@ window.DK = (function () {
 
   ];
 
+  // Player cards — week-by-week games for OUR squad and NEXT WEEK'S OPPONENT only.
+  // From the FargoRate LMS team report (DivisionTeamReportBCAPL?teamId=...). Each
+  // player plays 7 games a night, so w = games won and losses = 7 - w. A week
+  // missing from a player's map = didn't play. Team rows: op/ha/mf/ma = opponent,
+  // Home/Away/Bye, match points for/against. Swap the opponent block each weekly sync.
+  const GAMES_PER_NIGHT = 7;
+  const playerCards = {
+    "Double Kiss": {
+      teamId: "f74f1874-1ccf-41bb-85b1-b48a0186a4e9",
+      weeks: [
+        { wk: 1,  op: "Extorting Dogs",     ha: "Away", mf: 2, ma: 5 },
+        { wk: 2,  op: "Shooters",           ha: "Away", mf: 5, ma: 2 },
+        { wk: 3,  op: "BYE",                ha: "Bye",  mf: 3, ma: 0 },
+        { wk: 4,  op: "Dragonball Z",       ha: "Home", mf: 1, ma: 6 },
+        { wk: 5,  op: "Break & Enter",      ha: "Away", mf: 2, ma: 5 },
+        { wk: 6,  op: "Freeballers",        ha: "Home", mf: 6, ma: 1 },
+        { wk: 7,  op: "Unbelief",           ha: "Home", mf: 2, ma: 5 },
+        { wk: 8,  op: "Iron 4",             ha: "Home", mf: 2, ma: 5 },
+        { wk: 9,  op: "Cue The Good Times", ha: "Away", mf: 5, ma: 2 },
+        { wk: 10, op: "Balls Deep",         ha: "Away", mf: 6, ma: 1 },
+      ],
+      players: {
+        "Arul Baskaran": { br: 3, tr: 3, w: { 1: 3, 2: 5, 5: 5, 6: 5, 7: 2, 8: 3, 10: 7 } },
+        "Angus Crump":   { br: 1, tr: 1, w: { 1: 3, 4: 1, 5: 4, 7: 2, 8: 1, 9: 2 } },
+        "Oscar Kovacs":  { br: 3, tr: 0, w: { 1: 2, 4: 0, 5: 3, 6: 4, 9: 4, 10: 4 } },
+        "Tony Brooks":   { br: 0, tr: 0, w: { 2: 1, 6: 4, 10: 2 } },
+        "Kate Ridgeway": { br: 0, tr: 0, w: { 2: 2, 7: 2, 8: 1, 9: 2 } },
+        "Liam Anderson": { br: 0, tr: 0, w: { 4: 2 } },
+      },
+    },
+    // Next opponent: Wk 11, Mon 28 Sep — Nice Rack (away at us).
+    "Nice Rack": {
+      teamId: "cd89bc95-d169-4061-8f45-b48a0186a50f",
+      next: 11,
+      weeks: [
+        { wk: 1,  op: "Unbelief",           ha: "Away", mf: 6, ma: 2 },
+        { wk: 2,  op: "Gilas",              ha: "Away", mf: 3, ma: 5 },
+        { wk: 3,  op: "Marvin's Crew",      ha: "Home", mf: 1, ma: 6 },
+        { wk: 4,  op: "BYE",                ha: "Bye",  mf: 3, ma: 0 },
+        { wk: 5,  op: "Shooters",           ha: "Home", mf: 5, ma: 2 },
+        { wk: 6,  op: "Cue The Good Times", ha: "Away", mf: 6, ma: 1 },
+        { wk: 7,  op: "Balls Deep",         ha: "Home", mf: 3, ma: 5 },
+        { wk: 8,  op: "Break & Enter",      ha: "Away", mf: 2, ma: 5 },
+        { wk: 9,  op: "Extorting Dogs",     ha: "Home", mf: 5, ma: 2 },
+        { wk: 10, op: "Dragonball Z",       ha: "Away", mf: 1, ma: 6 },
+      ],
+      players: {
+        "Saif Mirza":       { br: 2, tr: 1, w: { 1: 3, 2: 3, 6: 6, 8: 6 } },
+        "Kate Harrison":    { br: 0, tr: 0, w: { 1: 5 } },
+        "Kevin Wang":       { br: 1, tr: 1, w: { 2: 2, 3: 3, 5: 3, 6: 3, 7: 5, 8: 4, 9: 2, 10: 4 } },
+        "Michael Eskander": { br: 0, tr: 0, w: { 3: 1, 5: 2, 7: 5, 9: 3, 10: 0 } },
+        "Hadi Cherri":      { br: 0, tr: 1, w: { 1: 2, 2: 2, 3: 1, 5: 4, 6: 3, 7: 4, 8: 2, 9: 3, 10: 2 } },
+      },
+    },
+  };
+
+  // Resolve a name (full, or a roster first name like "Tony") to its card, or null.
+  function card(name) {
+    let team = null, full = null;
+    for (const t in playerCards) {
+      const ps = playerCards[t].players;
+      if (ps[name]) { team = t; full = name; break; }
+      const hit = Object.keys(ps).find(n => n.split(" ")[0] === name);
+      if (hit && !full && t === TEAM) { team = t; full = hit; }
+    }
+    if (!full) return null;
+    const pc = playerCards[team], p = pc.players[full];
+    const dp = divisionPlayers.find(x => x.name === full) || {};
+    const weeks = pc.weeks.filter(w => p.w[w.wk] != null).map(w => ({
+      wk: w.wk, op: w.op, ha: w.ha, date: (fixtures.find(f => f.wk === w.wk) || {}).date || "",
+      w: p.w[w.wk], l: GAMES_PER_NIGHT - p.w[w.wk],
+      team: w.mf > w.ma ? "W" : w.mf < w.ma ? "L" : "D", score: w.mf + "\u2013" + w.ma,
+    }));
+    const gw = weeks.reduce((a, x) => a + x.w, 0), gp = weeks.length * GAMES_PER_NIGHT;
+    return { name: full, team, us: team === TEAM, next: pc.next || null, r: dp.r || null,
+             br: p.br, tr: p.tr, weeks, gw, gp,
+             allGw: dp.gw, allGp: dp.gp };   // allGw/allGp include games subbed for other teams
+  }
+
   const stats = {
     // Team record. matchFor/matchAgainst = match points (7 per night); the Wk 3
     // bye is credited 3-0 by the league, so it counts in both the record and the
@@ -357,6 +436,6 @@ window.DK = (function () {
   // table allocations for a given week (or null if none listed)
   function tablesFor(wk) { return tableAlloc[wk] || null; }
 
-  return { TEAM, SEASON, LEAGUE, VENUE, PLAYERS_PER_NIGHT, roster, fixtures, teams, divisionPlayers, FARGO_ASOF, FARGO_SOURCES, tableAlloc, news, stats,
+  return { TEAM, SEASON, LEAGUE, VENUE, PLAYERS_PER_NIGHT, roster, fixtures, teams, divisionPlayers, FARGO_ASOF, FARGO_SOURCES, tableAlloc, news, stats, playerCards, GAMES_PER_NIGHT, card,
            fixture, isMatch, matchesAvailable, scheduledGames, availability, nextIndex, nextMatchIndex, tablesFor };
 })();
