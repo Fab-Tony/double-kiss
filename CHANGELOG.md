@@ -6,6 +6,8 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-24 — **Roster lineup names open player cards** (cache v28): every name in a week's lineup on the Roster page is now tappable, including Liam Anderson (sub).
+
 - 2026-09-24 — **Player cards** (cache v27): tap one of our players, or a player from
   next week's opponent, on Teams / Players / Roster / Stats to open a card showing Fargo,
   season games W–L, win rate, B&R/TR and every night week by week (games W–L, opponent,
