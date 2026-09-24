@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Teams · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=28">
+<link rel="stylesheet" href="styles.css?v=29">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -32,8 +32,8 @@
   <footer>Ranked by top-three FargoRate total.</footer>
 </div>
 
-<script src="data.js?v=28"></script>
-<script src="app.js?v=28"></script>
+<script src="data.js?v=29"></script>
+<script src="app.js?v=29"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -83,7 +83,8 @@
           '</div>';
       }).join("");
       const note = over ? '<div class="overnote">Top three total ' + t3 + ' — over the 1775 cap, so they can\'t field their three strongest together.</div>' : '';
-      body = '<div class="gbody"><div class="who">' + rows + '</div>' + note + '</div>';
+      body = '<div class="gbody"><div class="who">' + rows + '</div>' + note +
+        '<a class="tmlink" href="' + D.teamHref(t.name) + '">' + esc(t.name) + ' team page \u203a</a></div>';
     }
     g.innerHTML = head + body;
     wrap.appendChild(g);

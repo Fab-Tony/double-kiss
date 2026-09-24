@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Team · Double Kiss</title>
+<link rel="stylesheet" href="styles.css?v=29">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
+<link rel="manifest" href="manifest.json?v=22">
+<meta name="theme-color" content="#0a1122">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Double Kiss">
+</head>
+<body data-page="teams">
+<div class="wrap">
+  <div class="tmhead"><div><h1 id="tname">Team</h1><div class="sub" id="tsub" style="margin:2px 0 0"></div></div><span class="t3pill" id="t3"></span></div>
+
+  <h2>Form</h2>
+  <div id="form"></div>
+
+  <h2>Squad</h2>
+  <div class="sub" id="sqnote" style="margin-top:-4px"></div>
+  <div class="who" id="squad"></div>
+
+  <h2>Us vs them</h2>
+  <div id="h2h"></div>
+
+  <a class="btn" href="teams.html" style="margin-top:18px">
+    <span><b>All teams</b><small>The 13 Monday teams, ranked by top-three Fargo</small></span>
+    <span class="arw" aria-hidden="true">›</span>
+  </a>
+
+  <footer id="foot"></footer>
+</div>
+
+<script src="data.js?v=29"></script>
+<script src="app.js?v=29"></script>
+<script>
+(function () {
+  const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+  const name = new URLSearchParams(location.search).get("t") || "";
+  const t = D.teams.find(x => x.name === name);
+  if (!t) {
+    document.getElementById("tname").textContent = "Team not found";
+    document.querySelector(".wrap").querySelectorAll("h2,#form,#squad,#h2h,#sqnote").forEach(e => e.remove());
+    return;
+  }
+  document.title = t.name + " · Double Kiss";
+  document.getElementById("tname").textContent = t.name;
+
+  const pc = (D.playerCards || {})[t.name];
+  const next = D.fixtures[D.nextMatchIndex()];
+  const isNext = next && next.op === t.name;
+  let sub = "Captain " + t.captain + " · " + t.players.length + " players";
+  if (t.us) sub = "That's us · " + sub;
+  else if (isNext) sub = "Next opponent · Wk " + next.wk + ", " + next.date + " · " + (next.ha === "Home" ? "we're at home" : "we're away") + " · " + sub;
+  document.getElementById("tsub").textContent = sub;
+
+  const rs = t.players.filter(p => p.r).map(p => p.r).sort((a, b) => b - a);
+  const t3 = rs.length ? rs.slice(0, 3).reduce((a, b) => a + b, 0) : null;
+  const t3el = document.getElementById("t3");
+  if (t3 != null) { t3el.textContent = t3; t3el.title = "Top-three Fargo total (cap 1775)"; if (t3 > 1775) t3el.classList.add("over"); }
+  else t3el.remove();
+
+  // ---- form: only for teams we pull week-by-week (us + next opponent)
+  const formEl = document.getElementById("form");
+  if (pc) {
+    const played = pc.weeks;
+    const res = w => w.ha === "Bye" ? "B" : w.mf > w.ma ? "W" : w.mf < w.ma ? "L" : "D";
+    const won = played.filter(w => w.ha === "Bye" || res(w) === "W").length;   // bye credited as a win, as the league does
+    const lost = played.filter(w => w.ha !== "Bye" && res(w) === "L").length;
+    const mf = played.reduce((a, w) => a + w.mf, 0), ma = played.reduce((a, w) => a + w.ma, 0);
+    const chips = played.map(w => '<span class="' + res(w) + '" title="Wk ' + w.wk + '">' + (res(w) === "B" ? "–" : res(w)) + '</span>').join("");
+    const rows = [...played].reverse().map(w => {
+      const r = res(w), rc = r === "W" ? "home" : r === "L" ? "away" : "bye";
+      return '<tr><td class="wk">' + w.wk + '</td><td>' + (w.ha === "Bye" ? "Bye" : D.teamLink(w.op)) + '</td><td>' +
+        (w.ha === "Bye" ? "" : esc(w.ha)) + '</td><td><span class="tag ' + rc + '">' + (r === "B" ? "—" : r) + '</span></td><td>' +
+        w.mf + '–' + w.ma + (w.ha === "Bye" ? " credited" : "") + '</td></tr>';
+    }).join("");
+    formEl.innerHTML =
+      '<div class="sub" style="margin-bottom:6px"><b style="color:var(--ink)">' + won + '–' + lost + '</b> win–loss · <b style="color:var(--ink)">' +
+      mf + '–' + ma + '</b> on match points</div>' +
+      '<div class="form">' + chips + '</div>' +
+      '<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Wk</th><th>Opponent</th><th>H/A</th><th>Result</th><th>Score</th></tr></thead><tbody>' +
+      rows + '</tbody></table></div>';
+  } else {
+    formEl.innerHTML = '<div class="card"><div class="empty" style="padding:4px 0">Week-by-week form is pulled for our team and next week’s opponent only. It’ll appear here the week we play ' + esc(t.name) + '.</div></div>';
+  }
+
+  // ---- squad: Fargo + win rate; tap for a player card where we have one
+  const hasCards = t.players.some(p => D.card(p.name));
+  document.getElementById("sqnote").textContent = hasCards ? "Tap a player for their week-by-week card." : "";
+  document.getElementById("squad").innerHTML = [...t.players].sort((a, b) => (b.r || 0) - (a.r || 0)).map(p => {
+    const form = p.wp == null ? '<div class="rl">not played yet</div>'
+                              : '<div class="rl">' + p.wp + '% · ' + p.gw + '/' + p.gp + ' games</div>';
+    return '<div class="row"' + D.cardAttr(p.name) + '><div><div class="nm">' + esc(p.name) + (p.c ? ' <span class="capb">C</span>' : '') +
+      '</div>' + form + '</div>' + (p.r ? '<div class="rr">' + p.r + '</div>' : '<div class="rr none">unrated</div>') + '</div>';
+  }).join("");
+
+  // ---- us vs them: our fixtures against this team, with results where played
+  const h2h = document.getElementById("h2h");
+  if (t.us) { h2h.previousElementSibling.remove(); h2h.remove(); }
+  else {
+    const fx = D.fixtures.filter(f => f.op === t.name);
+    h2h.innerHTML = fx.length ? '<div class="tablewrap"><table><thead><tr><th>Wk</th><th>Date</th><th>H/A</th><th>Result</th></tr></thead><tbody>' +
+      fx.map(f => {
+        const r = D.stats.results.find(x => x.wk === f.wk);
+        const rc = r ? (r.result === "W" ? "home" : "away") : "";
+        return '<tr><td class="wk">' + f.wk + '</td><td>' + esc(f.date) + '</td><td>' + esc(f.ha) + '</td><td>' +
+          (r ? '<span class="tag ' + rc + '">' + esc(r.result) + '</span> ' + esc(r.score) : '<span style="color:var(--muted)">Table ' + esc(f.tbl) + '</span>') + '</td></tr>';
+      }).join("") + '</tbody></table></div>'
+      : '<div class="card"><div class="empty" style="padding:4px 0">We don’t play ' + esc(t.name) + ' in the regular season.</div></div>';
+  }
+
+  document.getElementById("foot").textContent = "Ratings as at " + D.FARGO_ASOF + " · FargoRate LMS public report";
+})();
+</script>
+</body>
+</html>

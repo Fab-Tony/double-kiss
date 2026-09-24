@@ -112,6 +112,10 @@
     const el = e.target.closest && e.target.closest("[data-card]");
     if (el && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openCard(el.dataset.card); }
   });
+  // team page links: only for real division teams (not BYE / Finals)
+  D.teamHref = name => (D.teams || []).some(t => t.name === name) ? "team.html?t=" + encodeURIComponent(name) : null;
+  D.teamLink = (name, text) => { const h = D.teamHref(name); const t = esc(text == null ? name : text);
+    return h ? '<a class="tlink" href="' + h + '">' + t + '</a>' : t; };
   // mark tappable: pages call DK.cardAttr(name) -> ' data-card="..." tabindex="0"' or ""
   D.cardAttr = name => (D.card && D.card(name)) ? ' data-card="' + esc(name) + '" tabindex="0" role="button"' : "";
 })();

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=28">
+<link rel="stylesheet" href="styles.css?v=29">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -36,8 +36,8 @@
   <footer>Sydney Diamond League · Club9, North Strathfield · Season 28</footer>
 </div>
 
-<script src="data.js?v=28"></script>
-<script src="app.js?v=28"></script>
+<script src="data.js?v=29"></script>
+<script src="app.js?v=29"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -59,7 +59,7 @@
         '<span class="ha tag finals">FINALS</span>';
     } else {
       nextEl.innerHTML = '<div class="lbl">Round ' + f.wk + ' · ' + f.date + '</div>' +
-        '<div class="op">vs ' + esc(f.op) + '</div>' +
+        '<div class="op">vs ' + D.teamLink(f.op) + '</div>' +
         '<div class="meta">Table ' + f.tbl + ' · ' + esc(D.VENUE) + ' · 7pm</div>' +
         '<span class="ha tag ' + f.ha.toLowerCase() + '">' + f.ha.toUpperCase() + '</span>';
     }
@@ -76,7 +76,7 @@
   } else {
     const f = D.fixtures[mi], rostered = f.lineup.length, shortNight = rostered < 3;
     whoHdr.textContent = "Lineup · Wk " + f.wk + " vs " + f.op;
-    let rows = f.lineup.map(name => '<div class="row"><div class="nm">' + esc(name) + '</div>' +
+    let rows = f.lineup.map(name => '<div class="row"' + D.cardAttr(name.replace(/ \(sub\)$/, "")) + '><div class="nm">' + esc(name) + '</div>' +
       (ratingOf[name] != null ? '<div class="fargo">(' + ratingOf[name] + ')</div>' : '') + '</div>').join("");
     if (shortNight) rows += '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
       (3 - rostered) + ' more</div></div><div class="st out">TBC</div></div>';
@@ -110,7 +110,7 @@
       }
       const ha = f.ha === "Home" ? "(H)" : "(A)";
       return '<div class="up">' + cal + '<div class="upmain">' +
-        '<div class="upt">vs ' + esc(f.op) + ' ' + ha + '</div>' +
+        '<div class="upt">vs ' + D.teamLink(f.op) + ' ' + ha + '</div>' +
         '<div class="ups">Week ' + f.wk + ' · Table ' + f.tbl + '</div></div></div>';
     }).join("");
   }

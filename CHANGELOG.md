@@ -6,6 +6,13 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-24 — **Team pages** (cache v29): new `team.html?t=<team>`. Opponent names on
+  Home (next match + upcoming), Roster (link in each open match), Stats (results) and
+  Teams (link in each squad) now go to that team's page: record and match points, a
+  W/L form strip and week-by-week results, squad with Fargo and win rate (tap a player
+  for their card), and our fixtures against them. Form only exists for teams in
+  `playerCards` (us + next opponent); others show a note. Home lineup names open cards too.
+
 - 2026-09-24 — **Roster lineup names open player cards** (cache v28): every name in a week's lineup on the Roster page is now tappable, including Liam Anderson (sub).
 
 - 2026-09-24 — **Player cards** (cache v27): tap one of our players, or a player from

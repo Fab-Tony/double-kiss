@@ -280,3 +280,14 @@ body.pcopen{overflow:hidden}
 .pcempty{color:var(--muted);font-size:13.5px;padding:8px 0}
 .pcfoot{color:var(--muted);font-size:11.5px;margin-top:14px;text-align:center}
 @media (max-width:380px){.pcstats{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- team links + team page ---- */
+a.tlink{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;text-decoration-thickness:2px}
+.tmhead{display:flex;align-items:flex-start;gap:12px;margin:20px 0 4px}
+.tmhead h1{margin:0}
+.tmhead .t3pill{margin-left:auto}
+.form{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+.form span{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:13px}
+.form .W{background:rgba(31,122,77,.25);color:var(--home)} .form .L{background:rgba(150,60,70,.25);color:var(--danger)}
+.form .B{background:var(--panel2);color:var(--muted)}
+.tmlink{display:inline-block;margin-top:10px;font-size:13.5px;font-weight:700;text-decoration:none}
