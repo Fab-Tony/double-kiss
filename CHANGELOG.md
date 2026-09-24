@@ -6,6 +6,12 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-24 — **Weekly FargoRate sync** (cache v26): Wk 10 result (6–1 away over
+  Balls Deep, Arul 7/7), live ratings and `divisionPlayers` refreshed across all 64
+  division players, squads re-synced. Record 5–5, 34–32 on match points. Ladder
+  caveat updated (level with Extorting Dogs on 34 match wins, better record, still
+  listed below). News: Wk 10 write‑up. Cache-bust to `?v=26` across all pages.
+
 - 2026-09-15 — **Weekly FargoRate sync** (cache v25): Wk 9 result (5–2 away over
   Cue The Good Times), live ratings and `divisionPlayers` refreshed across all 64
   division players, squads re-synced (Raymart Pangan now listed at Gilas, Andrew
