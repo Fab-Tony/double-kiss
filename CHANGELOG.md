@@ -6,6 +6,13 @@ targets, results).
 
 ## App/UI
 
+- 2026-09-29 — **Weekly FargoRate sync** (cache v30): Wk 11 result (1–6 at home to
+  Nice Rack; Oscar 3, Angus 2, Kate 2). Record 5–6, 35–38 on match points, games
+  83/210. Our squad, Gilas and Nice Rack numbers synced from their team reports. The
+  LMS hadn't rerun the standings or ratings reports yet, so Fargo stays as at 24 Sep
+  and the ladder tile is marked "(Wk 10)". Player cards: opponent block swapped to Gilas
+  (Wk 12). News: Wk 11 write-up.
+
 - 2026-09-24 — **Team pages** (cache v29): new `team.html?t=<team>`. Opponent names on
   Home (next match + upcoming), Roster (link in each open match), Stats (results) and
   Teams (link in each squad) now go to that team's page: record and match points, a
