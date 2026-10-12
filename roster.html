@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=30">
+<link rel="stylesheet" href="styles.css?v=31">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=30"></script>
-<script src="app.js?v=30"></script>
+<script src="data.js?v=31"></script>
+<script src="app.js?v=31"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -148,7 +148,7 @@
     const leaveStyle = clear ? "color:var(--home)" : "color:var(--away)";
     const pct = Math.min(100, Math.round(sched / p.target * 100));
     let cls, txt;
-    if (!p.finals) { cls = "off"; txt = "Not contesting Finals — expected to drop after mid-Sept"; }
+    if (!p.finals) { cls = "off"; txt = p.finalsNote || "Not contesting Finals"; }
     else if (sched >= p.target) { cls = "ok"; txt = "On track — rostered for " + sched; }
     else { cls = "warn"; txt = "Only rostered " + sched + " of " + p.target + " needed"; }
     return '<div class="rcard"' + D.cardAttr(p.name) + '><div class="av">' + esc(p.name.slice(0, 1)) + '</div>' +

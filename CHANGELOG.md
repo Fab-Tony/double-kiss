@@ -6,6 +6,13 @@ targets, results).
 
 ## App/UI
 
+- 2026-10-13 — **Weekly FargoRate sync** (cache v31): Wk 12 result (5–2 away at Gilas;
+  Tony 4, Arul 4, Kate 1). Record 6–6, 40–40 on match points, games 92/231. All reports
+  at Wk 12, so live Fargo (13 Oct), every squad and the ladder are current again ("(Wk 10)"
+  tag dropped). Player cards: opponent block swapped to Marvin's Crew (Wk 13). Kate marked
+  away for Finals (`finalsNote` now drives the Roster finals status). News: Wk 12
+  write-up, t-shirts arrived, Kate away for Finals, roster rejig coming.
+
 - 2026-09-29 — **Weekly FargoRate sync** (cache v30): Wk 11 result (1–6 at home to
   Nice Rack; Oscar 3, Angus 2, Kate 2). Record 5–6, 35–38 on match points, games
   83/210. Our squad, Gilas and Nice Rack numbers synced from their team reports. The
