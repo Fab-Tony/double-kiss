@@ -6,6 +6,12 @@ targets, results).
 
 ## App/UI
 
+- 2026-10-21 — **Weekly FargoRate sync** (cache v32): Wk 13 result (2–6 at home to
+  Marvin's Crew; Arul 4, Angus 3, Tony 1). Record 6–7, 42–46, games 100/252. Live Fargo
+  21 Oct, all squads. Player cards: opponent block swapped to Nice Rack (Wk 14). Stats
+  ladder tile now shows the **Grand Ladder** position from the league (23rd of 29), not
+  the FargoRate division ladder. News: Wk 13 result + top-16 chances.
+
 - 2026-10-13 — **Weekly FargoRate sync** (cache v31): Wk 12 result (5–2 away at Gilas;
   Tony 4, Arul 4, Kate 1). Record 6–6, 40–40 on match points, games 92/231. All reports
   at Wk 12, so live Fargo (13 Oct), every squad and the ladder are current again ("(Wk 10)"
