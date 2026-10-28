@@ -6,6 +6,15 @@ targets, results).
 
 ## App/UI
 
+- 2026-10-28 — **Sync + playoff row** (cache v33): live Fargo 28 Oct and all squads (new:
+  John Maresovic, Marvin's Crew). Our Wk 14 v Nice Rack is **not yet entered in the LMS**
+  (both team reports blank, every other team at 14 weeks), so no result or stats change.
+  Player cards: opponent block swapped to Balls Deep (Wk 15). Lineups: Wk 15 Oscar, Tony,
+  Arul (Kate out). New fixture type `ha: "Playoff"` (wk "P", Mon 16 Nov, opponent TBA):
+  Tony, Oscar, Arul, Angus rostered, three picked on the night. Home, Roster and Tables
+  handle it, and `scheduledGames` now counts regular-season matches only. News trimmed to
+  four items.
+
 - 2026-10-21 — **Weekly FargoRate sync** (cache v32): Wk 13 result (2–6 at home to
   Marvin's Crew; Arul 4, Angus 3, Tony 1). Record 6–7, 42–46, games 100/252. Live Fargo
   21 Oct, all squads. Player cards: opponent block swapped to Nice Rack (Wk 14). Stats

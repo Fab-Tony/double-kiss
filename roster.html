@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roster · Double Kiss</title>
-<link rel="stylesheet" href="styles.css?v=32">
+<link rel="stylesheet" href="styles.css?v=33">
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=22">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
 <link rel="manifest" href="manifest.json?v=22">
@@ -32,8 +32,8 @@
   <footer>Season 28 · Sydney Diamond League</footer>
 </div>
 
-<script src="data.js?v=32"></script>
-<script src="app.js?v=32"></script>
+<script src="data.js?v=33"></script>
+<script src="app.js?v=33"></script>
 <script>
 (function () {
   const D = DK, esc = s => String(s).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
@@ -51,11 +51,12 @@
   D.fixtures.forEach((f, idx) => {
     const isBye = f.ha === "Bye";
     const isFinals = f.ha === "Finals";
+    const isPlayoff = f.ha === "Playoff";
     const isSpecial = isBye || isFinals;
     const rostered = f.lineup.length;
-    const shortNight = !isSpecial && rostered < 3;
+    const shortNight = !isSpecial && !isPlayoff && rostered < 3;
     const g = document.createElement("div");
-    g.className = "game" + (idx === mi ? " next" : "") + (isFinals ? " finals" : "");
+    g.className = "game" + (idx === mi ? " next" : "") + (isFinals || isPlayoff ? " finals" : "");
     g.dataset.wk = f.wk;
 
     const parts = f.date.split(" ").slice(-2);   // ["20","Jul"] — weekday-agnostic
@@ -66,6 +67,8 @@
       title = "Bye week"; sub = "Week " + f.wk;
     } else if (isFinals) {
       title = "Finals"; sub = esc(f.date) + " · " + esc(f.op.replace("Finals — ", "")) + " · Top 16";
+    } else if (isPlayoff) {
+      title = "Playoff (opponent TBA)"; sub = esc(f.date) + " · " + rostered + " rostered · team picked on the night";
     } else {
       const ha = f.ha === "Home" ? "(H)" : "(A)";
       title = "vs " + esc(f.op) + " " + ha;
@@ -83,7 +86,7 @@
     } else {
       const rows = f.lineup.map(name =>
         '<div class="row"' + D.cardAttr(name.replace(/ \(sub\)$/, "")) + '><div><div class="nm">' + esc(name) + '</div>' +
-        '</div><div class="st in">Playing</div></div>').join("");
+        '</div><div class="st in">' + (isPlayoff ? "Rostered" : "Playing") + '</div></div>').join("");
       const fillRow = shortNight
         ? '<div class="row out"><div><div class="nm">Fill-in needed</div><div class="rl">' +
           (3 - rostered) + ' more to field a legal team</div></div><div class="st out">TBC</div></div>'
@@ -91,7 +94,7 @@
       const banner = shortNight
         ? '<div class="fitbanner short">Only ' + rostered + ' available this week — line up a fill-in or it\'s a forfeit risk.</div>'
         : "";
-      const tl = D.teamHref(f.op) ? '<a class="tmlink" href="' + D.teamHref(f.op) + '">' + esc(f.op) + ' team page \u203a</a>' : "";
+      const tl = isPlayoff ? '<div class="sub" style="margin-top:8px">Three of these four play — picked on the night.</div>' : D.teamHref(f.op) ? '<a class="tmlink" href="' + D.teamHref(f.op) + '">' + esc(f.op) + ' team page \u203a</a>' : "";
       body = '<div class="gbody">' + banner + '<div class="who">' + rows + fillRow + '</div>' + tl + '</div>';
     }
     g.innerHTML = head + body;
