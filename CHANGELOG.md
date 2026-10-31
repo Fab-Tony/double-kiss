@@ -6,6 +6,10 @@ targets, results).
 
 ## App/UI
 
+- 2026-11-01 — **Weekly FargoRate sync** (cache v34): Wk 14 result (6–1 at home to Nice
+  Rack; Arul 7/7, Angus 4, Kate 3). Record 7–7, 48–47, games 114/273, 9 B&Rs. Live Fargo
+  1 Nov (Arul 619). News: Wk 14 write-up; 21 Oct top-16 item dropped (covered in the new one).
+
 - 2026-10-28 — **Sync + playoff row** (cache v33): live Fargo 28 Oct and all squads (new:
   John Maresovic, Marvin's Crew). Our Wk 14 v Nice Rack is **not yet entered in the LMS**
   (both team reports blank, every other team at 14 weeks), so no result or stats change.

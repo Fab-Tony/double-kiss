@@ -16,9 +16,9 @@ window.DK = (function () {
   const roster = [
     { name: "Tony",  role: "Captain", r: 437, out: [4, 5],       leave: "Was away 10 & 17 Aug \u2014 back now", target: 6, finals: true,  played: 5, gp: 35, gw: 12 },
     { name: "Oscar", role: "Player",  r: 490, out: [12, 13, 14], leave: "Away all October",                target: 6, finals: true,  played: 7, gp: 49, gw: 20 },
-    { name: "Kate",  role: "Player",  r: 370, out: [4, 5, 6, 15, "P", "F1", "F2"], leave: "Out Wk 15 (2 Nov), the playoff (16 Nov) and Finals (21\u201322 Nov)", target: 6, finals: false, finalsNote: "Away for Finals weekend (21\u201322 Nov)", played: 6, gp: 42, gw: 10 },
-    { name: "Arul",  role: "Player",  r: 595, out: [4],          leave: "Was away first fortnight of Aug", target: 8, finals: true,  played: 9, gp: 63, gw: 38 },
-    { name: "Angus", role: "Player",  r: 511, out: [],           leave: "Available all season",            target: 8, finals: true,  played: 8, gp: 56, gw: 18 },
+    { name: "Kate",  role: "Player",  r: 373, out: [4, 5, 6, 15, "P", "F1", "F2"], leave: "Out Wk 15 (2 Nov), the playoff (16 Nov) and Finals (21\u201322 Nov)", target: 6, finals: false, finalsNote: "Away for Finals weekend (21\u201322 Nov)", played: 7, gp: 49, gw: 13 },
+    { name: "Arul",  role: "Player",  r: 619, out: [4],          leave: "Was away first fortnight of Aug", target: 8, finals: true,  played: 10, gp: 70, gw: 45 },
+    { name: "Angus", role: "Player",  r: 512, out: [],           leave: "Available all season",            target: 8, finals: true,  played: 9, gp: 63, gw: 22 },
   ];;
 
   const PLAYERS_PER_NIGHT = 3; // only 3 play each Monday — the captain picks from those available
@@ -98,15 +98,15 @@ window.DK = (function () {
   const teams = [
 
     { name: "Balls Deep", captain: "Fenn Warth", players: [
-      { name: "Sev Gharedaghi", r: 485, wp: 50, gw: 42, gp: 84 },
-      { name: "Elliot Osborne", r: 411, wp: 37, gw: 26, gp: 70 },
+      { name: "Sev Gharedaghi", r: 486, wp: 50, gw: 42, gp: 84 },
+      { name: "Elliot Osborne", r: 409, wp: 37, gw: 26, gp: 70 },
       { name: "Gian Romeo", r: 333, wp: 21, gw: 12, gp: 56 },
-      { name: "Fenn Warth", r: 283, wp: 19, gw: 12, gp: 63, c: true },
+      { name: "Fenn Warth", r: 284, wp: 19, gw: 12, gp: 63, c: true },
     ] },
 
     { name: "Break & Enter", captain: "Nathan Wood", players: [
       { name: "Greg Jenkins", r: 698, wp: 61, gw: 30, gp: 49 },
-      { name: "Rob Carnell", r: 539, wp: 50, gw: 42, gp: 84 },
+      { name: "Rob Carnell", r: 538, wp: 50, gw: 42, gp: 84 },
       { name: "Rachel Lewis", r: 428, wp: 45, gw: 22, gp: 49 },
       { name: "Nathan Wood", r: 389, wp: 34, gw: 26, gp: 77, c: true },
     ] },
@@ -121,43 +121,43 @@ window.DK = (function () {
     ] },
 
     { name: "Double Kiss", captain: "Tony Brooks", us: true, players: [
-      { name: "Arul Baskaran", r: 595, wp: 60, gw: 38, gp: 63 },
-      { name: "Angus Crump", r: 511, wp: 32, gw: 18, gp: 56 },
+      { name: "Arul Baskaran", r: 619, wp: 64, gw: 45, gp: 70 },
+      { name: "Angus Crump", r: 512, wp: 35, gw: 22, gp: 63 },
       { name: "Oscar Kovacs", r: 490, wp: 41, gw: 20, gp: 49 },
-      { name: "Liam Anderson", r: 451, wp: 29, gw: 2, gp: 7 },
+      { name: "Liam Anderson", r: 459, wp: 29, gw: 2, gp: 7 },
       { name: "Tony Brooks", r: 437, wp: 34, gw: 12, gp: 35, c: true },
-      { name: "Kate Ridgeway", r: 370, wp: 24, gw: 10, gp: 42 },
+      { name: "Kate Ridgeway", r: 373, wp: 27, gw: 13, gp: 49 },
     ] },
 
     { name: "Dragonball Z", captain: "Adam Wowk", players: [
       { name: "John Bowkett", r: 720, wp: 76, gw: 32, gp: 42 },
-      { name: "Maghmud Sadien", r: 502, wp: 55, gw: 31, gp: 56 },
+      { name: "Maghmud Sadien", r: 503, wp: 55, gw: 31, gp: 56 },
+      { name: "Steven Tien", r: 477, wp: 48, gw: 30, gp: 63 },
       { name: "Shaun Matthews", r: 474, wp: 45, gw: 19, gp: 42 },
-      { name: "Steven Tien", r: 461, wp: 48, gw: 30, gp: 63 },
-      { name: "Adam Wowk", r: 416, wp: 29, gw: 18, gp: 63, c: true },
+      { name: "Adam Wowk", r: 417, wp: 29, gw: 18, gp: 63, c: true },
     ] },
 
     { name: "Extorting Dogs", captain: "Will Yuan", players: [
       { name: "Chris Dam", r: 682, wp: 61, gw: 30, gp: 49 },
-      { name: "Adam Taylor", r: 629, wp: 70, gw: 39, gp: 56 },
+      { name: "Adam Taylor", r: 630, wp: 70, gw: 39, gp: 56 },
       { name: "Sam Stacy", r: 627, wp: 57, gw: 32, gp: 56 },
       { name: "Will Yuan", r: 483, wp: 51, gw: 28, gp: 55, c: true },
-      { name: "Liam Pratt", r: 453, wp: 37, gw: 18, gp: 49 },
+      { name: "Liam Pratt", r: 452, wp: 37, gw: 18, gp: 49 },
       { name: "Ned Pulido", r: 401, wp: 23, gw: 8, gp: 35 },
     ] },
 
     { name: "Freeballers", captain: "Josh Leary", players: [
-      { name: "Mark Harper", r: 557, wp: 56, gw: 43, gp: 77 },
-      { name: "Josh Leary", r: 466, wp: 41, gw: 37, gp: 91, c: true },
-      { name: "Gerard Crowe", r: 447, wp: 38, gw: 8, gp: 21 },
-      { name: "Joshua Mackintosh", r: 408, wp: 27, gw: 23, gp: 84 },
+      { name: "Mark Harper", r: 562, wp: 56, gw: 43, gp: 77 },
+      { name: "Josh Leary", r: 467, wp: 41, gw: 37, gp: 91, c: true },
+      { name: "Gerard Crowe", r: 448, wp: 38, gw: 8, gp: 21 },
+      { name: "Joshua Mackintosh", r: 403, wp: 27, gw: 23, gp: 84 },
     ] },
 
     { name: "Gilas", captain: "John Tan", players: [
       { name: "John Tan", r: 668, wp: 53, gw: 26, gp: 49, c: true },
       { name: "Raymart Pangan", r: 628 },
-      { name: "Alfie Compuesto", r: 558, wp: 64, gw: 36, gp: 56 },
-      { name: "Aldrin Aguilan", r: 546, wp: 50, gw: 28, gp: 56 },
+      { name: "Alfie Compuesto", r: 559, wp: 64, gw: 36, gp: 56 },
+      { name: "Aldrin Aguilan", r: 544, wp: 50, gw: 28, gp: 56 },
       { name: "Jan Amiel Baste", r: 539, wp: 48, gw: 20, gp: 42 },
       { name: "Mark Rillera", r: 535, wp: 49, gw: 31, gp: 63 },
     ] },
@@ -165,7 +165,7 @@ window.DK = (function () {
     { name: "Iron 4", captain: "Graz Ferreri", players: [
       { name: "Andrew Samarjia", r: 601 },
       { name: "Dai Leota", r: 570, wp: 66, gw: 60, gp: 91 },
-      { name: "Dinesh Sookgreep", r: 569, wp: 52, gw: 44, gp: 84 },
+      { name: "Dinesh Sookgreep", r: 566, wp: 52, gw: 44, gp: 84 },
       { name: "Graz Ferreri", r: 560, wp: 61, gw: 51, gp: 84, c: true },
     ] },
 
@@ -174,30 +174,30 @@ window.DK = (function () {
       { name: "Mitchell Tucker", r: 619, wp: 52, gw: 11, gp: 21 },
       { name: "John McDermott", r: 619, wp: 62, gw: 48, gp: 77 },
       { name: "Stuart Rogers", r: 546, wp: 57, gw: 8, gp: 14 },
-      { name: "John Maresovic", r: 517, wp: 71, gw: 5, gp: 7 },
+      { name: "John Maresovic", r: 520, wp: 71, gw: 5, gp: 7 },
       { name: "Sean McAllister", r: 470, wp: 29, gw: 2, gp: 7 },
       { name: "David Gardner", r: 468, wp: 35, gw: 22, gp: 63 },
     ] },
 
     { name: "Nice Rack", captain: "Hadi Cherri", players: [
-      { name: "Saif Mirza", r: 588, wp: 67, gw: 28, gp: 42 },
-      { name: "Kate Harrison", r: 545, wp: 64, gw: 27, gp: 42 },
-      { name: "Kevin Wang", r: 514, wp: 50, gw: 35, gp: 70 },
-      { name: "Michael Eskander", r: 471, wp: 36, gw: 15, gp: 42 },
-      { name: "Hadi Cherri", r: 426, wp: 38, gw: 32, gp: 84, c: true },
+      { name: "Saif Mirza", r: 585, wp: 61, gw: 30, gp: 49 },
+      { name: "Kate Harrison", r: 546, wp: 64, gw: 27, gp: 42 },
+      { name: "Kevin Wang", r: 513, wp: 49, gw: 38, gp: 77 },
+      { name: "Michael Eskander", r: 470, wp: 35, gw: 17, gp: 49 },
+      { name: "Hadi Cherri", r: 427, wp: 38, gw: 32, gp: 84, c: true },
     ] },
 
     { name: "Shooters", captain: "Adis Coralic", players: [
-      { name: "Adis Coralic", r: 642, wp: 90, gw: 63, gp: 70, c: true },
+      { name: "Adis Coralic", r: 643, wp: 90, gw: 63, gp: 70, c: true },
       { name: "Omid Neshadi", r: 579, wp: 57, gw: 4, gp: 7 },
       { name: "Nasa Munkhnasan", r: 532, wp: 58, gw: 49, gp: 84 },
-      { name: "Stephen Giddings", r: 498, wp: 46, gw: 32, gp: 70 },
+      { name: "Stephen Giddings", r: 499, wp: 46, gw: 32, gp: 70 },
     ] },
 
     { name: "Unbelief", captain: "Tony Habib / Kamal Melhem", players: [
-      { name: "Tony Habib", r: 587, wp: 53, gw: 41, gp: 77, c: true },
-      { name: "Kamal Melhem", r: 580, wp: 61, gw: 51, gp: 84, c: true },
-      { name: "Kah Weng Tan", r: 576, wp: 52, gw: 25, gp: 48 },
+      { name: "Tony Habib", r: 588, wp: 53, gw: 41, gp: 77, c: true },
+      { name: "Kamal Melhem", r: 579, wp: 61, gw: 51, gp: 84, c: true },
+      { name: "Kah Weng Tan", r: 577, wp: 52, gw: 25, gp: 48 },
       { name: "Phil Deschanel", r: 569, wp: 56, gw: 35, gp: 63 },
     ] },
 
@@ -205,8 +205,8 @@ window.DK = (function () {
 
   // Home-page news feed — newest first. Add items as things happen.
   const news = [
+    { date: "1 Nov 2026", title: "Wk 14: 6\u20131 over Nice Rack \u2014 Arul goes 7 from 7 again", body: "Revenge at home for the Wk 11 loss. Arul was perfect again, 7 from 7, his second clean sweep of the season. Angus added 4 and Kate 3, for 14 games from 21 and a 6\u20131 win. That gets us back to 7\u20137 and 48\u201347 on ladder points. Arul is now at 64% for the season and his Fargo has jumped to 619. On the top 16: we\u2019re still in it, but we need both of the last two wins, ideally with bonus points. Next up: Wk 15, Mon 2 Nov, away at Balls Deep on Table 4 \u2014 Oscar, Tony and Arul in." },
     { date: "28 Oct 2026", title: "Lineups for the run home, plus a playoff night", body: "Wk 15, Mon 2 Nov, away at Balls Deep on Table 4: Oscar, Tony and Arul. Kate is out that week. Wk 16, Mon 9 Nov, home to Dragonball Z on Table 1: Tony, Oscar and Kate. There\u2019s also a playoff on Mon 16 Nov, opponent to be announced. Tony, Oscar, Arul and Angus are all rostered on, and the three who play will be picked on the night. All of it is on the Roster page." },
-    { date: "21 Oct 2026", title: "Wk 13 result, and the race for the top 16", body: "Monday was a 2\u20136 loss at home to Marvin\u2019s Crew. Arul took 4 from 7, Angus 3 and Tony 1, so 8 games from 21. That puts us at 6\u20137 for the season. On the Grand Ladder (both nights, 29 teams) we\u2019re 23rd on 42 points. The top 16 go straight to the Vegas Showdown. Extorting Dogs are 16th on 47, five points ahead of us, with six other teams in between. A win is worth 5 points (6 with the marquee bonus) and a loss 1 or 2. With three rounds left, 16th place looks likely to finish somewhere around 57\u201360. To get there we need 15\u201318 points from the last three nights. That means winning all three (Nice Rack, Balls Deep and Dragonball Z), ideally with bonus points, and getting some help from the teams around us. On current form it\u2019s about a 1\u2011in\u201125 shot, but three straight wins would make it close to a coin flip. One win drops us out of the running for a direct spot. The rules also allow extra teams in through the Diamond League Playoffs, based on ladder position. Details are still to be confirmed. Next up: Wk 14, Mon 26 Oct, home vs Nice Rack on Table 8." },
     { date: "13 Oct 2026", title: "Kate away for Finals", body: "Kate won\u2019t be with us for Finals weekend (Vegas Showdown, Sat 21 \u2013 Sun 22 Nov), so she\u2019s off the Finals list." },
     { date: "13 Oct 2026", title: "The t\u2011shirts have arrived!", body: "The team t\u2011shirts are here. Tony will sort getting them to everyone \u2014 grab yours from him." },
   ];;
@@ -214,7 +214,7 @@ window.DK = (function () {
   // Season stats — fill these in as results come in.
   // FargoRate LMS public reports — where the live data comes from. Swap the ID to
   // re-pull; no login needed. Refreshed weekly (see FARGO_ASOF).
-  const FARGO_ASOF = "28 Oct 2026";
+  const FARGO_ASOF = "1 Nov 2026";
   const FARGO_SOURCES = {
     divisionId: "aa6347f2-a437-4bd5-b84d-b48a0186a411",
     teamId:     "f74f1874-1ccf-41bb-85b1-b48a0186a4e9",
@@ -231,65 +231,65 @@ window.DK = (function () {
     { name: "Chris Dam", r: 682, team: "Extorting Dogs", wp: 61, gw: 30, gp: 49 },
     { name: "John Tan", r: 668, team: "Gilas", wp: 53, gw: 26, gp: 49 },
     { name: "Shaun Oglesby", r: 668, team: "Marvin's Crew", wp: 67, gw: 56, gp: 84 },
-    { name: "Adis Coralic", r: 642, team: "Shooters", wp: 90, gw: 63, gp: 70 },
-    { name: "Adam Taylor", r: 629, team: "Extorting Dogs", wp: 70, gw: 39, gp: 56 },
+    { name: "Adis Coralic", r: 643, team: "Shooters", wp: 90, gw: 63, gp: 70 },
+    { name: "Adam Taylor", r: 630, team: "Extorting Dogs", wp: 70, gw: 39, gp: 56 },
     { name: "Raymart Pangan", r: 628, team: "Gilas" },
     { name: "Sam Stacy", r: 627, team: "Extorting Dogs", wp: 57, gw: 32, gp: 56 },
     { name: "Mitchell Tucker", r: 619, team: "Marvin's Crew", wp: 52, gw: 11, gp: 21 },
     { name: "John McDermott", r: 619, team: "Marvin's Crew", wp: 62, gw: 48, gp: 77 },
+    { name: "Arul Baskaran", r: 619, team: "Double Kiss", wp: 64, gw: 45, gp: 70 },
     { name: "Andrew Samarjia", r: 601, team: "Iron 4" },
-    { name: "Arul Baskaran", r: 595, team: "Double Kiss", wp: 60, gw: 38, gp: 63 },
     { name: "Alex Koussas", r: 589, team: "Cue The Good Times", wp: 63, gw: 31, gp: 49 },
-    { name: "Saif Mirza", r: 588, team: "Nice Rack", wp: 67, gw: 28, gp: 42 },
-    { name: "Tony Habib", r: 587, team: "Unbelief", wp: 53, gw: 41, gp: 77 },
-    { name: "Kamal Melhem", r: 580, team: "Unbelief", wp: 61, gw: 51, gp: 84 },
+    { name: "Tony Habib", r: 588, team: "Unbelief", wp: 53, gw: 41, gp: 77 },
+    { name: "Saif Mirza", r: 585, team: "Nice Rack", wp: 61, gw: 30, gp: 49 },
+    { name: "Kamal Melhem", r: 579, team: "Unbelief", wp: 61, gw: 51, gp: 84 },
     { name: "Omid Neshadi", r: 579, team: "Shooters", wp: 57, gw: 4, gp: 7 },
-    { name: "Kah Weng Tan", r: 576, team: "Unbelief", wp: 52, gw: 25, gp: 48 },
+    { name: "Kah Weng Tan", r: 577, team: "Unbelief", wp: 52, gw: 25, gp: 48 },
     { name: "Dai Leota", r: 570, team: "Iron 4", wp: 66, gw: 60, gp: 91 },
-    { name: "Dinesh Sookgreep", r: 569, team: "Iron 4", wp: 52, gw: 44, gp: 84 },
     { name: "Phil Deschanel", r: 569, team: "Unbelief", wp: 56, gw: 35, gp: 63 },
+    { name: "Dinesh Sookgreep", r: 566, team: "Iron 4", wp: 52, gw: 44, gp: 84 },
+    { name: "Mark Harper", r: 562, team: "Freeballers", wp: 56, gw: 43, gp: 77 },
     { name: "Graz Ferreri", r: 560, team: "Iron 4", wp: 61, gw: 51, gp: 84 },
-    { name: "Alfie Compuesto", r: 558, team: "Gilas", wp: 64, gw: 36, gp: 56 },
-    { name: "Mark Harper", r: 557, team: "Freeballers", wp: 56, gw: 43, gp: 77 },
-    { name: "Aldrin Aguilan", r: 546, team: "Gilas", wp: 50, gw: 28, gp: 56 },
+    { name: "Alfie Compuesto", r: 559, team: "Gilas", wp: 64, gw: 36, gp: 56 },
     { name: "Stuart Rogers", r: 546, team: "Marvin's Crew", wp: 57, gw: 8, gp: 14 },
-    { name: "Kate Harrison", r: 545, team: "Nice Rack", wp: 64, gw: 27, gp: 42 },
+    { name: "Kate Harrison", r: 546, team: "Nice Rack", wp: 64, gw: 27, gp: 42 },
+    { name: "Aldrin Aguilan", r: 544, team: "Gilas", wp: 50, gw: 28, gp: 56 },
     { name: "Jan Amiel Baste", r: 539, team: "Gilas", wp: 48, gw: 20, gp: 42 },
-    { name: "Rob Carnell", r: 539, team: "Break & Enter", wp: 50, gw: 42, gp: 84 },
+    { name: "Rob Carnell", r: 538, team: "Break & Enter", wp: 50, gw: 42, gp: 84 },
     { name: "Mark Rillera", r: 535, team: "Gilas", wp: 49, gw: 31, gp: 63 },
     { name: "Nasa Munkhnasan", r: 532, team: "Shooters", wp: 58, gw: 49, gp: 84 },
-    { name: "John Maresovic", r: 517, team: "Marvin's Crew", wp: 71, gw: 5, gp: 7 },
-    { name: "Kevin Wang", r: 514, team: "Nice Rack", wp: 50, gw: 35, gp: 70 },
-    { name: "Angus Crump", r: 511, team: "Double Kiss", wp: 32, gw: 18, gp: 56 },
+    { name: "John Maresovic", r: 520, team: "Marvin's Crew", wp: 71, gw: 5, gp: 7 },
+    { name: "Kevin Wang", r: 513, team: "Nice Rack", wp: 49, gw: 38, gp: 77 },
+    { name: "Angus Crump", r: 512, team: "Double Kiss", wp: 35, gw: 22, gp: 63 },
+    { name: "Maghmud Sadien", r: 503, team: "Dragonball Z", wp: 55, gw: 31, gp: 56 },
     { name: "Philip Campbell", r: 502, team: "Cue The Good Times", wp: 45, gw: 22, gp: 49 },
-    { name: "Maghmud Sadien", r: 502, team: "Dragonball Z", wp: 55, gw: 31, gp: 56 },
-    { name: "Stephen Giddings", r: 498, team: "Shooters", wp: 46, gw: 32, gp: 70 },
+    { name: "Stephen Giddings", r: 499, team: "Shooters", wp: 46, gw: 32, gp: 70 },
     { name: "Wesley Valele", r: 492, team: "Cue The Good Times", wp: 34, gw: 12, gp: 35 },
     { name: "Oscar Kovacs", r: 490, team: "Double Kiss", wp: 41, gw: 20, gp: 49 },
-    { name: "Sev Gharedaghi", r: 485, team: "Balls Deep", wp: 50, gw: 42, gp: 84 },
+    { name: "Sev Gharedaghi", r: 486, team: "Balls Deep", wp: 50, gw: 42, gp: 84 },
     { name: "Will Yuan", r: 483, team: "Extorting Dogs", wp: 51, gw: 28, gp: 55 },
+    { name: "Steven Tien", r: 477, team: "Dragonball Z", wp: 48, gw: 30, gp: 63 },
     { name: "Shaun Matthews", r: 474, team: "Dragonball Z", wp: 45, gw: 19, gp: 42 },
-    { name: "Michael Eskander", r: 471, team: "Nice Rack", wp: 36, gw: 15, gp: 42 },
+    { name: "Michael Eskander", r: 470, team: "Nice Rack", wp: 35, gw: 17, gp: 49 },
     { name: "Sean McAllister", r: 470, team: "Marvin's Crew", wp: 29, gw: 2, gp: 7 },
     { name: "David Gardner", r: 468, team: "Marvin's Crew", wp: 35, gw: 22, gp: 63 },
-    { name: "Josh Leary", r: 466, team: "Freeballers", wp: 41, gw: 37, gp: 91 },
-    { name: "Steven Tien", r: 461, team: "Dragonball Z", wp: 48, gw: 30, gp: 63 },
-    { name: "Liam Pratt", r: 453, team: "Extorting Dogs", wp: 37, gw: 18, gp: 49 },
-    { name: "Liam Anderson", r: 451, team: "Double Kiss", wp: 29, gw: 2, gp: 7 },
-    { name: "Gerard Crowe", r: 447, team: "Freeballers", wp: 38, gw: 8, gp: 21 },
+    { name: "Josh Leary", r: 467, team: "Freeballers", wp: 41, gw: 37, gp: 91 },
+    { name: "Liam Anderson", r: 459, team: "Double Kiss", wp: 29, gw: 2, gp: 7 },
+    { name: "Liam Pratt", r: 452, team: "Extorting Dogs", wp: 37, gw: 18, gp: 49 },
+    { name: "Gerard Crowe", r: 448, team: "Freeballers", wp: 38, gw: 8, gp: 21 },
     { name: "Tony Brooks", r: 437, team: "Double Kiss", wp: 34, gw: 12, gp: 35 },
     { name: "Mike Dogan", r: 434, team: "Cue The Good Times", wp: 43, gw: 30, gp: 70 },
     { name: "Rachel Lewis", r: 428, team: "Break & Enter", wp: 45, gw: 22, gp: 49 },
-    { name: "Hadi Cherri", r: 426, team: "Nice Rack", wp: 38, gw: 32, gp: 84 },
-    { name: "Adam Wowk", r: 416, team: "Dragonball Z", wp: 29, gw: 18, gp: 63 },
-    { name: "Elliot Osborne", r: 411, team: "Balls Deep", wp: 37, gw: 26, gp: 70 },
-    { name: "Joshua Mackintosh", r: 408, team: "Freeballers", wp: 27, gw: 23, gp: 84 },
+    { name: "Hadi Cherri", r: 427, team: "Nice Rack", wp: 38, gw: 32, gp: 84 },
+    { name: "Adam Wowk", r: 417, team: "Dragonball Z", wp: 29, gw: 18, gp: 63 },
+    { name: "Elliot Osborne", r: 409, team: "Balls Deep", wp: 37, gw: 26, gp: 70 },
+    { name: "Joshua Mackintosh", r: 403, team: "Freeballers", wp: 27, gw: 23, gp: 84 },
     { name: "Ned Pulido", r: 401, team: "Extorting Dogs", wp: 23, gw: 8, gp: 35 },
     { name: "Nathan Wood", r: 389, team: "Break & Enter", wp: 34, gw: 26, gp: 77 },
-    { name: "Kate Ridgeway", r: 370, team: "Double Kiss", wp: 24, gw: 10, gp: 42 },
+    { name: "Kate Ridgeway", r: 373, team: "Double Kiss", wp: 27, gw: 13, gp: 49 },
     { name: "Gian Romeo", r: 333, team: "Balls Deep", wp: 21, gw: 12, gp: 56 },
     { name: "Kubilay Akin", r: 289, team: "Cue The Good Times", wp: 0, gw: 0, gp: 7 },
-    { name: "Fenn Warth", r: 283, team: "Balls Deep", wp: 19, gw: 12, gp: 63 },
+    { name: "Fenn Warth", r: 284, team: "Balls Deep", wp: 19, gw: 12, gp: 63 },
 
   ];
 
@@ -316,13 +316,14 @@ window.DK = (function () {
         { wk: 11, op: "Nice Rack",          ha: "Home", mf: 1, ma: 6 },
         { wk: 12, op: "Gilas",              ha: "Away", mf: 5, ma: 2 },
         { wk: 13, op: "Marvin's Crew",      ha: "Home", mf: 2, ma: 6 },
+        { wk: 14, op: "Nice Rack",          ha: "Home", mf: 6, ma: 1 },
       ],
       players: {
-        "Arul Baskaran": { br: 3, tr: 3, w: { 1: 3, 2: 5, 5: 5, 6: 5, 7: 2, 8: 3, 10: 7, 12: 4, 13: 4 } },
-        "Angus Crump":   { br: 1, tr: 1, w: { 1: 3, 4: 1, 5: 4, 7: 2, 8: 1, 9: 2, 11: 2, 13: 3 } },
+        "Arul Baskaran": { br: 4, tr: 3, w: { 1: 3, 2: 5, 5: 5, 6: 5, 7: 2, 8: 3, 10: 7, 12: 4, 13: 4, 14: 7 } },
+        "Angus Crump":   { br: 2, tr: 1, w: { 1: 3, 4: 1, 5: 4, 7: 2, 8: 1, 9: 2, 11: 2, 13: 3, 14: 4 } },
         "Oscar Kovacs":  { br: 3, tr: 0, w: { 1: 2, 4: 0, 5: 3, 6: 4, 9: 4, 10: 4, 11: 3 } },
         "Tony Brooks":   { br: 0, tr: 0, w: { 2: 1, 6: 4, 10: 2, 12: 4, 13: 1 } },
-        "Kate Ridgeway": { br: 0, tr: 0, w: { 2: 2, 7: 2, 8: 1, 9: 2, 11: 2, 12: 1 } },
+        "Kate Ridgeway": { br: 0, tr: 0, w: { 2: 2, 7: 2, 8: 1, 9: 2, 11: 2, 12: 1, 14: 3 } },
         "Liam Anderson": { br: 0, tr: 0, w: { 4: 2 } },
       },
     },
@@ -382,10 +383,10 @@ window.DK = (function () {
     // Team record. matchFor/matchAgainst = match points (7 per night); the Wk 3
     // bye is credited 3-0 by the league, so it counts in both the record and the
     // match points, exactly as the official ladder has it.
-    played: 13, won: 6, drawn: 0, lost: 7,
-    matchFor: 42, matchAgainst: 46,
-    gamesWon: 100, gamesPlayed: 252,  // sum across our players (incl. Liam Anderson's Wk 4 sub)
-    br: 7, tr: 4,
+    played: 14, won: 7, drawn: 0, lost: 7,
+    matchFor: 48, matchAgainst: 47,
+    gamesWon: 114, gamesPlayed: 273,  // sum across our players (incl. Liam Anderson's Wk 4 sub)
+    br: 9, tr: 4,
     ladder: "23rd of 29 (Grand Ladder, Wk 13)",
     ladderNote: "This is the Grand Ladder \u2014 both nights combined, ranked on ladder points (win 5, +1 marquee bonus; loss 1, or 2 if leading at the post). The top 16 qualify directly for the Vegas Showdown. It comes from the league, not the FargoRate report, so it updates when the league publishes it.",
     subs: [
@@ -405,6 +406,7 @@ window.DK = (function () {
       { wk: 11, op: "Nice Rack",    ha: "Home", result: "L", score: "1\u20136" },
       { wk: 12, op: "Gilas",        ha: "Away", result: "W", score: "5\u20132" },
       { wk: 13, op: "Marvin's Crew", ha: "Home", result: "L", score: "2\u20136" },
+      { wk: 14, op: "Nice Rack",    ha: "Home", result: "W", score: "6\u20131" },
     ],
   };;
 
