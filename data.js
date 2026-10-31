@@ -205,7 +205,7 @@ window.DK = (function () {
 
   // Home-page news feed — newest first. Add items as things happen.
   const news = [
-    { date: "1 Nov 2026", title: "Wk 14: 6\u20131 over Nice Rack \u2014 Arul goes 7 from 7 again", body: "Revenge at home for the Wk 11 loss. Arul was perfect again, 7 from 7, his second clean sweep of the season. Angus added 4 and Kate 3, for 14 games from 21 and a 6\u20131 win. That gets us back to 7\u20137 and 48\u201347 on ladder points. Arul is now at 64% for the season and his Fargo has jumped to 619. On the top 16: we\u2019re still in it, but we need both of the last two wins, ideally with bonus points. Next up: Wk 15, Mon 2 Nov, away at Balls Deep on Table 4 \u2014 Oscar, Tony and Arul in." },
+    { date: "1 Nov 2026", title: "Wk 14: 6\u20131 over Nice Rack, and the top 16 is back in play", body: "Revenge at home for the Wk 11 loss. Arul was perfect again, 7 from 7, his second clean sweep of the season. Angus added 4 and Kate 3, for 14 games from 21 and a 6\u20131 win. That gets us back to 7\u20137 and 48\u201347 on ladder points. Arul is now at 64% for the season and his Fargo has jumped to 619. The top 16 is back in play. On the Grand Ladder we\u2019ve climbed from 23rd to 18th, two points behind Cue The Good Times in 16th, and Balls Deep (17th) are the team we play next. Cue The Good Times also have a bye in Wk 16, which is worth only 3 points. Win both of our last two and we finish on 58\u201360, which gets us in roughly 9 times out of 10. Win only one and it drops to about 1 in 10. Over both games it\u2019s about 1 in 6, and Monday at Balls Deep is the one that matters most. Next up: Wk 15, Mon 2 Nov, away at Balls Deep on Table 4 \u2014 Oscar, Tony and Arul in." },
     { date: "28 Oct 2026", title: "Lineups for the run home, plus a playoff night", body: "Wk 15, Mon 2 Nov, away at Balls Deep on Table 4: Oscar, Tony and Arul. Kate is out that week. Wk 16, Mon 9 Nov, home to Dragonball Z on Table 1: Tony, Oscar and Kate. There\u2019s also a playoff on Mon 16 Nov, opponent to be announced. Tony, Oscar, Arul and Angus are all rostered on, and the three who play will be picked on the night. All of it is on the Roster page." },
     { date: "13 Oct 2026", title: "Kate away for Finals", body: "Kate won\u2019t be with us for Finals weekend (Vegas Showdown, Sat 21 \u2013 Sun 22 Nov), so she\u2019s off the Finals list." },
     { date: "13 Oct 2026", title: "The t\u2011shirts have arrived!", body: "The team t\u2011shirts are here. Tony will sort getting them to everyone \u2014 grab yours from him." },
@@ -387,8 +387,8 @@ window.DK = (function () {
     matchFor: 48, matchAgainst: 47,
     gamesWon: 114, gamesPlayed: 273,  // sum across our players (incl. Liam Anderson's Wk 4 sub)
     br: 9, tr: 4,
-    ladder: "23rd of 29 (Grand Ladder, Wk 13)",
-    ladderNote: "This is the Grand Ladder \u2014 both nights combined, ranked on ladder points (win 5, +1 marquee bonus; loss 1, or 2 if leading at the post). The top 16 qualify directly for the Vegas Showdown. It comes from the league, not the FargoRate report, so it updates when the league publishes it.",
+    ladder: "18th of 29 (Grand Ladder, Wk 14)",
+    ladderNote: "This is the Grand Ladder: both nights combined, ranked on ladder points (win 5, +1 marquee bonus; loss 1, or 2 if leading at the post). The top 16 qualify directly for the Vegas Showdown. After Wk 14 we\u2019re on 48, two points behind Cue The Good Times in 16th (50). It\u2019s built from the league\u2019s Monday and Tuesday results, with teams on equal points ordered by points against, as a stand-in for the official win-percentage tie-break.",
     subs: [
       { name: "Liam Anderson", wk: 4, gw: 2, gp: 7 },
     ],

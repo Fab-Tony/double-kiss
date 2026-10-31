@@ -6,6 +6,11 @@ targets, results).
 
 ## App/UI
 
+- 2026-11-01 — **Grand Ladder after Wk 14** (cache v35): built from the Monday and Tuesday
+  Team Standings reports (their W/L column is ladder points for/against). Stats tile now
+  reads 18th of 29, two points off 16th. The Wk 14 news item is retitled and now carries
+  the top-16 odds (win both: ~93%, overall ~1 in 6).
+
 - 2026-11-01 — **Weekly FargoRate sync** (cache v34): Wk 14 result (6–1 at home to Nice
   Rack; Arul 7/7, Angus 4, Kate 3). Record 7–7, 48–47, games 114/273, 9 B&Rs. Live Fargo
   1 Nov (Arul 619). News: Wk 14 write-up; 21 Oct top-16 item dropped (covered in the new one).
